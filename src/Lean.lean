@@ -29,3 +29,8 @@ import Lean.Server
 import Lean.ScopedEnvExtension
 import Lean.DocString
 import Lean.DeclarationRange
+
+-- This import must be below all the others. Moving it up currently triggers a
+-- mysterious bug.
+-- https://leanprover.zulipchat.com/#narrow/stream/113488-general
+import Lean.Aesop
