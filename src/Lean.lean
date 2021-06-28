@@ -3,7 +3,7 @@ Copyright (c) 2020 Microsoft Corporation. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Leonardo de Moura
 -/
-import Lean.Aesop
+import Lean.Bug
 import Lean.Data
 import Lean.Compiler
 import Lean.Environment
