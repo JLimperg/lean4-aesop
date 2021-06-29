@@ -1,7 +1,7 @@
 import Lean.Util.Trace
 
 -- Importing this particular module triggers the error.
--- import Lean.Meta.CollectFVars
+import Lean.Meta.CollectFVars
 
 -- Indirect import also triggers the error.
 -- import Lean.Meta
@@ -78,8 +78,3 @@ import Lean.ToExpr
 import Lean.Util
 
 import Std
-
-open Lean (registerTraceClass)
-
-builtin_initialize
-  registerTraceClass `stuff
