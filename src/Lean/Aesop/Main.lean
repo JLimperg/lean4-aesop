@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2021 Jannis Limperg. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Jannis Limperg, Asta Halkjær From
+Authors: Jannis Limperg
 -/
 
 import Lean.Aesop.BestFirstSearch
@@ -16,6 +16,8 @@ syntax (name := aesop) "aesop" : tactic
 
 @[tactic aesop]
 def evalAesop : Tactic := λ stx => do
-  liftMetaMAtMain $ search (← getRuleSet)
+  let rs ← getRuleSet
+  trace[Aesop.RuleSet] toMessageData rs
+  liftMetaMAtMain $ search rs
 
 end Lean.Aesop

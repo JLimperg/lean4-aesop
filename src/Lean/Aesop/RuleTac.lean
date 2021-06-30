@@ -40,7 +40,7 @@ unsafe def evalTacticUnsafe (decl : Name) :
   | some info =>
     if (← isDefEq info.type (mkConst ``TacticType))
       then ofExcept $ env.evalConst TacticType (← getOptions) decl
-      else throwError "aesop: {decl} was expected to have type\n  'MVarId → MetaM (List MVarId)'\nbut has type\n  '{info.type}'"
+      else throwError "aesop: {decl} was expected to have type\n  MVarId → MetaM (List MVarId)\nbut has type\n  {info.type}"
 
 @[implementedBy evalTacticUnsafe]
 constant evalTactic : Name → MetaM (MVarId → MetaM (List MVarId))

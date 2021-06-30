@@ -9,28 +9,54 @@ import Lean.Aesop.RuleBuilder
 open Lean
 open Lean.Meta (SimpEntry)
 
-declare_syntax_cat aesop_kind
-
-syntax &"norm" ("-"? num)? : aesop_kind
-syntax "unsafe" num "%" : aesop_kind
-syntax num "%" : aesop_kind
-syntax &"safe" ("-"? num)? : aesop_kind
-
-declare_syntax_cat aesop_clause
-
-declare_syntax_cat aesop_builder
-
-syntax &"apply" : aesop_builder
-syntax &"simp_lemma" : aesop_builder
-syntax &"tactic" : aesop_builder
-
-syntax "(" &"builder" aesop_builder  ")" : aesop_clause
-
-syntax (name := aesop) &"aesop" aesop_kind aesop_clause* : attr
-
 namespace Lean.Aesop
 
+namespace AttrSyntax
+
+syntax prio := "-"? num "%"?
+
+syntax kind := (&"safe" <|> &"norm" <|> &"unsafe")? (prio)?
+
+syntax builder_clause :=
+  "(" &"builder " (&"apply" <|> &"simp_lemma" <|> &"tactic") ")"
+
+syntax clause := builder_clause
+
+syntax (name := aesop) "aesop " kind clause* : attr
+
+end AttrSyntax
+
+
 variable [Monad m] [MonadError m]
+
+
+inductive Prio
+  | successProbability (p : Percent)
+  | penalty (i : Int)
+  deriving Inhabited, BEq
+
+namespace Prio
+
+instance : ToString Prio where
+  toString
+    | successProbability p => p.toHumanString
+    | penalty i => toString i
+
+-- "-"? num "%"?
+protected def parse (stx : Syntax) : m Prio := do
+  let negate := not $ stx[0].isNone
+  let percent := not $ stx[2].isNone
+  let n := stx[1].toNat
+  if percent
+    then
+      if negate then throwError "aesop: Percentage cannot be negative."
+      let (some p) ← Percent.ofNat n
+        | throwError "aesop: Percentage must be between 0 and 100."
+      return successProbability p
+    else
+      return penalty $ if negate then - Int.ofNat n else n
+
+end Prio
 
 inductive RuleKind
   | norm (penalty : Option Int)
@@ -46,23 +72,35 @@ instance : ToString RuleKind where
     | safe p => s!"safe {p}"
     | «unsafe» p => s!"unsafe {p.toHumanString}"
 
-protected def parse : Syntax → m RuleKind
-  | `(norm $penalty) => norm <$> parsePenalty penalty
-  | `(safe $penalty) => safe <$> parsePenalty penalty
-  | `(aesop_kind|unsafe $prob:numLit %) => «unsafe» <$> parsePercent prob
-  | `(aesop_kind|$prob:numLit %) => «unsafe» <$> parsePercent prob
-  | _ => unreachable!
-  where
-    parsePenalty : Syntax → Option Int
-      | `(- $n:numLit) => some $ - Int.ofNat n.toNat
-      | `($n:numLit) => some $ n.toNat
-      | _ => none
-
-    parsePercent (n : Syntax) : m Percent :=
-      let n := n.toNat
-      if 0 ≤ n ∧ n ≤ 100
-        then pure ⟨n.toFloat / 100⟩
-        else throwError "Percentage must be between 0 and 100"
+-- (&"safe" <|> &"norm" <|> &"unsafe")? (prio)?
+protected def parse (stx : Syntax) : m RuleKind := do
+  let prio? ← if stx[1].isNone then pure none else some <$> Prio.parse stx[1][0]
+  -- Unsafe rule
+  if stx[0].isNone || stx[0].getId == `unsafe
+    then
+      let (some (Prio.successProbability p)) ← pure prio? | throwError
+        "aesop: unsafe rules must specify a success probability ('n%') (got {prio?})"
+      return «unsafe» p
+    else
+      -- Safe rule
+      if stx[0].getId == `safe
+        then
+          let penalty ←
+            match prio? with
+            | none => pure defaultSafePenalty
+            | some (Prio.penalty p) => pure p
+            | some _ => throwError
+              "aesop: safe rules must specify an integer penalty, not a success probability."
+          return safe penalty
+        -- Norm rule
+        else
+          let penalty ←
+            match prio? with
+            | none => pure defaultNormPenalty
+            | some (Prio.penalty p) => pure p
+            | some _ => throwError
+              "aesop: norm rules must specify an integer penalty, not a success probability."
+          return norm penalty
 
 end RuleKind
 
@@ -76,8 +114,8 @@ namespace RegularBuilderClause
 
 instance : ToString RegularBuilderClause where
   toString
-    | apply => "apply"
-    | tactic => "tactic"
+    | apply => "(builder apply)"
+    | tactic => "(builder tactic)"
 
 def toRuleBuilder : RegularBuilderClause → RuleBuilder RegularRuleBuilderResult
   | apply => RuleBuilder.apply
@@ -96,13 +134,15 @@ namespace BuilderClause
 instance : ToString BuilderClause where
   toString
     | regular c => toString c
-    | simpLemma => "simp_lemma"
+    | simpLemma => "(builder simp_lemma)"
 
+-- "(" &"builder " (&"apply" <|> &"simp_lemma" <|> &"tactic") ")"
 open RegularBuilderClause in
-protected def parseArgs : Syntax → m BuilderClause
-  | `(apply) => regular apply
-  | `(simp_lemma) => simpLemma
-  | `(tactic) => regular tactic
+protected def parse (stx : Syntax) : BuilderClause :=
+  match stx[2].getAtomVal! with
+  | "apply" => regular apply
+  | "tactic" => regular tactic
+  | "simp_lemma" => simpLemma
   | _ => unreachable!
 
 def toRuleBuilder : BuilderClause → RuleBuilder NormRuleBuilderResult
@@ -120,11 +160,10 @@ namespace Clause
 
 instance : ToString Clause where
   toString
-    | builder c => s!"(builder {c})"
+    | builder c => toString c
 
-protected def parse : Syntax → m Clause
-  | `((builder $b)) => «builder» <$> BuilderClause.parseArgs b
-  | _ => unreachable!
+protected def parse (stx : Syntax) : m Clause :=
+  return builder $ BuilderClause.parse stx[0]
 
 end Clause
 
@@ -146,7 +185,7 @@ protected def addClause (conf : NormRuleConfig) :
     Clause → m NormRuleConfig
   | Clause.builder b =>
     if conf.builder.isSome
-      then throwError "Duplicate builder clause."
+      then throwError "aesop: duplicate builder clause."
       else pure { conf with builder := b }
 
 protected def addClauses (clauses : Array Clause)
@@ -191,10 +230,10 @@ instance : ToString SafeRuleConfig where
 
 protected def addClause (conf : SafeRuleConfig) : Clause → m SafeRuleConfig
   | Clause.builder BuilderClause.simpLemma =>
-    throwError "simp_lemma builder is not supported for safe rules."
+    throwError "aesop: 'simp_lemma' builder cannot be used with safe rules."
   | Clause.builder (BuilderClause.regular b) =>
     if conf.builder.isSome
-      then throwError "Duplicate builder clause."
+      then throwError "aesop: duplicate builder clause."
       else pure { conf with builder := b }
 
 protected def addClauses (clauses : Array Clause) (conf : SafeRuleConfig) :
@@ -235,10 +274,10 @@ instance : ToString UnsafeRuleConfig where
 
 protected def addClause (conf : UnsafeRuleConfig) : Clause → m UnsafeRuleConfig
   | Clause.builder BuilderClause.simpLemma =>
-    throwError "simp_lemma builder is not supported for unsafe rules."
+    throwError "aesop: 'simp_lemma' builder cannot be used with unsafe rules."
   | Clause.builder (BuilderClause.regular b) =>
     if conf.builder.isSome
-      then throwError "Duplicate builder clause."
+      then throwError "aesop: duplicate builder clause."
       else pure { conf with builder := b }
 
 protected def addClauses (clauses : Array Clause) (conf : UnsafeRuleConfig) :
@@ -270,12 +309,11 @@ namespace AttrConfig
 
 instance : ToString AttrConfig where
   toString c :=
-    " ".joinSep
-      [ "aesop",
-        match c with
-          | norm conf => toString conf
-          | safe conf => toString conf
-          | «unsafe» conf => toString conf ]
+    "aesop " ++
+    match c with
+      | norm conf => " ".joinSep ["norm", toString conf]
+      | safe conf => " ".joinSep ["safe", toString conf]
+      | «unsafe» conf => " ".joinSep ["unsafe", toString conf]
 
 protected def ofKindAndClauses : RuleKind → Array Clause → m AttrConfig
   | RuleKind.norm penalty, cs => do
@@ -288,12 +326,11 @@ protected def ofKindAndClauses : RuleKind → Array Clause → m AttrConfig
     let conf : UnsafeRuleConfig := { successProbability := prob, builder := none }
     «unsafe» <$> conf.addClauses cs
 
-protected def parse : Syntax → m AttrConfig
-  | stx@`(attr|aesop $kind:aesop_kind $clauses:aesop_clause*) => do
-    let kind ← RuleKind.parse kind
-    let clauses ← clauses.mapM Clause.parse
-    AttrConfig.ofKindAndClauses kind clauses
-  | _ => unreachable!
+-- "aesop " kind clause*
+protected def parse (stx : Syntax) : m AttrConfig := do
+  let kind ← RuleKind.parse stx[1]
+  let clauses ← stx[2].getArgs.mapM Clause.parse
+  AttrConfig.ofKindAndClauses kind clauses
 
 protected def applyToDecl (decl : Name) : AttrConfig → MetaM RuleSetMember
   | norm conf => conf.applyToDecl decl

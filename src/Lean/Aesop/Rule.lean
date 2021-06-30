@@ -97,6 +97,8 @@ abbrev NormRule := NormRule' RuleTac
 instance : ToFormat (NormRule' τ) where
   format r := f!"[{r.extra.penalty}] {r.name}"
 
+def defaultNormPenalty : Int := 1
+
 
 /-! ### Safe and Almost Safe Rules -/
 
@@ -130,6 +132,8 @@ abbrev SafeRule := SafeRule' RuleTac
 
 instance : ToFormat (SafeRule' τ) where
   format r := f!"[{r.extra.penalty}/{r.extra.safety}] {r.name}"
+
+def defaultSafePenalty : Int := 1
 
 
 /-! ### Unsafe Rules -/
@@ -207,10 +211,10 @@ open Std.Format in
 instance [ToFormat α] : ToFormat (RuleIndex α) where
   format ri := Format.join
     [ "rules indexed by target:",
-      Std.Format.indentD $ format ri.byTarget, -- TODO revisit
+      indentDUnlinesSkipEmpty ri.byTarget.values.toList,
       line,
       "unindexed rules:",
-      ri.unindexed.map format |>.toList |> unlines |> Std.Format.indentD ]
+      indentDUnlinesSkipEmpty ri.unindexed.toList ]
 
 def empty : RuleIndex α where
   byTarget := DiscrTree.empty
@@ -285,6 +289,21 @@ structure RuleSet where
   deriving Inhabited
 
 namespace RuleSet
+
+open Std.Format in
+instance : ToFormat RuleSet where
+  format rs := Format.join
+    [ "Unsafe rules:",
+      indentDSkipEmpty $ format rs.unsafeRules,
+      line,
+      "Safe rules:",
+      indentDSkipEmpty $ format rs.safeRules,
+      line,
+      "Normalisation rules:",
+      indentDSkipEmpty $ format rs.normRules,
+      line,
+      "Normalisation simp lemmas:",
+      indentDSkipEmpty $ format rs.normSimpLemmas ]
 
 def empty : RuleSet where
   normRules := RuleIndex.empty

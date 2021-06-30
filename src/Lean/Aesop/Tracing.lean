@@ -9,4 +9,6 @@ import Lean.Util.Trace
 open Lean
 
 builtin_initialize
-  registerTraceClass `Aesop
+  registerTraceClass `Aesop.RuleSet
+  registerTraceClass `Aesop.Ruleset.NormSimpLemmas
+  registerTraceClass `Aesop.Steps

@@ -7,6 +7,7 @@ Authors: Jannis Limperg, Asta Halkjær From
 import Lean.Message
 import Lean.Meta.DiscrTree
 import Lean.Meta.Tactic.Simp.SimpLemmas
+import Lean.Syntax
 import Std.Data.BinomialHeap
 
 namespace String
@@ -14,7 +15,11 @@ namespace String
 def joinSep (sep : String)  : List String → String
   | [] => ""
   | "" :: ss => joinSep sep ss
-  | s :: ss => s ++ sep ++ joinSep sep ss
+  | s :: ss =>
+    let tail := joinSep sep ss
+    match tail with
+    | "" => s
+    | _ => s ++ sep ++ tail
 
 end String
 
@@ -28,20 +33,21 @@ def isEmptyShallow : Format → Bool
   | _ => false
 
 @[inline]
-def indentDSkipEmpty (f : Format) : Format :=
+def indentDSkipEmpty [ToFormat α] (f : α) : Format :=
+  let f := format f
   if f.isEmptyShallow then nil else indentD f
 
 @[inline]
-def unlines (fs : List Format) : Format :=
+def unlines [ToFormat α] (fs : List α) : Format :=
   Format.joinSep fs line
 
 @[inline]
-def indentDUnlines : List Format → Format :=
+def indentDUnlines [ToFormat α] : List α → Format :=
   indentDSkipEmpty ∘ unlines
 
 @[inline]
-def indentDUnlinesSkipEmpty (fs : List Format) : Format :=
-  indentDSkipEmpty $ unlines $ fs.filter (¬ ·.isEmptyShallow)
+def indentDUnlinesSkipEmpty [ToFormat α] (fs : List α) : Format :=
+  indentDSkipEmpty $ unlines (fs.map format |>.filter (¬ ·.isEmptyShallow))
 
 def formatIf (b : Bool) (f : Thunk Format) : Format :=
   if b then f.get else nil
@@ -90,6 +96,15 @@ def merge [BEq α] [Hashable α] (s t : PersistentHashSet α) : PersistentHashSe
   where
     @[inline]
     loop s t := s.fold (init := t) λ s a => s.insert a
+
+-- Elements are returned in unspecified order.
+def toList [BEq α] [Hashable α] (s : PersistentHashSet α) : List α :=
+  s.fold (init := []) λ as a => a :: as
+
+-- Elements are returned in unspecified order. (In fact, they are currently
+-- returned in reverse order of `toList`.)
+def toArray [BEq α] [Hashable α] (s : PersistentHashSet α) : Array α :=
+  s.fold (init := #[]) λ as a => as.push a
 
 end Std.PersistentHashSet
 
@@ -156,6 +171,7 @@ def toArray (t : DiscrTree α) : Array (Array Key × α) :=
 
 end DiscrTree
 
+
 namespace SimpLemmas
 
 def merge (s t : SimpLemmas) : SimpLemmas where
@@ -168,6 +184,22 @@ def merge (s t : SimpLemmas) : SimpLemmas where
 def addSimpEntry (s : SimpLemmas) : SimpEntry → SimpLemmas
   | SimpEntry.lemma l => addSimpLemmaEntry s l
   | SimpEntry.toUnfold d => s.addDeclToUnfold d
+
+open Std.Format in
+instance : ToFormat SimpLemmas where
+  format s := Format.join
+    [ "pre lemmas:",
+      indentDUnlinesSkipEmpty s.pre.values.toList,
+      line,
+      "post lemmas:",
+      indentDUnlinesSkipEmpty s.post.values.toList,
+      line,
+      "definitions to unfold:",
+      indentDUnlinesSkipEmpty $ s.toUnfold.toArray.qsort Name.lt |>.toList,
+      line,
+      "erased entries:",
+      indentDUnlinesSkipEmpty $ s.erased.toArray.qsort Name.lt |>.toList
+    ]
 
 end SimpLemmas
 
@@ -239,3 +271,17 @@ def modifyGetM (r : Ref σ α) (f : α → m (β × α)) : m β := do
   return b
 
 end ST.Ref
+
+
+namespace Lean.Syntax
+
+-- TODO for debugging, maybe remove
+partial def formatRaw : Syntax → String
+  | missing => "missing"
+  | node kind args =>
+    let args := ", ".joinSep $ args.map formatRaw |>.toList
+    s!"(node {kind} [{args}])"
+  | atom _ val => s!"(atom {val})"
+  | ident _ _ val _ => s!"(ident {val})"
+
+end Lean.Syntax
