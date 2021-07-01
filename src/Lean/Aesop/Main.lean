@@ -18,6 +18,6 @@ syntax (name := aesop) "aesop" : tactic
 def evalAesop : Tactic := λ stx => do
   let rs ← getRuleSet
   trace[Aesop.RuleSet] toMessageData rs
-  liftMetaMAtMain $ search rs
+  search rs
 
 end Lean.Aesop

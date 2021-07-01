@@ -10,6 +10,8 @@ import Lean.Aesop.Util
 
 open Lean
 open Lean.Meta
+open Lean.Elab
+open Lean.Elab.Tactic
 open Std (BinomialHeap)
 
 namespace Lean.Aesop.Search
@@ -68,11 +70,15 @@ def mkInitialContextAndState (rs : RuleSet) (mainGoal : MVarId) :
     nextRappId := RappId.zero }
   return (ctx, state)
 
-abbrev SearchM := ReaderT Context $ StateRefT State MetaM
+abbrev SearchM := ReaderT Context $ StateRefT State TermElabM
+
+-- Make the compiler generate specialized `pure`/`bind` so we do not have to optimize through the
+-- whole monad stack at every use site. May eventually be covered by `deriving`.
+instance : Monad SearchM := { inferInstanceAs (Monad SearchM) with }
 
 namespace SearchM
 
-def run (ctx : Context) (state : State) (x : SearchM α) : MetaM (α × State) :=
+def run (ctx : Context) (state : State) (x : SearchM α) : TermElabM (α × State) :=
   StateRefT'.run (ReaderT.run x ctx) state
 
 end SearchM
@@ -139,9 +145,11 @@ def addRapp (r : RappData) (parent : GoalRef) : SearchM RappRef := do
   return rref
 
 def runNormRule (goal : MVarId) (r : NormRule) : SearchM MVarId := do
-  let subgoals ← try r.tac.tac goal catch e => throwError
-    "aesop: normalization rule {r.name} failed with error:\n{e.toMessageData}"
-    -- TODO show error context
+  let subgoals ←
+    try Lean.Elab.Tactic.run goal r.tac.tac
+    catch e => throwError
+      "aesop: normalization rule {r.name} failed with error:\n{e.toMessageData}"
+      -- TODO show error context
   match subgoals with
   | [g] => return g
   | _ => throwError "aesop: normalization rule {r.name} did not produce exactly one subgoal"
@@ -169,10 +177,10 @@ def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Unit :=
     let newGoal ← normalizeGoalMVar g.goal
     return g.setGoal newGoal
 
-def runRule (goal : MVarId) (r : MVarId → MetaM (List MVarId)) :
-    MetaM (Option (MVarId × List MVarId)) := do
+def runRule (goal : MVarId) (r : TacticM Unit) :
+    SearchM (Option (MVarId × List MVarId)) := do
   let proofMVar ← copyMVar goal
-  let subgoals ← observing? $ r proofMVar
+  let subgoals ← (observing? $ Tactic.run proofMVar r : TermElabM _)
   return subgoals.map (proofMVar, ·)
 
 inductive RuleResult
@@ -289,8 +297,11 @@ partial def search : SearchM Unit := do
 
 end Search
 
-def search (rs : RuleSet) (mainGoal : MVarId) : MetaM Unit := do
+def search' (rs : RuleSet) (mainGoal : MVarId) : TermElabM Unit := do
   let (ctx, state) ← Search.mkInitialContextAndState rs mainGoal
   let _ ← Search.search.run ctx state
+
+def search (rs : RuleSet) : TacticM Unit := do
+  search' rs (← getMainGoal)
 
 end Lean.Aesop
