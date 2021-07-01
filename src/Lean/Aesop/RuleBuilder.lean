@@ -26,19 +26,19 @@ abbrev RuleBuilder α := Name → MetaM α
 
 namespace RuleBuilder
 
-open NormRuleBuilderResult (simpEntries) in
-def normSimpLemmas : RuleBuilder NormRuleBuilderResult := λ decl => do
-  -- This is basically copied from Meta.Tactic.Simp.SimpLemmas, specifically
-  -- the attribute registration there.
+def normSimpUnfold : RuleBuilder NormRuleBuilderResult := λ decl => do
   let info ← getConstInfo decl
-  if (← isProp info.type) then
-     let simpLemmas ← mkSimpLemmasFromConst decl (post := true) (prio := 0)
-       -- TODO I don't really know what the `post` and `prio` above mean.
-     return simpEntries $ simpLemmas.map SimpEntry.lemma
-  else if info.hasValue then
-    return simpEntries #[SimpEntry.toUnfold decl]
-  else
-    throwError "Not a valid simp lemma: {decl}\n(should be a proposition or a definition to unfold)."
+  unless info.hasValue do
+    throwError "aesop: expected {decl} to be a definition to unfold"
+  return NormRuleBuilderResult.simpEntries #[SimpEntry.toUnfold decl]
+
+def normSimpLemmas : RuleBuilder NormRuleBuilderResult := λ decl => do
+  let info ← getConstInfo decl
+  unless (← isProp info.type) do
+    throwError "aesop: tried to add {decl} as a simp lemma, but it is not a proposition"
+  let simpLemmas ← mkSimpLemmasFromConst decl (post := true) (prio := 0)
+    -- TODO I don't really know what the `post` and `prio` above mean.
+  return NormRuleBuilderResult.simpEntries $ simpLemmas.map SimpEntry.lemma
 
 def applyIndexingMode (decl : Name) : MetaM IndexingMode := do
   let info ← getConstInfo decl

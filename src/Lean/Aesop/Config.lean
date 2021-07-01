@@ -18,7 +18,7 @@ syntax prio := "-"? num "%"?
 syntax kind := (&"safe" <|> &"norm" <|> &"unsafe")? (prio)?
 
 syntax builder_clause :=
-  "(" &"builder " (&"apply" <|> &"simp_lemma" <|> &"tactic") ")"
+  "(" &"builder " (&"apply" <|> &"simp" <|> &"unfold" <|> &"tactic") ")"
 
 syntax clause := builder_clause
 
@@ -127,6 +127,7 @@ end RegularBuilderClause
 inductive BuilderClause
   | regular (c : RegularBuilderClause)
   | simpLemma
+  | simpUnfold
   deriving Inhabited, BEq
 
 namespace BuilderClause
@@ -134,7 +135,8 @@ namespace BuilderClause
 instance : ToString BuilderClause where
   toString
     | regular c => toString c
-    | simpLemma => "(builder simp_lemma)"
+    | simpLemma => "(builder simp)"
+    | simpUnfold => "(builder unfold)"
 
 -- "(" &"builder " (&"apply" <|> &"simp_lemma" <|> &"tactic") ")"
 open RegularBuilderClause in
@@ -142,12 +144,14 @@ protected def parse (stx : Syntax) : BuilderClause :=
   match stx[2].getAtomVal! with
   | "apply" => regular apply
   | "tactic" => regular tactic
-  | "simp_lemma" => simpLemma
+  | "simp" => simpLemma
+  | "unfold" => simpUnfold
   | _ => unreachable!
 
 def toRuleBuilder : BuilderClause → RuleBuilder NormRuleBuilderResult
   | regular c => λ decl => NormRuleBuilderResult.regular <$> c.toRuleBuilder decl
   | simpLemma => λ decl => RuleBuilder.normSimpLemmas decl
+  | simpUnfold => λ decl => RuleBuilder.normSimpUnfold decl
 
 end BuilderClause
 
@@ -230,7 +234,9 @@ instance : ToString SafeRuleConfig where
 
 protected def addClause (conf : SafeRuleConfig) : Clause → m SafeRuleConfig
   | Clause.builder BuilderClause.simpLemma =>
-    throwError "aesop: 'simp_lemma' builder cannot be used with safe rules."
+    throwError "aesop: 'simp' builder cannot be used with safe rules."
+  | Clause.builder BuilderClause.simpUnfold =>
+    throwError "aesop: 'unfold' builder cannot be used with safe rules."
   | Clause.builder (BuilderClause.regular b) =>
     if conf.builder.isSome
       then throwError "aesop: duplicate builder clause."
@@ -274,7 +280,9 @@ instance : ToString UnsafeRuleConfig where
 
 protected def addClause (conf : UnsafeRuleConfig) : Clause → m UnsafeRuleConfig
   | Clause.builder BuilderClause.simpLemma =>
-    throwError "aesop: 'simp_lemma' builder cannot be used with unsafe rules."
+    throwError "aesop: 'simp' builder cannot be used with unsafe rules."
+  | Clause.builder BuilderClause.simpUnfold =>
+    throwError "aesop: 'unfold' builder cannot be used with unsafe rules."
   | Clause.builder (BuilderClause.regular b) =>
     if conf.builder.isSome
       then throwError "aesop: duplicate builder clause."
