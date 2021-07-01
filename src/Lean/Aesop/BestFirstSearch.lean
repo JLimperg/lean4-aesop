@@ -77,16 +77,16 @@ def run (ctx : Context) (state : State) (x : SearchM α) : MetaM (α × State) :
 
 end SearchM
 
-instance (priority := 0) : MonadReaderOf RuleSet SearchM where
+instance (priority := low) : MonadReaderOf RuleSet SearchM where
   read := Context.ruleSet <$> read
 
-instance (priority := 0) : MonadStateOf GoalId SearchM :=
+instance (priority := low) : MonadStateOf GoalId SearchM :=
   MonadStateOf.ofLens State.nextGoalId (λ id s => { s with nextGoalId := id })
 
-instance (priority := 0) : MonadStateOf RappId SearchM :=
+instance (priority := low) : MonadStateOf RappId SearchM :=
   MonadStateOf.ofLens State.nextRappId (λ id s => { s with nextRappId := id })
 
-instance (priority := 0) : MonadStateOf ActiveGoalQueue SearchM :=
+instance (priority := low) : MonadStateOf ActiveGoalQueue SearchM :=
   MonadStateOf.ofLens State.activeGoals (λ an s => { s with activeGoals := an })
 
 def readMainGoal : SearchM MVarId :=
