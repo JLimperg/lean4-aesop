@@ -185,21 +185,16 @@ def addSimpEntry (s : SimpLemmas) : SimpEntry → SimpLemmas
   | SimpEntry.lemma l => addSimpLemmaEntry s l
   | SimpEntry.toUnfold d => s.addDeclToUnfold d
 
-open Std.Format in
-instance : ToFormat SimpLemmas where
-  format s := Format.join
-    [ "pre lemmas:",
-      indentDUnlinesSkipEmpty s.pre.values.toList,
-      line,
-      "post lemmas:",
-      indentDUnlinesSkipEmpty s.post.values.toList,
-      line,
-      "definitions to unfold:",
-      indentDUnlinesSkipEmpty $ s.toUnfold.toArray.qsort Name.lt |>.toList,
-      line,
-      "erased entries:",
-      indentDUnlinesSkipEmpty $ s.erased.toArray.qsort Name.lt |>.toList
-    ]
+open MessageData in
+protected def toMessageData (s : SimpLemmas) : MessageData :=
+  node #[
+    "pre lemmas:" ++ node (s.pre.values.map toMessageData),
+    "post lemmas:" ++ node (s.post.values.map toMessageData),
+    "definitions to unfold:" ++ node
+      (s.toUnfold.toArray.qsort Name.lt |>.map toMessageData),
+    "erased entries:" ++ node
+      (s.erased.toArray.qsort Name.lt |>.map toMessageData)
+  ]
 
 end SimpLemmas
 

@@ -153,7 +153,7 @@ abbrev UnsafeRule' := Rule' UnsafeRuleInfo
 abbrev UnsafeRule := UnsafeRule' RuleTac
 
 instance : ToFormat (UnsafeRule' τ) where
-  format r := f!"[{r.extra.successProbability}] {r.name}"
+  format r := f!"[{r.extra.successProbability.toHumanString}] {r.name}"
 
 
 /-! ### Regular Rules -/
@@ -207,14 +207,12 @@ structure RuleIndex (α : Type) where
 
 namespace RuleIndex
 
-open Std.Format in
-instance [ToFormat α] : ToFormat (RuleIndex α) where
-  format ri := Format.join
-    [ "rules indexed by target:",
-      indentDUnlinesSkipEmpty ri.byTarget.values.toList,
-      line,
-      "unindexed rules:",
-      indentDUnlinesSkipEmpty ri.unindexed.toList ]
+open MessageData in
+instance [ToMessageData α] : ToMessageData (RuleIndex α) where
+  toMessageData ri := node #[
+    "indexed by target:" ++ node (ri.byTarget.values.map toMessageData),
+    "unindexed:" ++ node (ri.unindexed.map toMessageData)
+    ]
 
 def empty : RuleIndex α where
   byTarget := DiscrTree.empty
@@ -290,20 +288,15 @@ structure RuleSet where
 
 namespace RuleSet
 
-open Std.Format in
-instance : ToFormat RuleSet where
-  format rs := Format.join
-    [ "Unsafe rules:",
-      indentDSkipEmpty $ format rs.unsafeRules,
-      line,
-      "Safe rules:",
-      indentDSkipEmpty $ format rs.safeRules,
-      line,
-      "Normalisation rules:",
-      indentDSkipEmpty $ format rs.normRules,
-      line,
-      "Normalisation simp lemmas:",
-      indentDSkipEmpty $ format rs.normSimpLemmas ]
+open MessageData in
+instance : ToMessageData RuleSet where
+  toMessageData rs :=
+    "Aesop rule set:" ++ node #[
+      "Unsafe rules:" ++ toMessageData rs.unsafeRules,
+      "Safe rules:" ++ toMessageData rs.safeRules,
+      "Normalisation rules:" ++ toMessageData rs.normRules,
+      "Normalisation simp lemmas:" ++ rs.normSimpLemmas.toMessageData
+    ]
 
 def empty : RuleSet where
   normRules := RuleIndex.empty

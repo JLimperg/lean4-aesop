@@ -10,5 +10,4 @@ open Lean
 
 builtin_initialize
   registerTraceClass `Aesop.RuleSet
-  registerTraceClass `Aesop.Ruleset.NormSimpLemmas
   registerTraceClass `Aesop.Steps
