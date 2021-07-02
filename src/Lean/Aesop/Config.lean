@@ -76,14 +76,14 @@ instance : ToString RuleKind where
 protected def parse (stx : Syntax) : m RuleKind := do
   let prio? ← if stx[1].isNone then pure none else some <$> Prio.parse stx[1][0]
   -- Unsafe rule
-  if stx[0].isNone || stx[0].getId == `unsafe
+  if stx[0].isNone || stx[0][0].getAtomVal! == "unsafe"
     then
       let (some (Prio.successProbability p)) ← pure prio? | throwError
         "aesop: unsafe rules must specify a success probability ('n%') (got {prio?})"
       return «unsafe» p
     else
       -- Safe rule
-      if stx[0].getId == `safe
+      if stx[0][0].getAtomVal! == "safe"
         then
           let penalty ←
             match prio? with
