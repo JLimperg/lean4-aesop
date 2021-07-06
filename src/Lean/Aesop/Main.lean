@@ -17,7 +17,7 @@ syntax (name := aesop) "aesop" : tactic
 @[tactic aesop]
 def evalAesop : Tactic := λ stx => do
   let rs ← getRuleSet
-  trace[Aesop.RuleSet] toMessageData rs
+  trace[Aesop.RuleSet] m!"{rs}"
   search rs
 
 end Lean.Aesop

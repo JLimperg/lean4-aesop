@@ -85,6 +85,9 @@ def indentDUnlinesSkipEmpty (fs : List MessageData) : MessageData :=
 def toMessageDataIf (b : Bool) (f : Thunk MessageData) : MessageData :=
   if b then f.get else nil
 
+def nodeFiltering (fs : Array (Option MessageData)) : MessageData :=
+  node $ fs.filterMap id
+
 end Lean.MessageData
 
 
