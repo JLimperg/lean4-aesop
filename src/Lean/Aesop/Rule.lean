@@ -230,7 +230,8 @@ def add [BEq α] (r : α) (imode : IndexingMode) (ri : RuleIndex α) :
 
 def applicableByTargetRules (ri : RuleIndex α) (goal : MVarId) :
     MetaM (Array α) := do
-  ri.byTarget.getMatch (← getMVarDecl goal).type
+  let target ← instantiateMVarsMVarType goal
+  ri.byTarget.getMatch target
 
 -- TODO remove Inhabited as soon as qsort doesn't require it any more.
 def applicableRules [Inhabited α] [LT α] [DecidableRel (α := α) (· < ·)]

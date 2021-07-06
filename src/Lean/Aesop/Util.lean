@@ -268,6 +268,16 @@ def modifyGetM (r : Ref σ α) (f : α → m (β × α)) : m β := do
 end ST.Ref
 
 
+namespace Lean.Meta
+
+def instantiateMVarsMVarType (mvarId : MVarId) : MetaM Expr := do
+  let type ← instantiateMVars (← getMVarDecl mvarId).type
+  setMVarType mvarId type
+  return type
+
+end Lean.Meta
+
+
 namespace Lean.Syntax
 
 -- TODO for debugging, maybe remove
