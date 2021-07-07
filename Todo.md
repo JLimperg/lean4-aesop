@@ -9,5 +9,5 @@
   - by-hyp indexing
   - per-hyp rules
 - add proper meta handling
-- lower SearchM from TermElabM to MetaM
 - add simp builder (combines `simp_unfold` and `simp_eq`)
+- document how to merge upstream

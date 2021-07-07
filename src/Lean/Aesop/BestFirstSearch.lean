@@ -70,7 +70,7 @@ def mkInitialContextAndState (rs : RuleSet) (mainGoal : MVarId) :
     nextRappId := RappId.zero }
   return (ctx, state)
 
-abbrev SearchM := ReaderT Context $ StateRefT State TermElabM
+abbrev SearchM := ReaderT Context $ StateRefT State MetaM
 
 -- Make the compiler generate specialized `pure`/`bind` so we do not have to optimize through the
 -- whole monad stack at every use site. May eventually be covered by `deriving`.
@@ -78,8 +78,11 @@ instance : Monad SearchM := { inferInstanceAs (Monad SearchM) with }
 
 namespace SearchM
 
-def run (ctx : Context) (state : State) (x : SearchM α) : TermElabM (α × State) :=
+def run (ctx : Context) (state : State) (x : SearchM α) : MetaM (α × State) :=
   StateRefT'.run (ReaderT.run x ctx) state
+
+def run' (ctx : Context) (state : State) (x : SearchM α) : MetaM α :=
+  Prod.fst <$> run ctx state x
 
 end SearchM
 
@@ -146,7 +149,7 @@ def addRapp (r : RappData) (parent : GoalRef) : SearchM RappRef := do
 
 def runNormRule (goal : MVarId) (r : NormRule) : SearchM MVarId := do
   let subgoals ←
-    try Lean.Elab.Tactic.run goal r.tac.tac
+    try runTacticMAsMetaM r.tac.tac goal
     catch e => throwError
       "aesop: normalization rule {r.name} failed with error:\n{e.toMessageData}"
       -- TODO show error context
@@ -183,7 +186,7 @@ def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Unit :=
 def runRule (goal : MVarId) (r : TacticM Unit) :
     SearchM (Option (MVarId × List MVarId)) := do
   let proofMVar ← copyMVar goal
-  let subgoals ← (observing? $ Tactic.run proofMVar r : TermElabM _)
+  let subgoals ← (observing? $ runTacticMAsMetaM r proofMVar : MetaM _)
   return subgoals.map (proofMVar, ·)
 
 inductive RuleResult

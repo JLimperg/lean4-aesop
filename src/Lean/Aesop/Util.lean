@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jannis Limperg, Asta Halkjær From
 -/
 
+import Lean.Elab.Tactic.Basic
 import Lean.Message
 import Lean.Meta.DiscrTree
 import Lean.Meta.Tactic.Simp.SimpLemmas
@@ -293,3 +294,25 @@ partial def formatRaw : Syntax → String
   | ident _ _ val _ => s!"(ident {val})"
 
 end Lean.Syntax
+
+
+namespace Lean
+
+open Lean.Elab.Tactic
+
+def runTacticMAsMetaM (tac : TacticM Unit) (goal : MVarId) :
+    MetaM (List MVarId) :=
+  run goal tac |>.run'
+
+def runMetaMAsImportM (x : MetaM α) : ImportM α := do
+  let ctx : Core.Context := { options := (← read).opts }
+  let state : Core.State := { env := (← read).env }
+  let r ← x |>.run {} {} |>.run ctx state |>.toIO'
+  match r with
+  | Except.ok ((a, _), _) => pure a
+  | Except.error e => throw $ IO.userError (← e.toMessageData.toString)
+
+def runMetaMAsCoreM (x : MetaM α) : CoreM α :=
+  Prod.fst <$> x.run {} {}
+
+end Lean

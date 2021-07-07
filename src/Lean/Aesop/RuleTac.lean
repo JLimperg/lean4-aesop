@@ -26,6 +26,10 @@ structure RuleTac where
   descr : RuleTacDescr
   deriving Inhabited
 
+namespace RuleTac
+
+end RuleTac
+
 abbrev RuleTacBuilder := MetaM RuleTac
 
 namespace RuleTacBuilder
