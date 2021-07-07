@@ -7,7 +7,7 @@ Authors: Jannis Limperg, Asta Halkjær From
 import Lean.Aesop.RuleBuilder
 
 open Lean
-open Lean.Meta (SimpEntry)
+open Lean.Meta (SimpEntry getSimpLemmas)
 
 namespace Lean.Aesop
 
@@ -366,7 +366,7 @@ builtin_initialize extension :
     addEntry := λ rs r => rs.add r
   }
 
-def getRuleSet : MetaM RuleSet := do
+def getAttrRuleSet : CoreM RuleSet := do
   extension.getState (← getEnv)
 
 private def runMetaMAsCoreM (x : MetaM α) : CoreM α :=
@@ -383,5 +383,10 @@ builtin_initialize
     erase := λ _ =>
       throwError "aesop attribute currently cannot be removed"
   }
+
+def getRuleSet : MetaM RuleSet := do
+  let defaultSimpLemmas ← getSimpLemmas
+  let rs ← getAttrRuleSet
+  return { rs with normSimpLemmas := defaultSimpLemmas.merge rs.normSimpLemmas }
 
 end Lean.Aesop
