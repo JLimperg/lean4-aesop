@@ -42,12 +42,15 @@ def normSimpLemmas : RuleBuilder NormRuleBuilderResult := λ decl => do
 
 def applyIndexingMode (decl : Name) : MetaM IndexingMode := do
   let info ← getConstInfo decl
-  let (metas, _, conclusion) ← forallMetaTelescope info.type
-  let path ← DiscrTree.mkPath conclusion
+  let savedState ← saveState
+  let path ←
+    try
+      let (_, _, conclusion) ← forallMetaTelescope info.type
+      DiscrTree.mkPath conclusion
+    finally
+      restoreState savedState
   -- We use a meta telescope because `DiscrTree.mkPath` ignores metas (they
   -- turn into `Key.star`) but not fvars.
-  -- TODO We leave the metavariables `metas` in the mvar context. Does that
-  -- matter?
   return IndexingMode.indexTarget path
 
 def apply : RuleBuilder RegularRuleBuilderResult := λ decl =>
