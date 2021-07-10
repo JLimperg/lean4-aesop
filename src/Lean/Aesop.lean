@@ -6,6 +6,7 @@ Authors: Jannis Limperg
 
 import Lean.Aesop.BestFirstSearch
 import Lean.Aesop.Config
+import Lean.Aesop.DefaultRules
 import Lean.Aesop.Main
 import Lean.Aesop.MutAltTree
 import Lean.Aesop.Percent
