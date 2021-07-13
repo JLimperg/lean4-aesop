@@ -134,7 +134,7 @@ protected def toMessageData' (minfo : MessageInfo) (g : GoalData) : MessageData 
         m!"irrelevant: {g.irrelevant?.toYesNo}" ],
     if ¬ minfo.showGoal then none else
       m!"Goal:{indentD $ ofGoal g.goal}",
-    if ¬ minfo.showUnsafeQueue && g.unsafeQueue.isSome then none else
+    if ¬ minfo.showUnsafeQueue || g.unsafeQueue.isNone then none else
       m!"Unsafe queue:{indentDUnlines $ g.unsafeQueue.get!.map toMessageData}",
     if ¬ minfo.showFailedRapps then none else
       m!"Failed rule applications:{indentDUnlines $ g.failedRapps.map toMessageData}" ]
