@@ -13,16 +13,29 @@ namespace Lean.Aesop
 
 namespace AttrSyntax
 
-syntax prio := "-"? num "%"?
+declare_syntax_cat aesop_prio
 
-syntax kind := (&"safe" <|> &"norm" <|> &"unsafe")? (prio)?
+syntax "-"? num "%"? : aesop_prio
 
-syntax builder_clause :=
-  "(" &"builder " (&"apply" <|> &"simp" <|> &"unfold" <|> &"tactic") ")"
+declare_syntax_cat' aesop_kind force_leading_unreserved_tokens
 
-syntax clause := builder_clause
+syntax (aesop_prio)? : aesop_kind
+syntax &"safe" (aesop_prio)? : aesop_kind
+syntax &"unsafe" (aesop_prio)? : aesop_kind
+syntax &"norm" (aesop_prio)? : aesop_kind
 
-syntax (name := aesop) "aesop " kind clause* : attr
+declare_syntax_cat' aesop_builder force_leading_unreserved_tokens
+
+syntax &"apply" : aesop_builder
+syntax &"simp" : aesop_builder
+syntax &"unfold" : aesop_builder
+syntax &"tactic" : aesop_builder
+
+declare_syntax_cat' aesop_clause force_leading_unreserved_tokens
+
+syntax "(" &"builder" aesop_builder ")" : aesop_clause
+
+syntax (name := aesop) &"aesop" aesop_kind aesop_clause* : attr
 
 end AttrSyntax
 
@@ -42,19 +55,16 @@ instance : ToString Prio where
     | successProbability p => p.toHumanString
     | penalty i => toString i
 
--- "-"? num "%"?
-protected def parse (stx : Syntax) : m Prio := do
-  let negate := not $ stx[0].isNone
-  let percent := not $ stx[2].isNone
-  let n := stx[1].toNat
-  if percent
-    then
-      if negate then throwError "aesop: Percentage cannot be negative."
-      let (some p) ← Percent.ofNat n
-        | throwError "aesop: Percentage must be between 0 and 100."
-      return successProbability p
-    else
-      return penalty $ if negate then - Int.ofNat n else n
+protected def parse : Syntax → m Prio
+  | `(aesop_prio|- $n:numLit %) =>
+    throwError "aesop: Percentage cannot be negative."
+  | `(aesop_prio|- $n:numLit) => return penalty $ - n.toNat
+  | `(aesop_prio|$n:numLit) => return penalty $ n.toNat
+  | `(aesop_prio|$n:numLit %) => do
+    let (some p) ← Percent.ofNat n.toNat
+      | throwError "aesop: Percentage must be between 0 and 100."
+    return successProbability p
+  | _ => unreachable!
 
 end Prio
 
@@ -72,35 +82,31 @@ instance : ToString RuleKind where
     | safe p => s!"safe {p}"
     | «unsafe» p => s!"unsafe {p.toHumanString}"
 
--- (&"safe" <|> &"norm" <|> &"unsafe")? (prio)?
-protected def parse (stx : Syntax) : m RuleKind := do
-  let prio? ← if stx[1].isNone then pure none else some <$> Prio.parse stx[1][0]
-  -- Unsafe rule
-  if stx[0].isNone || stx[0][0].getAtomVal! == "unsafe"
-    then
-      let (some (Prio.successProbability p)) ← pure prio? | throwError
-        "aesop: unsafe rules must specify a success probability ('n%') (got {prio?})"
-      return «unsafe» p
-    else
-      -- Safe rule
-      if stx[0][0].getAtomVal! == "safe"
-        then
-          let penalty ←
-            match prio? with
-            | none => pure defaultSafePenalty
-            | some (Prio.penalty p) => pure p
-            | some _ => throwError
-              "aesop: safe rules must specify an integer penalty, not a success probability."
-          return safe penalty
-        -- Norm rule
-        else
-          let penalty ←
-            match prio? with
-            | none => pure defaultNormPenalty
-            | some (Prio.penalty p) => pure p
-            | some _ => throwError
-              "aesop: norm rules must specify an integer penalty, not a success probability."
-          return norm penalty
+protected def parse : Syntax → m RuleKind
+  | `(aesop_kind|safe $[$prio:aesop_prio]?) => do
+    let (some prio) ← pure prio
+      | return safe defaultSafePenalty
+    let (Prio.penalty penalty) ← Prio.parse prio | throwError
+      "aesop: safe rules must specify an integer penalty, not a success probability."
+    return safe penalty
+  | `(aesop_kind|unsafe $[$prio:aesop_prio]?) => doUnsafe prio
+  | `(aesop_kind|$[$prio:aesop_prio]?) => doUnsafe prio
+  | `(aesop_kind|norm $[$prio:aesop_prio]?) => do
+    let (some prio) ← pure prio
+      | return norm defaultNormPenalty
+    let (Prio.penalty penalty) ← Prio.parse prio | throwError
+      "aesop: norm rules must specify an integer penalty, not a success probability."
+    return norm penalty
+  | _ => unreachable!
+  where
+    doUnsafe : Option Syntax → m RuleKind
+      | none => throwError
+        "aesop: unsafe rules must specify a success probability ('n%')"
+      | some prio => do
+        match (← Prio.parse prio) with
+        | Prio.successProbability p => return «unsafe» p
+        | Prio.penalty _ => throwError
+          "aesop: unsafe rules must specity a success probability ('n%'), not an integer penalty"
 
 end RuleKind
 
@@ -138,14 +144,12 @@ instance : ToString BuilderClause where
     | simpLemma => "(builder simp)"
     | simpUnfold => "(builder unfold)"
 
--- "(" &"builder " (&"apply" <|> &"simp_lemma" <|> &"tactic") ")"
 open RegularBuilderClause in
-protected def parse (stx : Syntax) : BuilderClause :=
-  match stx[2].getAtomVal! with
-  | "apply" => regular apply
-  | "tactic" => regular tactic
-  | "simp" => simpLemma
-  | "unfold" => simpUnfold
+protected def parseBuilder : Syntax → BuilderClause
+  | `(aesop_builder|apply) => regular apply
+  | `(aesop_builder|tactic) => regular tactic
+  | `(aesop_builder|simp) => simpLemma
+  | `(aesop_builder|unfold) => simpUnfold
   | _ => unreachable!
 
 def toRuleBuilder : BuilderClause → RuleBuilder NormRuleBuilderResult
@@ -166,8 +170,10 @@ instance : ToString Clause where
   toString
     | builder c => toString c
 
-protected def parse (stx : Syntax) : m Clause :=
-  return builder $ BuilderClause.parse stx[0]
+protected def parse : Syntax → m Clause
+  | `(aesop_clause|(builder $b:aesop_builder)) =>
+    builder <$> BuilderClause.parseBuilder b
+  | _ => unreachable!
 
 end Clause
 
@@ -334,11 +340,12 @@ protected def ofKindAndClauses : RuleKind → Array Clause → m AttrConfig
     let conf : UnsafeRuleConfig := { successProbability := prob, builder := none }
     «unsafe» <$> conf.addClauses cs
 
--- "aesop " kind clause*
-protected def parse (stx : Syntax) : m AttrConfig := do
-  let kind ← RuleKind.parse stx[1]
-  let clauses ← stx[2].getArgs.mapM Clause.parse
-  AttrConfig.ofKindAndClauses kind clauses
+protected def parse : Syntax → m AttrConfig
+  | `(attr|aesop $kind:aesop_kind $[$clauses:aesop_clause]*) => do
+    let kind ← RuleKind.parse kind
+    let clauses ← clauses.mapM Clause.parse
+    AttrConfig.ofKindAndClauses kind clauses
+  | _ => unreachable!
 
 protected def applyToDecl (decl : Name) : AttrConfig → MetaM RuleSetMember
   | norm conf => conf.applyToDecl decl

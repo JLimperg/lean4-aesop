@@ -319,7 +319,7 @@ def add (rs : RuleSet) : RuleSetMember → RuleSet
   | unsafeRule r =>
     return { rs with unsafeRules := (← rs.unsafeRules.add r r.indexingMode )}
   | safeRule r =>
-    return { rs with safeRules := (← rs.safeRules.add r r.indexingMode )}
+    return { rs with safeRules := (← rs.safeRules.add r r.indexingMode) }
 
 def addArray (rs : RuleSet) (ra : Array RuleSetMember) : RuleSet :=
   ra.foldl add rs
