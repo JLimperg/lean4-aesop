@@ -11,7 +11,7 @@ open Lean.Meta (SimpEntry getSimpLemmas)
 
 namespace Lean.Aesop
 
-namespace AttrSyntax
+namespace Parser.Attribute
 
 declare_syntax_cat aesop_prio
 
@@ -37,7 +37,7 @@ syntax "(" &"builder" aesop_builder ")" : aesop_clause
 
 syntax (name := aesop) &"aesop" aesop_kind aesop_clause* : attr
 
-end AttrSyntax
+end Parser.Attribute
 
 
 variable [Monad m] [MonadError m]
@@ -55,22 +55,43 @@ instance : ToString Prio where
     | successProbability p => p.toHumanString
     | penalty i => toString i
 
-protected def parse : Syntax → m Prio
+protected def parse : Syntax → Except String Prio
   | `(aesop_prio|- $n:numLit %) =>
-    throwError "aesop: Percentage cannot be negative."
+    throw "percentage cannot be negative"
   | `(aesop_prio|- $n:numLit) => return penalty $ - n.toNat
   | `(aesop_prio|$n:numLit) => return penalty $ n.toNat
   | `(aesop_prio|$n:numLit %) => do
     let (some p) ← Percent.ofNat n.toNat
-      | throwError "aesop: Percentage must be between 0 and 100."
+      | throw "percentage must be between 0 and 100."
     return successProbability p
   | _ => unreachable!
 
 end Prio
 
+def parsePrioForUnsafeRule : Option Syntax → Except String Percent
+  | none => throw "unsafe rule must be given a success probability."
+  | some p => do
+    let (Prio.successProbability p) ← Prio.parse p | throw
+      "unsafe rule must be given a success probability ('x%'), not an integer penalty"
+    return p
+
+def parsePrioForSafeRule : Option Syntax → Except String Int
+  | none => return defaultSafePenalty
+  | some p => do
+    let (Prio.penalty p) ← Prio.parse p | throw
+      "safe rule must be given an integer penalty, not a success probability"
+    return p
+
+def parsePrioForNormRule : Option Syntax → Except String Int
+  | none => return defaultNormPenalty
+  | some p => do
+    let (Prio.penalty p) ← Prio.parse p | throw
+      "norm rule must be given an integer penalty, not a success probability"
+    return p
+
 inductive RuleKind
-  | norm (penalty : Option Int)
-  | safe (penalty : Option Int)
+  | norm (penalty : Int)
+  | safe (penalty : Int)
   | «unsafe» (successProbability : Percent)
   deriving Inhabited, BEq
 
@@ -83,30 +104,20 @@ instance : ToString RuleKind where
     | «unsafe» p => s!"unsafe {p.toHumanString}"
 
 protected def parse : Syntax → m RuleKind
-  | `(aesop_kind|safe $[$prio:aesop_prio]?) => do
-    let (some prio) ← pure prio
-      | return safe defaultSafePenalty
-    let (Prio.penalty penalty) ← Prio.parse prio | throwError
-      "aesop: safe rules must specify an integer penalty, not a success probability."
-    return safe penalty
-  | `(aesop_kind|unsafe $[$prio:aesop_prio]?) => doUnsafe prio
-  | `(aesop_kind|$[$prio:aesop_prio]?) => doUnsafe prio
-  | `(aesop_kind|norm $[$prio:aesop_prio]?) => do
-    let (some prio) ← pure prio
-      | return norm defaultNormPenalty
-    let (Prio.penalty penalty) ← Prio.parse prio | throwError
-      "aesop: norm rules must specify an integer penalty, not a success probability."
-    return norm penalty
+  | `(aesop_kind|safe $[$prio:aesop_prio]?) =>
+    go (parsePrioForSafeRule prio) safe
+  | `(aesop_kind|unsafe $[$prio:aesop_prio]?) =>
+    go (parsePrioForUnsafeRule prio) «unsafe»
+  | `(aesop_kind|$[$prio:aesop_prio]?) =>
+    go (parsePrioForUnsafeRule prio) «unsafe»
+  | `(aesop_kind|norm $[$prio:aesop_prio]?) =>
+    go (parsePrioForNormRule prio) norm
   | _ => unreachable!
   where
-    doUnsafe : Option Syntax → m RuleKind
-      | none => throwError
-        "aesop: unsafe rules must specify a success probability ('n%')"
-      | some prio => do
-        match (← Prio.parse prio) with
-        | Prio.successProbability p => return «unsafe» p
-        | Prio.penalty _ => throwError
-          "aesop: unsafe rules must specity a success probability ('n%'), not an integer penalty"
+    go {α} (prio : Except String α) (cont : α → RuleKind) : m RuleKind :=
+      match prio with
+      | Except.ok prio => return cont prio
+      | Except.error e => throwError "aesop: {e}"
 
 end RuleKind
 
@@ -313,15 +324,15 @@ protected def applyToDecl (decl : Name) (conf : UnsafeRuleConfig) :
 end UnsafeRuleConfig
 
 
-inductive AttrConfig
+inductive RuleConfig
   | norm (conf : NormRuleConfig)
   | safe (conf : SafeRuleConfig)
   | «unsafe» (conf : UnsafeRuleConfig)
   deriving Inhabited
 
-namespace AttrConfig
+namespace RuleConfig
 
-instance : ToString AttrConfig where
+instance : ToString RuleConfig where
   toString c :=
     "aesop " ++
     match c with
@@ -329,7 +340,7 @@ instance : ToString AttrConfig where
       | safe conf => " ".joinSep ["safe", toString conf]
       | «unsafe» conf => " ".joinSep ["unsafe", toString conf]
 
-protected def ofKindAndClauses : RuleKind → Array Clause → m AttrConfig
+protected def ofKindAndClauses : RuleKind → Array Clause → m RuleConfig
   | RuleKind.norm penalty, cs => do
     let conf : NormRuleConfig := { penalty := penalty, builder := none }
     norm <$> conf.addClauses cs
@@ -340,19 +351,19 @@ protected def ofKindAndClauses : RuleKind → Array Clause → m AttrConfig
     let conf : UnsafeRuleConfig := { successProbability := prob, builder := none }
     «unsafe» <$> conf.addClauses cs
 
-protected def parse : Syntax → m AttrConfig
+protected def parse : Syntax → m RuleConfig
   | `(attr|aesop $kind:aesop_kind $[$clauses:aesop_clause]*) => do
     let kind ← RuleKind.parse kind
     let clauses ← clauses.mapM Clause.parse
-    AttrConfig.ofKindAndClauses kind clauses
+    RuleConfig.ofKindAndClauses kind clauses
   | _ => unreachable!
 
-protected def applyToDecl (decl : Name) : AttrConfig → MetaM RuleSetMember
+protected def applyToDecl (decl : Name) : RuleConfig → MetaM RuleSetMember
   | norm conf => conf.applyToDecl decl
   | safe conf => conf.applyToDecl decl
   | «unsafe» conf => conf.applyToDecl decl
 
-end AttrConfig
+end RuleConfig
 
 
 builtin_initialize extension :
@@ -373,7 +384,7 @@ builtin_initialize
     name := `aesop
     descr := "Register a declaration as an Aesop rule."
     add := λ decl stx attrKind => do
-      let config ← AttrConfig.parse stx
+      let config ← RuleConfig.parse stx
       let rule ← runMetaMAsCoreM $ config.applyToDecl decl
       extension.add rule attrKind
     erase := λ _ =>

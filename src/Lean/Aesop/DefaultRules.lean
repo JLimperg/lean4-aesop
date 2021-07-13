@@ -36,7 +36,7 @@ def defaultRules : TermElabM (Array RuleSetMember) := do
     (``DefaultRules.splitHyps , ← `(attr|aesop norm 0)) ]
   where
     mkRule (decl : Name) (configStx : Syntax) : TermElabM RuleSetMember := do
-      let config ← AttrConfig.parse configStx
+      let config ← RuleConfig.parse configStx
       config.applyToDecl decl
 
     mkRules (rs : Array (Name × Syntax)) : TermElabM (Array RuleSetMember) :=
