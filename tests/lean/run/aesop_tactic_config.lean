@@ -5,11 +5,8 @@ Authors: Jannis Limperg
 -/
 
 -- TODO clean up this test case
-import Lean
 
-open Lean
-open Lean.Meta
-open Lean.Elab.Tactic
+import Lean.Aesop
 
 inductive Even : Nat → Prop
 | zero : Even Nat.zero
@@ -23,21 +20,10 @@ inductive EvenOrOdd : Nat → Prop
 | even {n} : Even n → EvenOrOdd n
 | odd {n} : Odd n → EvenOrOdd n
 
-attribute [aesop  50%] EvenOrOdd.even EvenOrOdd.odd
-attribute [aesop safe] Even.zero Even.plus_two
-attribute [aesop 100%] Odd.one Odd.plus_two
-
-def EvenOrOdd' (n : Nat) : Prop := EvenOrOdd n
-
-@[aesop norm (builder tactic)]
-def testNormTactic : TacticM Unit := do
-  evalTactic (← `(tactic|try simp only [EvenOrOdd']))
-
 set_option pp.all false
 set_option trace.Aesop.RuleSet false
 set_option trace.Aesop.Steps false
 
-variable (n : Nat)
-
-example : EvenOrOdd' 3 := by
-  aesop
+example : EvenOrOdd 3 := by
+  aesop (safe [Even.zero, Even.plus_two, Odd.one, Odd.plus_two])
+    (unsafe [EvenOrOdd.even 50% (builder apply), EvenOrOdd.odd 50%])

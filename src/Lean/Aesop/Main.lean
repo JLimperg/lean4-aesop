@@ -13,12 +13,12 @@ namespace Lean.Aesop
 
 open Lean.Elab.Tactic
 
-syntax (name := aesop) "aesop" : tactic
-
-@[tactic aesop]
+@[tactic Parser.Tactic.aesop]
 def evalAesop : Tactic := λ stx => do
+  let config ← TacticConfig.parse stx
   let rs ← getRuleSet
   let rs := rs.addArray (← defaultRules)
+  let rs := rs.addArray (← config.additionalRuleSetMembers)
   trace[Aesop.RuleSet] m!"{rs}"
   search rs
 

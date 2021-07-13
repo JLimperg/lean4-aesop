@@ -396,4 +396,76 @@ def getRuleSet : MetaM RuleSet := do
   let rs ← getAttrRuleSet
   return { rs with normSimpLemmas := defaultSimpLemmas.merge rs.normSimpLemmas }
 
+
+namespace Parser.Tactic
+
+declare_syntax_cat aesop_rule
+
+syntax ident (aesop_prio)? (aesop_clause)* : aesop_rule
+
+declare_syntax_cat aesop_tactic_clause
+
+syntax ruleList := "[" aesop_rule,+,? "]"
+
+syntax "(" &"unsafe" ruleList ")" : aesop_tactic_clause
+syntax "(" &"safe"   ruleList ")" : aesop_tactic_clause
+syntax "(" &"norm"   ruleList ")" : aesop_tactic_clause
+
+syntax (name := aesop) &"aesop " (aesop_tactic_clause)* : tactic
+
+end Parser.Tactic
+
+structure AdditionalRule where
+  decl : Name
+  config : RuleConfig
+  deriving Inhabited
+
+namespace AdditionalRule
+
+protected def parse (prioParser : Option Syntax → Except String α)
+    (ruleKind : α → RuleKind) : Syntax → m AdditionalRule
+  | `(aesop_rule|$decl:ident $[$prio:aesop_prio]? $clauses:aesop_clause*) => do
+    let prio ←
+      match prioParser prio with
+      | Except.ok p => p
+      | Except.error e => throwError "aesop: at rule {decl}: {e}"
+    let clauses ← clauses.mapM Clause.parse
+    let config ← RuleConfig.ofKindAndClauses (ruleKind prio) clauses
+    return { decl := decl.getId, config := config }
+  | _ => unreachable!
+
+protected def toRuleSetMember (r : AdditionalRule) : MetaM RuleSetMember :=
+  r.config.applyToDecl r.decl
+
+end AdditionalRule
+
+def parseAdditionalRuleClause : Syntax → m (Array AdditionalRule)
+  | `(aesop_tactic_clause|(unsafe [$rules:aesop_rule,*])) =>
+    (rules : Array Syntax).mapM
+      (AdditionalRule.parse parsePrioForUnsafeRule RuleKind.unsafe)
+  | `(aesop_tactic_clause|(safe [$rules:aesop_rule,*])) =>
+    (rules : Array Syntax).mapM
+      (AdditionalRule.parse parsePrioForSafeRule RuleKind.safe)
+  | `(aesop_tactic_clause|(norm [$rules:aesop_rule,*])) =>
+    (rules : Array Syntax).mapM
+      (AdditionalRule.parse parsePrioForNormRule RuleKind.norm)
+  | _ => unreachable!
+
+structure TacticConfig where
+  additionalRules : Array AdditionalRule
+  deriving Inhabited
+
+namespace TacticConfig
+
+protected def parse : Syntax → m TacticConfig
+  | `(tactic|aesop $[$clauses:aesop_tactic_clause]*) => do
+    let rs ← clauses.concatMapM parseAdditionalRuleClause
+    return { additionalRules := rs }
+  | _ => unreachable!
+
+def additionalRuleSetMembers (c : TacticConfig) : MetaM (Array RuleSetMember) :=
+  c.additionalRules.mapM (·.toRuleSetMember)
+
+end TacticConfig
+
 end Lean.Aesop
