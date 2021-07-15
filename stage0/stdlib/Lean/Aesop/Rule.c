@@ -20,18 +20,17 @@ lean_object* l_Lean_Aesop_Rule_x27_instDecidableRelRule_x27Lt(lean_object*, lean
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__38(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_instToFormatRegularRule_x27(lean_object*);
 lean_object* l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__4___boxed(lean_object*, lean_object*, lean_object*);
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__3(lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_name___rarg(lean_object*);
 size_t l_USize_add(size_t, size_t);
 static lean_object* l_Lean_Aesop_RuleIndex_empty___closed__2;
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg___boxed(lean_object*, lean_object*);
-lean_object* l_Std_Format_join(lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_map___rarg(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__16(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instLTSafeRuleInfo;
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__2(lean_object*);
 lean_object* l_Lean_Aesop_Safety_instToFormatSafety_match__1___rarg(uint8_t, lean_object*, lean_object*);
 static size_t l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__4___closed__1;
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756_(uint8_t, uint8_t);
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759_(uint8_t, uint8_t);
 lean_object* lean_mk_empty_array_with_capacity(lean_object*);
 lean_object* lean_nat_div(lean_object*, lean_object*);
 static lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableSafeRules___spec__2___closed__1;
@@ -39,7 +38,7 @@ lean_object* l_Lean_Aesop_RegularRule_x27_successProbability(lean_object*);
 lean_object* l_Array_contains___at_Lean_Aesop_RuleSet_add___spec__29___boxed(lean_object*, lean_object*);
 static lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__2___closed__3;
 lean_object* l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__37(lean_object*, size_t, lean_object*);
-lean_object* l_Std_Format_indentD(lean_object*);
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4;
 lean_object* l_Lean_Aesop_instInhabitedRegularRule_x27(lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__3(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__37___boxed(lean_object*, lean_object*, lean_object*);
@@ -56,20 +55,21 @@ lean_object* l_Lean_Aesop_instInhabitedRuleSetMember_x27(lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_toDescr(lean_object*);
 static lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__2___closed__5;
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertAux___at_Lean_Aesop_RuleSet_add___spec__43___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
-double lean_float_of_nat(lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_isSafe___rarg___boxed(lean_object*);
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2;
 lean_object* lean_array_uset(lean_object*, size_t, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_instToFormatRegularRule_x27_match__1(lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_find_x3f___at_Lean_Aesop_RuleSet_add___spec__3___boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedIndexingMode;
 lean_object* l_Lean_Aesop_RuleSet_applicableSafeRules(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedRule_x27___rarg(lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1;
 lean_object* l_Lean_Aesop_RuleIndex_applicableRules___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__1(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_tac___rarg___boxed(lean_object*);
-lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instDecidableEqSafety___boxed(lean_object*, lean_object*);
 size_t l_USize_sub(size_t, size_t);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM___rarg___lambda__2___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16;
 lean_object* l_Lean_Aesop_instLTUnsafeRuleInfo;
 lean_object* l_Lean_Aesop_RuleSet_applicableNormalizationRules(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_find_x3f___at_Lean_Aesop_RuleSet_add___spec__20(lean_object*, lean_object*);
@@ -77,16 +77,17 @@ lean_object* l_Lean_Aesop_RuleIndex_applicableByTargetRules(lean_object*);
 lean_object* l_Lean_Aesop_instBEqIndexingMode;
 uint8_t lean_name_eq(lean_object*, lean_object*);
 static lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableSafeRules___spec__2___lambda__1___closed__1;
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertAux___at_Lean_Aesop_RuleSet_add___spec__10___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux_traverse___at_Lean_Aesop_RuleSet_add___spec__41(size_t, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_tacToDescr___rarg(lean_object*);
 lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__19(lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insert___at_Lean_Aesop_RuleSet_add___spec__39(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertAux___at_Lean_Aesop_RuleSet_add___spec__43(lean_object*, lean_object*, lean_object*, lean_object*);
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858_(lean_object*, lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4___boxed(lean_object*, lean_object*, lean_object*);
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861_(lean_object*, lean_object*);
 static lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__2___closed__4;
 lean_object* l_Lean_Aesop_RuleIndex_add___at_Lean_Aesop_RuleSet_add___spec__18(lean_object*, lean_object*, lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Meta_DiscrTree_instInhabitedDiscrTree(lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapTacM(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_binInsertM___at_Lean_Aesop_RuleSet_add___spec__31___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
@@ -99,6 +100,8 @@ uint8_t l_Array_contains___at_Lean_Aesop_RuleSet_add___spec__29(lean_object*, le
 lean_object* l_Lean_Aesop_RuleSet_add_match__1___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* lean_string_append(lean_object*, lean_object*);
 uint8_t l_Array_contains___at_Lean_Aesop_RuleSet_add___spec__12(lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10;
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__3;
 lean_object* l_Lean_Aesop_Safety_instToFormatSafety_match__1___rarg___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___at_Lean_Aesop_RuleSet_add___spec__34___boxed(lean_object*, lean_object*, lean_object*);
@@ -107,7 +110,6 @@ lean_object* l_Lean_Aesop_RegularRule_x27_tac(lean_object*);
 uint8_t l_Lean_Aesop_RegularRule_x27_isSafe___rarg(lean_object*);
 uint8_t l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__2___lambda__1(double, double);
 lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatNormRule_x27___spec__1(lean_object*);
-lean_object* l_Std_Format_joinSep___at_instReprProd___spec__1(lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__3___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_RuleIndex_instEmptyCollectionRuleIndex___closed__1;
 lean_object* l_Std_PersistentHashMap_insertAtCollisionNodeAux___at_Lean_Aesop_RuleSet_add___spec__26(lean_object*, lean_object*, lean_object*, lean_object*);
@@ -126,6 +128,7 @@ lean_object* l_Lean_Aesop_RuleSet_applicableUnsafeRules(lean_object*, lean_objec
 lean_object* l_Std_PersistentHashMap_insert___at_Lean_Aesop_RuleSet_add___spec__23(lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__2(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__40(lean_object*, size_t, size_t, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3;
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__5(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* lean_nat_add(lean_object*, lean_object*);
 lean_object* l_Array_foldlMUnsafe_fold___at_Lean_Aesop_RuleSet_add___spec__17___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
@@ -137,17 +140,18 @@ lean_object* l_Lean_Aesop_Rule_x27_mapM___rarg(lean_object*, lean_object*, lean_
 lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__2___boxed(lean_object*, lean_object*, lean_object*);
 extern lean_object* l_Std_PersistentHashMap_empty___at_Lean_Meta_SimpLemmas_lemmaNames___default___spec__1;
 static lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__3___closed__1;
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6;
 lean_object* l_Int_decLt___boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___at_Lean_Aesop_RuleSet_add___spec__18___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__2___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858__match__1___rarg(lean_object*, lean_object*, lean_object*);
 size_t l_UInt64_toUSize(uint64_t);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM___rarg___lambda__1(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedRule_x27(lean_object*);
 uint8_t l___private_Lean_Meta_DiscrTreeTypes_0__Lean_Meta_DiscrTree_beqKey____x40_Lean_Meta_DiscrTreeTypes___hyg_68_(lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7;
+lean_object* l_Lean_Meta_DiscrTree_values___rarg(lean_object*);
 extern lean_object* l_Lean_Aesop_instInhabitedRuleTac;
 lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__49___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1___boxed(lean_object*);
 static lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__2___lambda__1___closed__1;
 lean_object* l_Lean_Aesop_Rule_x27_mapM___rarg___lambda__2(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_Safety_instToFormatSafety___closed__1;
@@ -157,9 +161,10 @@ static lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
 lean_object* l_Lean_Aesop_instDecidableRelUnsafeRuleInfoLt___boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___rarg(lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instInhabitedUnsafeRuleInfo___closed__1;
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176_(lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182_(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapExtraM___rarg___lambda__2(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* lean_array_fget(lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1(lean_object*);
 static lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__16___closed__3;
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableSafeRules___spec__3___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 uint8_t lean_nat_dec_eq(lean_object*, lean_object*);
@@ -168,6 +173,7 @@ lean_object* l_Lean_Aesop_RuleSet_addArray___boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___at_Lean_Aesop_RuleSet_add___spec__1___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqIndexingMode____x40_Lean_Aesop_Rule___hyg_24__match__1___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_Safety_instToFormatSafety___closed__2;
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2(lean_object*);
 lean_object* lean_nat_sub(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Safety_instToFormatSafety(uint8_t);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__2___lambda__2(lean_object*, lean_object*);
@@ -175,14 +181,16 @@ static lean_object* l_Lean_Aesop_Safety_instToFormatSafety___closed__4;
 uint8_t l_Float_decLt(double, double);
 lean_object* lean_array_swap(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_createNodes___rarg(lean_object*, lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1(lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__40___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__2___lambda__1___boxed(lean_object*, lean_object*);
 uint8_t l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__46(lean_object*, lean_object*, size_t, size_t);
 static lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableSafeRules___spec__3___closed__1;
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2(size_t, size_t, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_applicableRules___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insert___at_Lean_Aesop_RuleSet_add___spec__6(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM(lean_object*, lean_object*, lean_object*);
+lean_object* l_Lean_Meta_SimpLemmas_toMessageData(lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182__match__1___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedSafeRuleInfo;
 lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__33(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* lean_array_get(lean_object*, lean_object*, lean_object*);
@@ -190,8 +198,10 @@ lean_object* l_Array_foldlMUnsafe_fold___at_Lean_Aesop_RuleSet_addArray___spec__
 lean_object* l_Lean_Aesop_RegularRule_x27_isSafe(lean_object*);
 uint8_t l_Lean_Aesop_instDecidableRelUnsafeRuleInfoLt(double, double);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertVal___at_Lean_Aesop_RuleSet_add___spec__11(lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5;
 static lean_object* l_Lean_Aesop_instInhabitedRuleSet___closed__2;
 lean_object* lean_array_fset(lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14;
 lean_object* l_Lean_Aesop_RegularRule_x27_instToFormatRegularRule_x27_match__1___rarg(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_descrToTac(lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_name(lean_object*);
@@ -199,9 +209,9 @@ lean_object* l_Std_PersistentHashMap_insertAux_traverse___at_Lean_Aesop_RuleSet_
 lean_object* l_Lean_Aesop_Rule_x27_mapExtra___rarg(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapTacM___rarg(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqIndexingMode____x40_Lean_Aesop_Rule___hyg_24__match__1(lean_object*);
-lean_object* lean_float_to_string(double);
 lean_object* l_Nat_repr(lean_object*);
 lean_object* l_Array_back___at_Lean_Aesop_RuleSet_add___spec__32(lean_object*);
+lean_object* l_Lean_Meta_instantiateMVarsMVarType(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 uint8_t l_Lean_Aesop_RegularRule_x27_isUnsafe___rarg(lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add_match__1___rarg(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instLTNormRuleInfo;
@@ -219,17 +229,18 @@ uint8_t l_Lean_Aesop_instInhabitedSafety;
 lean_object* l_Lean_Aesop_Rule_x27_descrToTac___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux_traverse___at_Lean_Aesop_RuleSet_add___spec__8(size_t, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 size_t l_USize_shiftLeft(size_t, size_t);
-lean_object* lean_array_to_list(lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_RuleSetMember_x27_toDescr___closed__1;
 lean_object* l_Lean_Aesop_instInhabitedNormRuleInfo;
 lean_object* l_Lean_Aesop_instInhabitedUnsafeRuleInfo;
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861____boxed(lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__5___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1(lean_object*);
 lean_object* l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__13___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAtCollisionNodeAux___at_Lean_Aesop_RuleSet_add___spec__9(lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7;
 lean_object* l_Lean_Aesop_Rule_x27_mapExtraM___rarg___lambda__1(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instToFormatSafeRule_x27(lean_object*);
 lean_object* l___private_Init_Util_0__mkPanicMessageWithDecl(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13;
 uint8_t l_Array_isEmpty___rarg(lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_toDescr___lambda__1___boxed(lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__5(lean_object*);
@@ -241,26 +252,23 @@ lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec
 static lean_object* l_Lean_Aesop_instInhabitedRuleIndex___closed__4;
 lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__33___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 size_t l_USize_mul(size_t, size_t);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176__match__1___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6;
 static lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__3___closed__1;
 lean_object* l_Std_PersistentHashMap_insertAux_traverse___at_Lean_Aesop_RuleSet_add___spec__8___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__22___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
-static lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4;
 static lean_object* l_Lean_Aesop_RuleIndex_empty___closed__1;
 lean_object* l_Lean_Aesop_RuleSetMember_x27_map___rarg(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_applicableRules___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__1(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapExtraM___rarg___lambda__1___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____boxed(lean_object*, lean_object*);
 lean_object* l_Array_binInsertM___at_Lean_Aesop_RuleSet_add___spec__47(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-static lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1;
-lean_object* l_Lean_Meta_DiscrTree_format___rarg(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instDecidableEqSafeRuleInfo___boxed(lean_object*, lean_object*);
-static lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2;
 size_t lean_usize_of_nat(lean_object*);
-lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex(lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg(lean_object*, size_t, size_t, lean_object*);
 lean_object* l_Lean_Aesop_RuleSet_empty;
 uint8_t l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__30(lean_object*, lean_object*, size_t, size_t);
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg(lean_object*, size_t, size_t, lean_object*);
+lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex(lean_object*);
 size_t l_USize_land(size_t, size_t);
 lean_object* l_Lean_Aesop_instDecidableEqNormRuleInfo___boxed(lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__21(lean_object*, size_t, lean_object*);
@@ -269,15 +277,16 @@ static lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__1;
 lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__7(lean_object*, size_t, size_t, lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__3(lean_object*);
 lean_object* l_Lean_Aesop_instBEqRegularRule_x27___boxed(lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instToFormatSafeRule_x27___rarg(lean_object*);
 lean_object* l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(lean_object*);
 lean_object* l_Lean_Aesop_Safety_instToFormatSafety_match__1(lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_applicableRules(lean_object*);
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__38___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM___rarg___lambda__2(lean_object*, lean_object*, lean_object*, double);
+lean_object* l_Lean_Aesop_defaultSafePenalty;
 lean_object* l_Lean_Aesop_RegularRule_x27_name___rarg___boxed(lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_map_match__1___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4;
 lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg(lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_tac___rarg(lean_object*);
 uint8_t l_Lean_Aesop_instDecidableEqNormRuleInfo(lean_object*, lean_object*);
@@ -285,18 +294,23 @@ lean_object* l_Lean_Aesop_Rule_x27_mapTac(lean_object*, lean_object*, lean_objec
 lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__35___boxed(lean_object*, lean_object*, lean_object*);
 extern lean_object* l_Lean_Meta_DiscrTree_instInhabitedKey;
 lean_object* l_Std_PersistentHashMap_insertAux_traverse___at_Lean_Aesop_RuleSet_add___spec__25___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759____boxed(lean_object*, lean_object*);
+lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg(lean_object*, lean_object*);
+lean_object* l_Lean_Aesop_Percent_toHumanString(double);
 uint8_t l_Lean_Aesop_instDecidableRelSafeRuleInfoLt(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instInhabitedRuleIndex___closed__5;
 lean_object* l_Lean_Aesop_Rule_x27_map(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__5___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__2(lean_object*, lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg___boxed(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSet_instEmptyCollectionRuleSet;
 uint8_t lean_nat_dec_le(lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756____boxed(lean_object*, lean_object*);
 uint8_t l_USize_decLe(size_t, size_t);
 lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatNormRule_x27___spec__1___boxed(lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1;
 static lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatNormRule_x27___spec__1___closed__1;
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_empty(lean_object*);
 lean_object* l_Std_PersistentHashMap_find_x3f___at_Lean_Aesop_RuleSet_add___spec__3(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_isUnsafe(lean_object*);
@@ -314,19 +328,23 @@ lean_object* l_Array_isEqvAux___at___private_Lean_Aesop_Rule_0__Lean_Aesop_beqIn
 uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqNormRuleInfo____x40_Lean_Aesop_Rule___hyg_604_(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM___at_Lean_Aesop_RuleSetMember_x27_ofDescr___spec__1(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_instBEqRule_x27___rarg___boxed(lean_object*, lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Meta_DiscrTree_insertCore___at_Lean_Aesop_RuleSet_add___spec__19___boxed(lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2;
 static lean_object* l_Lean_Aesop_instInhabitedRuleIndex___closed__3;
 uint8_t l_Lean_Aesop_instDecidableEqSafeRuleInfo(lean_object*, lean_object*);
 uint8_t lean_int_dec_lt(lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_findAux___at_Lean_Aesop_RuleSet_add___spec__21___boxed(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqNormRuleInfo____x40_Lean_Aesop_Rule___hyg_604__match__1___rarg(lean_object*, lean_object*, lean_object*);
 static lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__7___closed__1;
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6(size_t, size_t, lean_object*);
 uint8_t l_Lean_Meta_DiscrTree_Key_lt(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_ofDescr(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1(double);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15;
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__1(lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1(lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__7___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapTacM___rarg___lambda__1(lean_object*, lean_object*, lean_object*, lean_object*);
-static double l_Lean_Aesop_RegularRule_x27_successProbability___rarg___closed__1;
 lean_object* l_Array_binInsertM___at_Lean_Aesop_RuleSet_add___spec__31(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_instToFormatRegularRule_x27___rarg(lean_object*);
 lean_object* lean_nat_abs(lean_object*);
@@ -341,21 +359,25 @@ static lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux_
 lean_object* l_Lean_Aesop_RuleSetMember_x27_mapM___rarg___lambda__4(lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleSet_applicableSafeRules___spec__3(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__2___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4(size_t, size_t, lean_object*);
 lean_object* l_Std_PersistentHashMap_insertAux___at_Lean_Aesop_RuleSet_add___spec__24(lean_object*, size_t, size_t, lean_object*, lean_object*);
 uint8_t l_Lean_Aesop_Rule_x27_instBEqRule_x27___rarg(lean_object*, lean_object*);
 lean_object* l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__30___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_defaultNormPenalty___closed__1;
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__2___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapExtraM(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_successProbability___rarg(lean_object*);
 static lean_object* l_Lean_Aesop_Safety_instToFormatSafety___closed__3;
 static lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__16___closed__1;
-lean_object* l_Lean_Meta_getMVarDecl(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedRuleIndex(lean_object*);
 static lean_object* l_Array_back___at_Lean_Aesop_RuleSet_add___spec__15___closed__2;
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861__match__1___rarg(lean_object*, lean_object*, lean_object*);
 uint8_t l_Lean_Aesop_instDecidableRelNormRuleInfoLt(lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9;
 lean_object* l_Lean_Aesop_RuleSetMember_x27_map_match__1(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_applicableRules___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Array_back___at_Lean_Aesop_RuleSet_add___spec__15___boxed(lean_object*);
+extern double l_Lean_Aesop_Percent_hundred;
 lean_object* l_Lean_Meta_DiscrTree_getMatch___rarg(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_RuleSet_empty___closed__2;
 static lean_object* l_Array_back___at_Lean_Aesop_RuleSet_add___spec__15___closed__1;
@@ -363,35 +385,42 @@ lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableSafeRules___sp
 lean_object* l_Array_foldlMUnsafe_fold___at_Lean_Aesop_RuleSet_addArray___spec__1(lean_object*, size_t, size_t, lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add___at_Lean_Aesop_RuleSet_add___spec__1(lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Init_Data_Array_BinSearch_0__Array_binInsertAux___at_Lean_Aesop_RuleSet_add___spec__16___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-static lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3;
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8;
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3;
 lean_object* l_Lean_Aesop_Rule_x27_mapM___rarg___lambda__1(lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instBEqIndexingMode___closed__1;
 uint8_t l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__13(lean_object*, lean_object*, size_t, size_t);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861__match__1(lean_object*);
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__22(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Meta_SimpLemmas_addSimpEntry(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instToFormatUnsafeRule_x27(lean_object*);
+lean_object* l_Lean_Aesop_defaultNormPenalty;
 lean_object* l_Array_qpartition_loop___at_Lean_Aesop_RuleIndex_applicableRules___spec__4(lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12;
 lean_object* l_Lean_Aesop_RuleSet_add(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instInhabitedRegularRule_x27___rarg(lean_object*);
 static lean_object* l_Lean_Aesop_instInhabitedSafeRuleInfo___closed__1;
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858__match__1(lean_object*);
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg(lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5;
 static lean_object* l_Lean_Aesop_instInhabitedNormRuleInfo___closed__1;
 static lean_object* l_Lean_Aesop_instInhabitedRuleIndex___closed__2;
 lean_object* l_Array_foldlMUnsafe_fold___at_Lean_Aesop_RuleSet_add___spec__17(lean_object*, size_t, size_t, lean_object*);
 lean_object* l_unsafeCast(lean_object*, lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__5(lean_object*);
 lean_object* l_Lean_Aesop_RegularRule_x27_isUnsafe___rarg___boxed(lean_object*);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleIndex_applicableRules___spec__1(lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg(lean_object*, size_t, size_t, lean_object*);
+lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet(lean_object*);
 lean_object* lean_usize_to_nat(size_t);
 lean_object* l_Lean_Aesop_Rule_x27_instDecidableRelRule_x27Lt___rarg(lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
 uint8_t lean_int_dec_eq(lean_object*, lean_object*);
 lean_object* l_Array_back___at_Lean_Aesop_RuleSet_add___spec__48___boxed(lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176__match__1(lean_object*, lean_object*);
 lean_object* l_Array_anyMUnsafe_any___at_Lean_Aesop_RuleSet_add___spec__46___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertVal___at_Lean_Aesop_RuleSet_add___spec__28(lean_object*, lean_object*);
 uint8_t l_Array_contains___at_Lean_Aesop_RuleSet_add___spec__45(lean_object*, lean_object*);
 lean_object* l_Array_binInsertM___at_Lean_Aesop_RuleSet_add___spec__14___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+static lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11;
 lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqNormRuleInfo____x40_Lean_Aesop_Rule___hyg_604__match__1(lean_object*);
 lean_object* l_Lean_Aesop_instBEqRegularRule_x27(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapExtraM___rarg(lean_object*, lean_object*, lean_object*);
@@ -399,7 +428,6 @@ uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqIndexingMode____x40_Lean_Ae
 lean_object* l_Array_contains___at_Lean_Aesop_RuleSet_add___spec__45___boxed(lean_object*, lean_object*);
 uint8_t l_Array_isEqvAux___at___private_Lean_Aesop_Rule_0__Lean_Aesop_beqIndexingMode____x40_Lean_Aesop_Rule___hyg_24____spec__1(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__2___closed__1;
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858____boxed(lean_object*, lean_object*);
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__2___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleTacDescr_toRuleTac(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__1;
@@ -415,25 +443,26 @@ static lean_object* l_Lean_Aesop_instInhabitedRuleSetMember_x27___closed__1;
 lean_object* lean_nat_to_int(lean_object*);
 lean_object* l_Std_PersistentHashMap_mkEmptyEntries(lean_object*, lean_object*);
 static lean_object* l_Lean_Aesop_instInhabitedRuleSet___closed__1;
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg(lean_object*, lean_object*);
 uint64_t l_Lean_Meta_DiscrTree_Key_hash(lean_object*);
 lean_object* l_Std_PersistentHashMap_find_x3f___at_Lean_Aesop_RuleSet_add___spec__20___boxed(lean_object*, lean_object*);
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_instToFormatUnsafeRule_x27___rarg(lean_object*);
 static lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableUnsafeRules___spec__2___lambda__2___closed__1;
 lean_object* l_Array_qsort_sort___at_Lean_Aesop_RuleSet_applicableNormalizationRules___spec__2___lambda__1(lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertAux___at_Lean_Aesop_RuleSet_add___spec__10(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_findAtAux___at_Lean_Aesop_RuleSet_add___spec__5___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg(uint8_t, uint8_t, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Meta_DiscrTree_instInhabitedTrie(lean_object*);
 static lean_object* l_Lean_Aesop_RuleSet_empty___closed__1;
 lean_object* l_Lean_Meta_DiscrTree_empty(lean_object*);
 lean_object* l_Lean_Aesop_RuleIndex_add(lean_object*);
 static lean_object* l_Lean_Aesop_instInhabitedRuleIndex___closed__1;
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182__match__1(lean_object*, lean_object*);
 lean_object* l_Std_PersistentHashMap_mkCollisionNode___rarg(lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertAux___at_Lean_Aesop_RuleSet_add___spec__27(lean_object*, lean_object*, lean_object*, lean_object*);
 uint8_t lean_nat_dec_lt(lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_Rule_x27_mapExtra(lean_object*, lean_object*, lean_object*);
 lean_object* l_Lean_Aesop_RuleSetMember_x27_map(lean_object*, lean_object*);
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg(uint8_t, uint8_t, lean_object*, lean_object*, lean_object*, lean_object*);
 lean_object* l___private_Lean_Meta_DiscrTree_0__Lean_Meta_DiscrTree_insertVal___at_Lean_Aesop_RuleSet_add___spec__44(lean_object*, lean_object*);
 static lean_object* _init_l_Lean_Aesop_instInhabitedIndexingMode() {
 _start:
@@ -1498,6 +1527,23 @@ lean_dec(x_1);
 return x_2;
 }
 }
+static lean_object* _init_l_Lean_Aesop_defaultNormPenalty___closed__1() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = lean_unsigned_to_nat(1u);
+x_2 = lean_nat_to_int(x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_defaultNormPenalty() {
+_start:
+{
+lean_object* x_1; 
+x_1 = l_Lean_Aesop_defaultNormPenalty___closed__1;
+return x_1;
+}
+}
 static uint8_t _init_l_Lean_Aesop_instInhabitedSafety() {
 _start:
 {
@@ -1506,7 +1552,7 @@ x_1 = 0;
 return x_1;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg(uint8_t x_1, uint8_t x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5, lean_object* x_6) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg(uint8_t x_1, uint8_t x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5, lean_object* x_6) {
 _start:
 {
 if (x_1 == 0)
@@ -1553,15 +1599,15 @@ return x_14;
 }
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1(lean_object* x_1) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1(lean_object* x_1) {
 _start:
 {
 lean_object* x_2; 
-x_2 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg___boxed), 6, 0);
+x_2 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg___boxed), 6, 0);
 return x_2;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5, lean_object* x_6) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5, lean_object* x_6) {
 _start:
 {
 uint8_t x_7; uint8_t x_8; lean_object* x_9; 
@@ -1569,11 +1615,11 @@ x_7 = lean_unbox(x_1);
 lean_dec(x_1);
 x_8 = lean_unbox(x_2);
 lean_dec(x_2);
-x_9 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756__match__1___rarg(x_7, x_8, x_3, x_4, x_5, x_6);
+x_9 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759__match__1___rarg(x_7, x_8, x_3, x_4, x_5, x_6);
 return x_9;
 }
 }
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756_(uint8_t x_1, uint8_t x_2) {
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759_(uint8_t x_1, uint8_t x_2) {
 _start:
 {
 if (x_1 == 0)
@@ -1608,7 +1654,7 @@ return x_6;
 }
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756____boxed(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759____boxed(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 uint8_t x_3; uint8_t x_4; uint8_t x_5; lean_object* x_6; 
@@ -1616,7 +1662,7 @@ x_3 = lean_unbox(x_1);
 lean_dec(x_1);
 x_4 = lean_unbox(x_2);
 lean_dec(x_2);
-x_5 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756_(x_3, x_4);
+x_5 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759_(x_3, x_4);
 x_6 = lean_box(x_5);
 return x_6;
 }
@@ -1625,7 +1671,7 @@ uint8_t l_Lean_Aesop_instDecidableEqSafety(uint8_t x_1, uint8_t x_2) {
 _start:
 {
 uint8_t x_3; 
-x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756_(x_1, x_2);
+x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759_(x_1, x_2);
 return x_3;
 }
 }
@@ -1764,7 +1810,7 @@ x_1 = l_Lean_Aesop_instInhabitedSafeRuleInfo___closed__1;
 return x_1;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858__match__1___rarg(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861__match__1___rarg(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
 _start:
 {
 lean_object* x_4; uint8_t x_5; lean_object* x_6; uint8_t x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; 
@@ -1782,15 +1828,15 @@ x_10 = lean_apply_4(x_3, x_4, x_8, x_6, x_9);
 return x_10;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858__match__1(lean_object* x_1) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861__match__1(lean_object* x_1) {
 _start:
 {
 lean_object* x_2; 
-x_2 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858__match__1___rarg), 3, 0);
+x_2 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861__match__1___rarg), 3, 0);
 return x_2;
 }
 }
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858_(lean_object* x_1, lean_object* x_2) {
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861_(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 lean_object* x_3; uint8_t x_4; lean_object* x_5; uint8_t x_6; uint8_t x_7; 
@@ -1808,16 +1854,16 @@ return x_8;
 else
 {
 uint8_t x_9; 
-x_9 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_756_(x_4, x_6);
+x_9 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafety____x40_Lean_Aesop_Rule___hyg_759_(x_4, x_6);
 return x_9;
 }
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858____boxed(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861____boxed(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 uint8_t x_3; lean_object* x_4; 
-x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858_(x_1, x_2);
+x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861_(x_1, x_2);
 lean_dec(x_2);
 lean_dec(x_1);
 x_4 = lean_box(x_3);
@@ -1828,7 +1874,7 @@ uint8_t l_Lean_Aesop_instDecidableEqSafeRuleInfo(lean_object* x_1, lean_object* 
 _start:
 {
 uint8_t x_3; 
-x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_858_(x_1, x_2);
+x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_decEqSafeRuleInfo____x40_Lean_Aesop_Rule___hyg_861_(x_1, x_2);
 return x_3;
 }
 }
@@ -1967,6 +2013,14 @@ x_3 = l_Std_fmt___at_Lean_Aesop_instToFormatSafeRule_x27___spec__1(x_2);
 return x_3;
 }
 }
+static lean_object* _init_l_Lean_Aesop_defaultSafePenalty() {
+_start:
+{
+lean_object* x_1; 
+x_1 = l_Lean_Aesop_defaultNormPenalty___closed__1;
+return x_1;
+}
+}
 static lean_object* _init_l_Lean_Aesop_instInhabitedUnsafeRuleInfo___closed__1() {
 _start:
 {
@@ -2014,45 +2068,37 @@ x_6 = lean_box(x_5);
 return x_6;
 }
 }
-lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1(double x_1) {
-_start:
-{
-lean_object* x_2; lean_object* x_3; 
-x_2 = lean_float_to_string(x_1);
-x_3 = lean_alloc_ctor(2, 1, 0);
-lean_ctor_set(x_3, 0, x_2);
-return x_3;
-}
-}
 lean_object* l_Lean_Aesop_instToFormatUnsafeRule_x27___rarg(lean_object* x_1) {
 _start:
 {
-lean_object* x_2; double x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; 
+lean_object* x_2; double x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; 
 x_2 = lean_ctor_get(x_1, 2);
 lean_inc(x_2);
 x_3 = lean_unbox_float(x_2);
 lean_dec(x_2);
-x_4 = l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1(x_3);
-x_5 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
-x_6 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_6, 0, x_5);
-lean_ctor_set(x_6, 1, x_4);
-x_7 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
-x_8 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_8, 0, x_6);
-lean_ctor_set(x_8, 1, x_7);
-x_9 = lean_ctor_get(x_1, 0);
-lean_inc(x_9);
+x_4 = l_Lean_Aesop_Percent_toHumanString(x_3);
+x_5 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_5, 0, x_4);
+x_6 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
+x_7 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_7, 0, x_6);
+lean_ctor_set(x_7, 1, x_5);
+x_8 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
+x_9 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_9, 0, x_7);
+lean_ctor_set(x_9, 1, x_8);
+x_10 = lean_ctor_get(x_1, 0);
+lean_inc(x_10);
 lean_dec(x_1);
-x_10 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_9);
-x_11 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_11, 0, x_8);
-lean_ctor_set(x_11, 1, x_10);
-x_12 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
-x_13 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_13, 0, x_11);
-lean_ctor_set(x_13, 1, x_12);
-return x_13;
+x_11 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_10);
+x_12 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_12, 0, x_9);
+lean_ctor_set(x_12, 1, x_11);
+x_13 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
+x_14 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_14, 0, x_12);
+lean_ctor_set(x_14, 1, x_13);
+return x_14;
 }
 }
 lean_object* l_Lean_Aesop_instToFormatUnsafeRule_x27(lean_object* x_1) {
@@ -2063,17 +2109,7 @@ x_2 = lean_alloc_closure((void*)(l_Lean_Aesop_instToFormatUnsafeRule_x27___rarg)
 return x_2;
 }
 }
-lean_object* l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1___boxed(lean_object* x_1) {
-_start:
-{
-double x_2; lean_object* x_3; 
-x_2 = lean_unbox_float(x_1);
-lean_dec(x_1);
-x_3 = l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1(x_2);
-return x_3;
-}
-}
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176__match__1___rarg(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182__match__1___rarg(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5) {
 _start:
 {
 if (lean_obj_tag(x_1) == 0)
@@ -2126,15 +2162,15 @@ return x_13;
 }
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176__match__1(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182__match__1(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 lean_object* x_3; 
-x_3 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176__match__1___rarg), 5, 0);
+x_3 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182__match__1___rarg), 5, 0);
 return x_3;
 }
 }
-uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg(lean_object* x_1, lean_object* x_2) {
+uint8_t l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 if (lean_obj_tag(x_1) == 0)
@@ -2177,30 +2213,30 @@ return x_14;
 }
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176_(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182_(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 lean_object* x_3; 
-x_3 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg___boxed), 2, 0);
+x_3 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg___boxed), 2, 0);
 return x_3;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg___boxed(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg___boxed(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 uint8_t x_3; lean_object* x_4; 
-x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg(x_1, x_2);
+x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg(x_1, x_2);
 lean_dec(x_2);
 lean_dec(x_1);
 x_4 = lean_box(x_3);
 return x_4;
 }
 }
-lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____boxed(lean_object* x_1, lean_object* x_2) {
+lean_object* l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____boxed(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 lean_object* x_3; 
-x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176_(x_1, x_2);
+x_3 = l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182_(x_1, x_2);
 lean_dec(x_2);
 return x_3;
 }
@@ -2209,7 +2245,7 @@ static lean_object* _init_l_Lean_Aesop_instBEqRegularRule_x27___closed__1() {
 _start:
 {
 lean_object* x_1; 
-x_1 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1176____rarg___boxed), 2, 0);
+x_1 = lean_alloc_closure((void*)(l___private_Lean_Aesop_Rule_0__Lean_Aesop_beqRegularRule_x27____x40_Lean_Aesop_Rule___hyg_1182____rarg___boxed), 2, 0);
 return x_1;
 }
 }
@@ -2336,7 +2372,7 @@ return x_19;
 }
 else
 {
-lean_object* x_20; lean_object* x_21; double x_22; lean_object* x_23; lean_object* x_24; lean_object* x_25; lean_object* x_26; lean_object* x_27; lean_object* x_28; lean_object* x_29; lean_object* x_30; lean_object* x_31; lean_object* x_32; 
+lean_object* x_20; lean_object* x_21; double x_22; lean_object* x_23; lean_object* x_24; lean_object* x_25; lean_object* x_26; lean_object* x_27; lean_object* x_28; lean_object* x_29; lean_object* x_30; lean_object* x_31; lean_object* x_32; lean_object* x_33; 
 x_20 = lean_ctor_get(x_1, 0);
 lean_inc(x_20);
 lean_dec(x_1);
@@ -2344,27 +2380,29 @@ x_21 = lean_ctor_get(x_20, 2);
 lean_inc(x_21);
 x_22 = lean_unbox_float(x_21);
 lean_dec(x_21);
-x_23 = l_Std_fmt___at_Lean_Aesop_instToFormatUnsafeRule_x27___spec__1(x_22);
-x_24 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
-x_25 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_25, 0, x_24);
-lean_ctor_set(x_25, 1, x_23);
-x_26 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
-x_27 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_27, 0, x_25);
-lean_ctor_set(x_27, 1, x_26);
-x_28 = lean_ctor_get(x_20, 0);
-lean_inc(x_28);
+x_23 = l_Lean_Aesop_Percent_toHumanString(x_22);
+x_24 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_24, 0, x_23);
+x_25 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
+x_26 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_26, 0, x_25);
+lean_ctor_set(x_26, 1, x_24);
+x_27 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
+x_28 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_28, 0, x_26);
+lean_ctor_set(x_28, 1, x_27);
+x_29 = lean_ctor_get(x_20, 0);
+lean_inc(x_29);
 lean_dec(x_20);
-x_29 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_28);
-x_30 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_30, 0, x_27);
-lean_ctor_set(x_30, 1, x_29);
-x_31 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
-x_32 = lean_alloc_ctor(4, 2, 0);
-lean_ctor_set(x_32, 0, x_30);
-lean_ctor_set(x_32, 1, x_31);
-return x_32;
+x_30 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_29);
+x_31 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_31, 0, x_28);
+lean_ctor_set(x_31, 1, x_30);
+x_32 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
+x_33 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_33, 0, x_31);
+lean_ctor_set(x_33, 1, x_32);
+return x_33;
 }
 }
 }
@@ -2376,20 +2414,11 @@ x_2 = lean_alloc_closure((void*)(l_Lean_Aesop_RegularRule_x27_instToFormatRegula
 return x_2;
 }
 }
-static double _init_l_Lean_Aesop_RegularRule_x27_successProbability___rarg___closed__1() {
-_start:
-{
-lean_object* x_1; double x_2; 
-x_1 = lean_unsigned_to_nat(100u);
-x_2 = lean_float_of_nat(x_1);
-return x_2;
-}
-}
 static lean_object* _init_l_Lean_Aesop_RegularRule_x27_successProbability___rarg___boxed__const__1() {
 _start:
 {
 double x_1; lean_object* x_2; 
-x_1 = l_Lean_Aesop_RegularRule_x27_successProbability___rarg___closed__1;
+x_1 = l_Lean_Aesop_Percent_hundred;
 x_2 = lean_box_float(x_1);
 return x_2;
 }
@@ -2613,7 +2642,7 @@ x_2 = l_Lean_Aesop_instInhabitedRuleIndex___closed__5;
 return x_2;
 }
 }
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg(lean_object* x_1, size_t x_2, size_t x_3, lean_object* x_4) {
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg(lean_object* x_1, size_t x_2, size_t x_3, lean_object* x_4) {
 _start:
 {
 uint8_t x_5; 
@@ -2644,107 +2673,172 @@ goto _start;
 }
 }
 }
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1(lean_object* x_1) {
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1(lean_object* x_1) {
 _start:
 {
 lean_object* x_2; 
-x_2 = lean_alloc_closure((void*)(l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg___boxed), 4, 0);
+x_2 = lean_alloc_closure((void*)(l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg___boxed), 4, 0);
 return x_2;
 }
 }
-static lean_object* _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1() {
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg(lean_object* x_1, size_t x_2, size_t x_3, lean_object* x_4) {
+_start:
+{
+uint8_t x_5; 
+x_5 = x_3 < x_2;
+if (x_5 == 0)
+{
+lean_object* x_6; 
+lean_dec(x_1);
+x_6 = x_4;
+return x_6;
+}
+else
+{
+lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; size_t x_12; size_t x_13; lean_object* x_14; lean_object* x_15; 
+x_7 = lean_array_uget(x_4, x_3);
+x_8 = lean_unsigned_to_nat(0u);
+x_9 = lean_array_uset(x_4, x_3, x_8);
+x_10 = x_7;
+lean_inc(x_1);
+x_11 = lean_apply_1(x_1, x_10);
+x_12 = 1;
+x_13 = x_3 + x_12;
+x_14 = x_11;
+x_15 = lean_array_uset(x_9, x_3, x_14);
+x_3 = x_13;
+x_4 = x_15;
+goto _start;
+}
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; 
+x_2 = lean_alloc_closure((void*)(l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg___boxed), 4, 0);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1() {
 _start:
 {
 lean_object* x_1; 
-x_1 = lean_mk_string("rules indexed by target:");
+x_1 = lean_mk_string("indexed by target:");
 return x_1;
 }
 }
-static lean_object* _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2() {
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2() {
 _start:
 {
 lean_object* x_1; lean_object* x_2; 
-x_1 = l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1;
+x_1 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1;
 x_2 = lean_alloc_ctor(2, 1, 0);
 lean_ctor_set(x_2, 0, x_1);
 return x_2;
 }
 }
-static lean_object* _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3() {
-_start:
-{
-lean_object* x_1; 
-x_1 = lean_mk_string("unindexed rules:");
-return x_1;
-}
-}
-static lean_object* _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4() {
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3() {
 _start:
 {
 lean_object* x_1; lean_object* x_2; 
-x_1 = l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3;
+x_1 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("unindexed:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4;
 x_2 = lean_alloc_ctor(2, 1, 0);
 lean_ctor_set(x_2, 0, x_1);
 return x_2;
 }
 }
-lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg(lean_object* x_1, lean_object* x_2) {
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6() {
 _start:
 {
-lean_object* x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; size_t x_8; size_t x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; lean_object* x_15; lean_object* x_16; lean_object* x_17; lean_object* x_18; lean_object* x_19; lean_object* x_20; lean_object* x_21; lean_object* x_22; lean_object* x_23; lean_object* x_24; lean_object* x_25; 
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = lean_unsigned_to_nat(2u);
+x_2 = lean_mk_empty_array_with_capacity(x_1);
+return x_2;
+}
+}
+lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg(lean_object* x_1, lean_object* x_2) {
+_start:
+{
+lean_object* x_3; lean_object* x_4; lean_object* x_5; size_t x_6; size_t x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; lean_object* x_15; size_t x_16; lean_object* x_17; lean_object* x_18; lean_object* x_19; lean_object* x_20; lean_object* x_21; lean_object* x_22; lean_object* x_23; lean_object* x_24; lean_object* x_25; lean_object* x_26; 
 x_3 = lean_ctor_get(x_2, 0);
 lean_inc(x_3);
-lean_inc(x_1);
-x_4 = l_Lean_Meta_DiscrTree_format___rarg(x_1, x_3);
+x_4 = l_Lean_Meta_DiscrTree_values___rarg(x_3);
 lean_dec(x_3);
-x_5 = l_Std_Format_indentD(x_4);
-x_6 = lean_ctor_get(x_2, 1);
-lean_inc(x_6);
+x_5 = lean_array_get_size(x_4);
+x_6 = lean_usize_of_nat(x_5);
+lean_dec(x_5);
+x_7 = 0;
+x_8 = x_4;
+lean_inc(x_1);
+x_9 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg(x_1, x_6, x_7, x_8);
+x_10 = x_9;
+x_11 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_11, 0, x_10);
+x_12 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3;
+x_13 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_13, 0, x_12);
+lean_ctor_set(x_13, 1, x_11);
+x_14 = lean_ctor_get(x_2, 1);
+lean_inc(x_14);
 lean_dec(x_2);
-x_7 = lean_array_get_size(x_6);
-x_8 = lean_usize_of_nat(x_7);
-lean_dec(x_7);
-x_9 = 0;
-x_10 = x_6;
-x_11 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg(x_1, x_8, x_9, x_10);
-x_12 = x_11;
-x_13 = lean_array_to_list(lean_box(0), x_12);
-x_14 = lean_box(1);
-x_15 = l_Std_Format_joinSep___at_instReprProd___spec__1(x_13, x_14);
-lean_dec(x_13);
-x_16 = l_Std_Format_indentD(x_15);
-x_17 = lean_box(0);
-x_18 = lean_alloc_ctor(1, 2, 0);
-lean_ctor_set(x_18, 0, x_16);
-lean_ctor_set(x_18, 1, x_17);
-x_19 = l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4;
-x_20 = lean_alloc_ctor(1, 2, 0);
+x_15 = lean_array_get_size(x_14);
+x_16 = lean_usize_of_nat(x_15);
+lean_dec(x_15);
+x_17 = x_14;
+x_18 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg(x_1, x_16, x_7, x_17);
+x_19 = x_18;
+x_20 = lean_alloc_ctor(12, 1, 0);
 lean_ctor_set(x_20, 0, x_19);
-lean_ctor_set(x_20, 1, x_18);
-x_21 = lean_alloc_ctor(1, 2, 0);
-lean_ctor_set(x_21, 0, x_14);
-lean_ctor_set(x_21, 1, x_20);
-x_22 = lean_alloc_ctor(1, 2, 0);
-lean_ctor_set(x_22, 0, x_5);
-lean_ctor_set(x_22, 1, x_21);
-x_23 = l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2;
-x_24 = lean_alloc_ctor(1, 2, 0);
-lean_ctor_set(x_24, 0, x_23);
-lean_ctor_set(x_24, 1, x_22);
-x_25 = l_Std_Format_join(x_24);
-lean_dec(x_24);
-return x_25;
+x_21 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6;
+x_22 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_22, 0, x_21);
+lean_ctor_set(x_22, 1, x_20);
+x_23 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7;
+x_24 = lean_array_push(x_23, x_13);
+x_25 = lean_array_push(x_24, x_22);
+x_26 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_26, 0, x_25);
+return x_26;
 }
 }
-lean_object* l_Lean_Aesop_RuleIndex_instToFormatRuleIndex(lean_object* x_1) {
+lean_object* l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex(lean_object* x_1) {
 _start:
 {
 lean_object* x_2; 
-x_2 = lean_alloc_closure((void*)(l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg), 2, 0);
+x_2 = lean_alloc_closure((void*)(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg), 2, 0);
 return x_2;
 }
 }
-lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4) {
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4) {
 _start:
 {
 size_t x_5; size_t x_6; lean_object* x_7; 
@@ -2752,7 +2846,19 @@ x_5 = lean_unbox_usize(x_2);
 lean_dec(x_2);
 x_6 = lean_unbox_usize(x_3);
 lean_dec(x_3);
-x_7 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToFormatRuleIndex___spec__1___rarg(x_1, x_5, x_6, x_4);
+x_7 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__1___rarg(x_1, x_5, x_6, x_4);
+return x_7;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4) {
+_start:
+{
+size_t x_5; size_t x_6; lean_object* x_7; 
+x_5 = lean_unbox_usize(x_2);
+lean_dec(x_2);
+x_6 = lean_unbox_usize(x_3);
+lean_dec(x_3);
+x_7 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___spec__2___rarg(x_1, x_5, x_6, x_4);
 return x_7;
 }
 }
@@ -2914,10 +3020,14 @@ lean_object* l_Lean_Aesop_RuleIndex_applicableByTargetRules___rarg(lean_object* 
 _start:
 {
 lean_object* x_8; 
-x_8 = l_Lean_Meta_getMVarDecl(x_2, x_3, x_4, x_5, x_6, x_7);
+lean_inc(x_6);
+lean_inc(x_5);
+lean_inc(x_4);
+lean_inc(x_3);
+x_8 = l_Lean_Meta_instantiateMVarsMVarType(x_2, x_3, x_4, x_5, x_6, x_7);
 if (lean_obj_tag(x_8) == 0)
 {
-lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; 
+lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; 
 x_9 = lean_ctor_get(x_8, 0);
 lean_inc(x_9);
 x_10 = lean_ctor_get(x_8, 1);
@@ -2926,37 +3036,34 @@ lean_dec(x_8);
 x_11 = lean_ctor_get(x_1, 0);
 lean_inc(x_11);
 lean_dec(x_1);
-x_12 = lean_ctor_get(x_9, 2);
-lean_inc(x_12);
-lean_dec(x_9);
-x_13 = l_Lean_Meta_DiscrTree_getMatch___rarg(x_11, x_12, x_3, x_4, x_5, x_6, x_10);
-return x_13;
+x_12 = l_Lean_Meta_DiscrTree_getMatch___rarg(x_11, x_9, x_3, x_4, x_5, x_6, x_10);
+return x_12;
 }
 else
 {
-uint8_t x_14; 
+uint8_t x_13; 
 lean_dec(x_6);
 lean_dec(x_5);
 lean_dec(x_4);
 lean_dec(x_3);
 lean_dec(x_1);
-x_14 = !lean_is_exclusive(x_8);
-if (x_14 == 0)
+x_13 = !lean_is_exclusive(x_8);
+if (x_13 == 0)
 {
 return x_8;
 }
 else
 {
-lean_object* x_15; lean_object* x_16; lean_object* x_17; 
-x_15 = lean_ctor_get(x_8, 0);
-x_16 = lean_ctor_get(x_8, 1);
-lean_inc(x_16);
+lean_object* x_14; lean_object* x_15; lean_object* x_16; 
+x_14 = lean_ctor_get(x_8, 0);
+x_15 = lean_ctor_get(x_8, 1);
 lean_inc(x_15);
+lean_inc(x_14);
 lean_dec(x_8);
-x_17 = lean_alloc_ctor(1, 2, 0);
-lean_ctor_set(x_17, 0, x_15);
-lean_ctor_set(x_17, 1, x_16);
-return x_17;
+x_16 = lean_alloc_ctor(1, 2, 0);
+lean_ctor_set(x_16, 0, x_14);
+lean_ctor_set(x_16, 1, x_15);
+return x_16;
 }
 }
 }
@@ -4929,6 +5036,537 @@ _start:
 lean_object* x_1; 
 x_1 = l_Lean_Aesop_instInhabitedRuleSet___closed__2;
 return x_1;
+}
+}
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__1(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; double x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; 
+x_2 = lean_ctor_get(x_1, 2);
+lean_inc(x_2);
+x_3 = lean_unbox_float(x_2);
+lean_dec(x_2);
+x_4 = l_Lean_Aesop_Percent_toHumanString(x_3);
+x_5 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_5, 0, x_4);
+x_6 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
+x_7 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_7, 0, x_6);
+lean_ctor_set(x_7, 1, x_5);
+x_8 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
+x_9 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_9, 0, x_7);
+lean_ctor_set(x_9, 1, x_8);
+x_10 = lean_ctor_get(x_1, 0);
+lean_inc(x_10);
+lean_dec(x_1);
+x_11 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_10);
+x_12 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_12, 0, x_9);
+lean_ctor_set(x_12, 1, x_11);
+x_13 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
+x_14 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_14, 0, x_12);
+lean_ctor_set(x_14, 1, x_13);
+return x_14;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2(size_t x_1, size_t x_2, lean_object* x_3) {
+_start:
+{
+uint8_t x_4; 
+x_4 = x_2 < x_1;
+if (x_4 == 0)
+{
+lean_object* x_5; 
+x_5 = x_3;
+return x_5;
+}
+else
+{
+lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; size_t x_12; size_t x_13; lean_object* x_14; lean_object* x_15; 
+x_6 = lean_array_uget(x_3, x_2);
+x_7 = lean_unsigned_to_nat(0u);
+x_8 = lean_array_uset(x_3, x_2, x_7);
+x_9 = x_6;
+x_10 = l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__1(x_9);
+x_11 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_11, 0, x_10);
+x_12 = 1;
+x_13 = x_2 + x_12;
+x_14 = x_11;
+x_15 = lean_array_uset(x_8, x_2, x_14);
+x_2 = x_13;
+x_3 = x_15;
+goto _start;
+}
+}
+}
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__3(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; lean_object* x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; uint8_t x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; lean_object* x_15; lean_object* x_16; lean_object* x_17; lean_object* x_18; 
+x_2 = lean_ctor_get(x_1, 2);
+lean_inc(x_2);
+x_3 = lean_ctor_get(x_2, 0);
+lean_inc(x_3);
+x_4 = l_Std_fmt___at_Lean_Aesop_instToFormatNormRule_x27___spec__1(x_3);
+lean_dec(x_3);
+x_5 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
+x_6 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_6, 0, x_5);
+lean_ctor_set(x_6, 1, x_4);
+x_7 = l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__2;
+x_8 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_8, 0, x_6);
+lean_ctor_set(x_8, 1, x_7);
+x_9 = lean_ctor_get_uint8(x_2, sizeof(void*)*1);
+lean_dec(x_2);
+x_10 = l_Std_fmt___at_Lean_Aesop_instToFormatSafeRule_x27___spec__1(x_9);
+x_11 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_11, 0, x_8);
+lean_ctor_set(x_11, 1, x_10);
+x_12 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
+x_13 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_13, 0, x_11);
+lean_ctor_set(x_13, 1, x_12);
+x_14 = lean_ctor_get(x_1, 0);
+lean_inc(x_14);
+lean_dec(x_1);
+x_15 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_14);
+x_16 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_16, 0, x_13);
+lean_ctor_set(x_16, 1, x_15);
+x_17 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
+x_18 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_18, 0, x_16);
+lean_ctor_set(x_18, 1, x_17);
+return x_18;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4(size_t x_1, size_t x_2, lean_object* x_3) {
+_start:
+{
+uint8_t x_4; 
+x_4 = x_2 < x_1;
+if (x_4 == 0)
+{
+lean_object* x_5; 
+x_5 = x_3;
+return x_5;
+}
+else
+{
+lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; size_t x_12; size_t x_13; lean_object* x_14; lean_object* x_15; 
+x_6 = lean_array_uget(x_3, x_2);
+x_7 = lean_unsigned_to_nat(0u);
+x_8 = lean_array_uset(x_3, x_2, x_7);
+x_9 = x_6;
+x_10 = l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__3(x_9);
+x_11 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_11, 0, x_10);
+x_12 = 1;
+x_13 = x_2 + x_12;
+x_14 = x_11;
+x_15 = lean_array_uset(x_8, x_2, x_14);
+x_2 = x_13;
+x_3 = x_15;
+goto _start;
+}
+}
+}
+lean_object* l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__5(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; lean_object* x_3; lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; 
+x_2 = lean_ctor_get(x_1, 2);
+lean_inc(x_2);
+x_3 = l_Std_fmt___at_Lean_Aesop_instToFormatNormRule_x27___spec__1(x_2);
+lean_dec(x_2);
+x_4 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__2;
+x_5 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_5, 0, x_4);
+lean_ctor_set(x_5, 1, x_3);
+x_6 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__4;
+x_7 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_7, 0, x_5);
+lean_ctor_set(x_7, 1, x_6);
+x_8 = lean_ctor_get(x_1, 0);
+lean_inc(x_8);
+lean_dec(x_1);
+x_9 = l_Std_fmt___at_Lean_Level_PP_Result_format___spec__1(x_8);
+x_10 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_10, 0, x_7);
+lean_ctor_set(x_10, 1, x_9);
+x_11 = l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6;
+x_12 = lean_alloc_ctor(4, 2, 0);
+lean_ctor_set(x_12, 0, x_10);
+lean_ctor_set(x_12, 1, x_11);
+return x_12;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6(size_t x_1, size_t x_2, lean_object* x_3) {
+_start:
+{
+uint8_t x_4; 
+x_4 = x_2 < x_1;
+if (x_4 == 0)
+{
+lean_object* x_5; 
+x_5 = x_3;
+return x_5;
+}
+else
+{
+lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; size_t x_12; size_t x_13; lean_object* x_14; lean_object* x_15; 
+x_6 = lean_array_uget(x_3, x_2);
+x_7 = lean_unsigned_to_nat(0u);
+x_8 = lean_array_uset(x_3, x_2, x_7);
+x_9 = x_6;
+x_10 = l_Std_fmt___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__5(x_9);
+x_11 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_11, 0, x_10);
+x_12 = 1;
+x_13 = x_2 + x_12;
+x_14 = x_11;
+x_15 = lean_array_uset(x_8, x_2, x_14);
+x_2 = x_13;
+x_3 = x_15;
+goto _start;
+}
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("Unsafe rules:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1;
+x_2 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("Safe rules:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4;
+x_2 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("Normalisation rules:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7;
+x_2 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("Normalisation simp lemmas:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10;
+x_2 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = lean_unsigned_to_nat(4u);
+x_2 = lean_mk_empty_array_with_capacity(x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14() {
+_start:
+{
+lean_object* x_1; 
+x_1 = lean_mk_string("Aesop rule set:");
+return x_1;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14;
+x_2 = lean_alloc_ctor(2, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+static lean_object* _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16() {
+_start:
+{
+lean_object* x_1; lean_object* x_2; 
+x_1 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15;
+x_2 = lean_alloc_ctor(0, 1, 0);
+lean_ctor_set(x_2, 0, x_1);
+return x_2;
+}
+}
+lean_object* l_Lean_Aesop_RuleSet_instToMessageDataRuleSet(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; lean_object* x_3; lean_object* x_4; lean_object* x_5; size_t x_6; size_t x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; lean_object* x_11; lean_object* x_12; lean_object* x_13; lean_object* x_14; lean_object* x_15; size_t x_16; lean_object* x_17; lean_object* x_18; lean_object* x_19; lean_object* x_20; lean_object* x_21; lean_object* x_22; lean_object* x_23; lean_object* x_24; lean_object* x_25; lean_object* x_26; lean_object* x_27; lean_object* x_28; lean_object* x_29; lean_object* x_30; lean_object* x_31; lean_object* x_32; size_t x_33; lean_object* x_34; lean_object* x_35; lean_object* x_36; lean_object* x_37; lean_object* x_38; lean_object* x_39; lean_object* x_40; size_t x_41; lean_object* x_42; lean_object* x_43; lean_object* x_44; lean_object* x_45; lean_object* x_46; lean_object* x_47; lean_object* x_48; lean_object* x_49; lean_object* x_50; lean_object* x_51; lean_object* x_52; lean_object* x_53; lean_object* x_54; lean_object* x_55; size_t x_56; lean_object* x_57; lean_object* x_58; lean_object* x_59; lean_object* x_60; lean_object* x_61; lean_object* x_62; lean_object* x_63; size_t x_64; lean_object* x_65; lean_object* x_66; lean_object* x_67; lean_object* x_68; lean_object* x_69; lean_object* x_70; lean_object* x_71; lean_object* x_72; lean_object* x_73; lean_object* x_74; lean_object* x_75; lean_object* x_76; lean_object* x_77; lean_object* x_78; lean_object* x_79; lean_object* x_80; lean_object* x_81; lean_object* x_82; lean_object* x_83; lean_object* x_84; lean_object* x_85; lean_object* x_86; 
+x_2 = lean_ctor_get(x_1, 2);
+lean_inc(x_2);
+x_3 = lean_ctor_get(x_2, 0);
+lean_inc(x_3);
+x_4 = l_Lean_Meta_DiscrTree_values___rarg(x_3);
+lean_dec(x_3);
+x_5 = lean_array_get_size(x_4);
+x_6 = lean_usize_of_nat(x_5);
+lean_dec(x_5);
+x_7 = 0;
+x_8 = x_4;
+x_9 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2(x_6, x_7, x_8);
+x_10 = x_9;
+x_11 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_11, 0, x_10);
+x_12 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3;
+x_13 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_13, 0, x_12);
+lean_ctor_set(x_13, 1, x_11);
+x_14 = lean_ctor_get(x_2, 1);
+lean_inc(x_14);
+lean_dec(x_2);
+x_15 = lean_array_get_size(x_14);
+x_16 = lean_usize_of_nat(x_15);
+lean_dec(x_15);
+x_17 = x_14;
+x_18 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2(x_16, x_7, x_17);
+x_19 = x_18;
+x_20 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_20, 0, x_19);
+x_21 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6;
+x_22 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_22, 0, x_21);
+lean_ctor_set(x_22, 1, x_20);
+x_23 = l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7;
+x_24 = lean_array_push(x_23, x_13);
+x_25 = lean_array_push(x_24, x_22);
+x_26 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_26, 0, x_25);
+x_27 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3;
+x_28 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_28, 0, x_27);
+lean_ctor_set(x_28, 1, x_26);
+x_29 = lean_ctor_get(x_1, 3);
+lean_inc(x_29);
+x_30 = lean_ctor_get(x_29, 0);
+lean_inc(x_30);
+x_31 = l_Lean_Meta_DiscrTree_values___rarg(x_30);
+lean_dec(x_30);
+x_32 = lean_array_get_size(x_31);
+x_33 = lean_usize_of_nat(x_32);
+lean_dec(x_32);
+x_34 = x_31;
+x_35 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4(x_33, x_7, x_34);
+x_36 = x_35;
+x_37 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_37, 0, x_36);
+x_38 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_38, 0, x_12);
+lean_ctor_set(x_38, 1, x_37);
+x_39 = lean_ctor_get(x_29, 1);
+lean_inc(x_39);
+lean_dec(x_29);
+x_40 = lean_array_get_size(x_39);
+x_41 = lean_usize_of_nat(x_40);
+lean_dec(x_40);
+x_42 = x_39;
+x_43 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4(x_41, x_7, x_42);
+x_44 = x_43;
+x_45 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_45, 0, x_44);
+x_46 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_46, 0, x_21);
+lean_ctor_set(x_46, 1, x_45);
+x_47 = lean_array_push(x_23, x_38);
+x_48 = lean_array_push(x_47, x_46);
+x_49 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_49, 0, x_48);
+x_50 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6;
+x_51 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_51, 0, x_50);
+lean_ctor_set(x_51, 1, x_49);
+x_52 = lean_ctor_get(x_1, 0);
+lean_inc(x_52);
+x_53 = lean_ctor_get(x_52, 0);
+lean_inc(x_53);
+x_54 = l_Lean_Meta_DiscrTree_values___rarg(x_53);
+lean_dec(x_53);
+x_55 = lean_array_get_size(x_54);
+x_56 = lean_usize_of_nat(x_55);
+lean_dec(x_55);
+x_57 = x_54;
+x_58 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6(x_56, x_7, x_57);
+x_59 = x_58;
+x_60 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_60, 0, x_59);
+x_61 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_61, 0, x_12);
+lean_ctor_set(x_61, 1, x_60);
+x_62 = lean_ctor_get(x_52, 1);
+lean_inc(x_62);
+lean_dec(x_52);
+x_63 = lean_array_get_size(x_62);
+x_64 = lean_usize_of_nat(x_63);
+lean_dec(x_63);
+x_65 = x_62;
+x_66 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6(x_64, x_7, x_65);
+x_67 = x_66;
+x_68 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_68, 0, x_67);
+x_69 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_69, 0, x_21);
+lean_ctor_set(x_69, 1, x_68);
+x_70 = lean_array_push(x_23, x_61);
+x_71 = lean_array_push(x_70, x_69);
+x_72 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_72, 0, x_71);
+x_73 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9;
+x_74 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_74, 0, x_73);
+lean_ctor_set(x_74, 1, x_72);
+x_75 = lean_ctor_get(x_1, 1);
+lean_inc(x_75);
+lean_dec(x_1);
+x_76 = l_Lean_Meta_SimpLemmas_toMessageData(x_75);
+lean_dec(x_75);
+x_77 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12;
+x_78 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_78, 0, x_77);
+lean_ctor_set(x_78, 1, x_76);
+x_79 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13;
+x_80 = lean_array_push(x_79, x_28);
+x_81 = lean_array_push(x_80, x_51);
+x_82 = lean_array_push(x_81, x_74);
+x_83 = lean_array_push(x_82, x_78);
+x_84 = lean_alloc_ctor(12, 1, 0);
+lean_ctor_set(x_84, 0, x_83);
+x_85 = l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16;
+x_86 = lean_alloc_ctor(10, 2, 0);
+lean_ctor_set(x_86, 0, x_85);
+lean_ctor_set(x_86, 1, x_84);
+return x_86;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+_start:
+{
+size_t x_4; size_t x_5; lean_object* x_6; 
+x_4 = lean_unbox_usize(x_1);
+lean_dec(x_1);
+x_5 = lean_unbox_usize(x_2);
+lean_dec(x_2);
+x_6 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__2(x_4, x_5, x_3);
+return x_6;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+_start:
+{
+size_t x_4; size_t x_5; lean_object* x_6; 
+x_4 = lean_unbox_usize(x_1);
+lean_dec(x_1);
+x_5 = lean_unbox_usize(x_2);
+lean_dec(x_2);
+x_6 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__4(x_4, x_5, x_3);
+return x_6;
+}
+}
+lean_object* l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+_start:
+{
+size_t x_4; size_t x_5; lean_object* x_6; 
+x_4 = lean_unbox_usize(x_1);
+lean_dec(x_1);
+x_5 = lean_unbox_usize(x_2);
+lean_dec(x_2);
+x_6 = l_Array_mapMUnsafe_map___at_Lean_Aesop_RuleSet_instToMessageDataRuleSet___spec__6(x_4, x_5, x_3);
+return x_6;
 }
 }
 static lean_object* _init_l_Lean_Aesop_RuleSet_empty___closed__1() {
@@ -10849,6 +11487,10 @@ l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__5 = _init_l_Lean_Aesop_in
 lean_mark_persistent(l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__5);
 l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6 = _init_l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6();
 lean_mark_persistent(l_Lean_Aesop_instToFormatNormRule_x27___rarg___closed__6);
+l_Lean_Aesop_defaultNormPenalty___closed__1 = _init_l_Lean_Aesop_defaultNormPenalty___closed__1();
+lean_mark_persistent(l_Lean_Aesop_defaultNormPenalty___closed__1);
+l_Lean_Aesop_defaultNormPenalty = _init_l_Lean_Aesop_defaultNormPenalty();
+lean_mark_persistent(l_Lean_Aesop_defaultNormPenalty);
 l_Lean_Aesop_instInhabitedSafety = _init_l_Lean_Aesop_instInhabitedSafety();
 l_Lean_Aesop_Safety_instToFormatSafety___closed__1 = _init_l_Lean_Aesop_Safety_instToFormatSafety___closed__1();
 lean_mark_persistent(l_Lean_Aesop_Safety_instToFormatSafety___closed__1);
@@ -10868,6 +11510,8 @@ l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__1 = _init_l_Lean_Aesop_in
 lean_mark_persistent(l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__1);
 l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__2 = _init_l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__2();
 lean_mark_persistent(l_Lean_Aesop_instToFormatSafeRule_x27___rarg___closed__2);
+l_Lean_Aesop_defaultSafePenalty = _init_l_Lean_Aesop_defaultSafePenalty();
+lean_mark_persistent(l_Lean_Aesop_defaultSafePenalty);
 l_Lean_Aesop_instInhabitedUnsafeRuleInfo___closed__1 = _init_l_Lean_Aesop_instInhabitedUnsafeRuleInfo___closed__1();
 lean_mark_persistent(l_Lean_Aesop_instInhabitedUnsafeRuleInfo___closed__1);
 l_Lean_Aesop_instInhabitedUnsafeRuleInfo = _init_l_Lean_Aesop_instInhabitedUnsafeRuleInfo();
@@ -10876,7 +11520,6 @@ l_Lean_Aesop_instLTUnsafeRuleInfo = _init_l_Lean_Aesop_instLTUnsafeRuleInfo();
 lean_mark_persistent(l_Lean_Aesop_instLTUnsafeRuleInfo);
 l_Lean_Aesop_instBEqRegularRule_x27___closed__1 = _init_l_Lean_Aesop_instBEqRegularRule_x27___closed__1();
 lean_mark_persistent(l_Lean_Aesop_instBEqRegularRule_x27___closed__1);
-l_Lean_Aesop_RegularRule_x27_successProbability___rarg___closed__1 = _init_l_Lean_Aesop_RegularRule_x27_successProbability___rarg___closed__1();
 l_Lean_Aesop_RegularRule_x27_successProbability___rarg___boxed__const__1 = _init_l_Lean_Aesop_RegularRule_x27_successProbability___rarg___boxed__const__1();
 lean_mark_persistent(l_Lean_Aesop_RegularRule_x27_successProbability___rarg___boxed__const__1);
 l_Lean_Aesop_instInhabitedRuleIndex___closed__1 = _init_l_Lean_Aesop_instInhabitedRuleIndex___closed__1();
@@ -10889,14 +11532,20 @@ l_Lean_Aesop_instInhabitedRuleIndex___closed__4 = _init_l_Lean_Aesop_instInhabit
 lean_mark_persistent(l_Lean_Aesop_instInhabitedRuleIndex___closed__4);
 l_Lean_Aesop_instInhabitedRuleIndex___closed__5 = _init_l_Lean_Aesop_instInhabitedRuleIndex___closed__5();
 lean_mark_persistent(l_Lean_Aesop_instInhabitedRuleIndex___closed__5);
-l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1 = _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1();
-lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__1);
-l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2 = _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2();
-lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__2);
-l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3 = _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3();
-lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__3);
-l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4 = _init_l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4();
-lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToFormatRuleIndex___rarg___closed__4);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__1);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__2);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__3);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__4);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__5);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__6);
+l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7 = _init_l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7();
+lean_mark_persistent(l_Lean_Aesop_RuleIndex_instToMessageDataRuleIndex___rarg___closed__7);
 l_Lean_Aesop_RuleIndex_empty___closed__1 = _init_l_Lean_Aesop_RuleIndex_empty___closed__1();
 lean_mark_persistent(l_Lean_Aesop_RuleIndex_empty___closed__1);
 l_Lean_Aesop_RuleIndex_empty___closed__2 = _init_l_Lean_Aesop_RuleIndex_empty___closed__2();
@@ -10915,6 +11564,38 @@ l_Lean_Aesop_instInhabitedRuleSet___closed__2 = _init_l_Lean_Aesop_instInhabited
 lean_mark_persistent(l_Lean_Aesop_instInhabitedRuleSet___closed__2);
 l_Lean_Aesop_instInhabitedRuleSet = _init_l_Lean_Aesop_instInhabitedRuleSet();
 lean_mark_persistent(l_Lean_Aesop_instInhabitedRuleSet);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__1);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__2);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__3);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__4);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__5);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__6);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__7);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__8);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__9);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__10);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__11);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__12);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__13);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__14);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__15);
+l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16 = _init_l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16();
+lean_mark_persistent(l_Lean_Aesop_RuleSet_instToMessageDataRuleSet___closed__16);
 l_Lean_Aesop_RuleSet_empty___closed__1 = _init_l_Lean_Aesop_RuleSet_empty___closed__1();
 lean_mark_persistent(l_Lean_Aesop_RuleSet_empty___closed__1);
 l_Lean_Aesop_RuleSet_empty___closed__2 = _init_l_Lean_Aesop_RuleSet_empty___closed__2();

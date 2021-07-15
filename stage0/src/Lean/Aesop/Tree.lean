@@ -6,14 +6,16 @@ Authors: Jannis Limperg, Asta Halkjær From
 
 import Lean.Aesop.MutAltTree
 import Lean.Aesop.Rule
+import Lean.Aesop.Util
+import Lean.Aesop.Tracing
 
 open Lean
 open Lean.Meta
 
 @[inlineIfReduce]
 private def Bool.toYesNo : Bool → Format
-  | true => "y"
-  | false => "n"
+  | true => "yes"
+  | false => "no "
 
 namespace Lean.Aesop
 
@@ -100,33 +102,48 @@ namespace GoalData
 def normal? (g : GoalData) : Bool :=
   g.normalizationProof.isSome
 
-structure MessageInfo where
+protected structure MessageInfo where
   showGoal : Bool
   showUnsafeQueue : Bool
   showFailedRapps : Bool
   deriving Inhabited
 
+open GoalData (MessageInfo)
+
+variable [Monad m] [MonadOptions m]
+
+protected def getMessageInfo (traceCtx : TraceContext) : m MessageInfo := do
+  return {
+    showGoal := (← TraceOption.showGoals.get traceCtx)
+    showUnsafeQueue := (← TraceOption.showUnsafeQueues.get traceCtx)
+    showFailedRapps := (← TraceOption.showFailedRapps.get traceCtx)
+  }
+
 open MessageData in
-protected def toMessageData (minfo : MessageInfo) (g : GoalData) : MessageData :=
+protected def toMessageData' (minfo : MessageInfo) (g : GoalData) : MessageData :=
   let unsafeQueueLength :=
     match g.unsafeQueue with
     | none => f!"<not selected>"
     | some q => format q.length
-  m!"Goal {g.id} [{g.successProbability}]" ++ indentDUnlinesSkipEmpty
-    [ m!"Unsafe rules in queue: {unsafeQueueLength}, failed: {g.failedRapps.length}",
-      join
-        [ m!"normal: {g.normal?.toYesNo} | ",
-          m!"proven: {g.proven?.toYesNo} | ",
-          m!"unprovable: {g.unprovable?.toYesNo} | ",
-          m!"irrelevant: {g.irrelevant?.toYesNo}" ],
-      toMessageDataIf minfo.showGoal $
-        m!"Goal:{indentD g.goal}",
-      toMessageDataIf (minfo.showUnsafeQueue && g.unsafeQueue.isSome) $
-        m!"Unsafe queue:{indentDUnlines $ g.unsafeQueue.get!.map toMessageData}",
-      toMessageDataIf minfo.showFailedRapps $
-        m!"Failed rule applications:{indentDUnlines $ g.failedRapps.map toMessageData}" ]
+  m!"Goal {g.id} [{g.successProbability.toHumanString}]" ++ nodeFiltering #[
+    m!"Unsafe rules in queue: {unsafeQueueLength}, failed: {g.failedRapps.length}",
+    join
+      [ m!"normal: {g.normal?.toYesNo} | ",
+        m!"proven: {g.proven?.toYesNo} | ",
+        m!"unprovable: {g.unprovable?.toYesNo} | ",
+        m!"irrelevant: {g.irrelevant?.toYesNo}" ],
+    if ¬ minfo.showGoal then none else
+      m!"Goal:{indentD $ ofGoal g.goal}",
+    if ¬ minfo.showUnsafeQueue && g.unsafeQueue.isSome then none else
+      m!"Unsafe queue:{indentDUnlines $ g.unsafeQueue.get!.map toMessageData}",
+    if ¬ minfo.showFailedRapps then none else
+      m!"Failed rule applications:{indentDUnlines $ g.failedRapps.map toMessageData}" ]
 
-def mkInitial (id : GoalId) (goal : MVarId) (successProbability : Percent) :
+protected def toMessageData (traceCtx : TraceContext) (g : GoalData) :
+    m MessageData :=
+  return g.toMessageData' (← GoalData.getMessageInfo traceCtx)
+
+protected def mkInitial (id : GoalId) (goal : MVarId) (successProbability : Percent) :
     GoalData where
   id := id
   goal := goal
@@ -152,21 +169,34 @@ structure RappData : Type where
 
 namespace RappData
 
-structure MessageInfo where
+protected structure MessageInfo where
   showProof : Bool
 
-open MessageData in
-protected def toMessageData (minfo : MessageInfo) (r : RappData) : MessageData :=
-  m!"Rule application {r.id} [{r.successProbability}]" ++ indentDUnlinesSkipEmpty
-    [ toMessageData r.appliedRule,
-      join
-        [ m!"proven: {r.proven?.toYesNo} | ",
-          m!"unprovable: {r.unprovable?.toYesNo} | ",
-          m!"irrelevant: {r.irrelevant?.toYesNo}" ],
-      toMessageDataIf minfo.showProof $
-        m!"Proof:{indentD r.proof}" ]
+open RappData (MessageInfo)
 
-def mkInitial (id : RappId) (appliedRule : RegularRule)
+variable [Monad m] [MonadOptions m]
+
+protected def getMessageInfo (traceCtx : TraceContext) : m MessageInfo :=
+  return {
+    showProof := (← TraceOption.showProofs.get traceCtx)
+  }
+
+open MessageData in
+protected def toMessageData' (minfo : MessageInfo) (r : RappData) : MessageData :=
+  m!"Rule application {r.id} [{r.successProbability}]" ++ nodeFiltering #[
+    toMessageData r.appliedRule,
+    join
+      [ m!"proven: {r.proven?.toYesNo} | ",
+        m!"unprovable: {r.unprovable?.toYesNo} | ",
+        m!"irrelevant: {r.irrelevant?.toYesNo}" ],
+    if ¬ minfo.showProof then none else
+      m!"Proof:{indentD r.proof}" ]
+
+protected def toMessageData (traceCtx : TraceContext) (r : RappData) :
+    m MessageData :=
+  return r.toMessageData' (← RappData.getMessageInfo traceCtx)
+
+protected def mkInitial (id : RappId) (appliedRule : RegularRule)
   (successProbability : Percent) (proof : Expr) : RappData where
   id := id
   appliedRule := appliedRule
@@ -184,7 +214,7 @@ abbrev GoalRef := IO.Ref Goal
 abbrev Rapp    := MutAltTree IO.RealWorld RappData GoalData
 abbrev RappRef := IO.Ref Rapp
 
-variable {m} [Monad m] [MonadLiftT (ST IO.RealWorld) m]
+variable [Monad m] [MonadLiftT (ST IO.RealWorld) m]
 
 /-! ## Functions on Goals -/
 
@@ -193,7 +223,7 @@ namespace Goal
 /-! ### Constructors -/
 
 @[inline]
-def mk (parent : Option RappRef) (rapps : Array RappRef)
+protected def mk (parent : Option RappRef) (rapps : Array RappRef)
     (data : GoalData) : Goal :=
   MutAltTree.mk data parent rapps
 
@@ -298,7 +328,7 @@ namespace Rapp
 /-! ### Constructors -/
 
 @[inline]
-def mk (parent : Option GoalRef) (subgoals : Array GoalRef)
+protected def mk (parent : Option GoalRef) (subgoals : Array GoalRef)
     (data : RappData) : Rapp :=
   MutAltTree.mk data parent subgoals
 
@@ -378,28 +408,54 @@ end Rapp
 mutual
   private partial def formatTreeGoal (goalMInfo : GoalData.MessageInfo)
       (rappMInfo : RappData.MessageInfo) (goal : Goal) : m MessageData := do
-    let goalMsg := goal.payload.toMessageData goalMInfo
+    let goalMsg := goal.payload.toMessageData' goalMInfo
     let childrenMsgs ← goal.rapps.mapM λ c => do
       formatTreeRapp goalMInfo rappMInfo (← c.get)
     return goalMsg ++ indentD (MessageData.node childrenMsgs)
 
   private partial def formatTreeRapp (goalMInfo : GoalData.MessageInfo)
       (rappMInfo : RappData.MessageInfo) (rapp : Rapp) : m MessageData := do
-    let rappMsg := rapp.payload.toMessageData rappMInfo
+    let rappMsg := rapp.payload.toMessageData' rappMInfo
     let childrenMsgs ← rapp.subgoals.mapM λ c => do
       formatTreeGoal goalMInfo rappMInfo (← c.get)
     return rappMsg ++ indentD (MessageData.node childrenMsgs)
 end
 
-@[inline]
-def Goal.formatTree : GoalData.MessageInfo → RappData.MessageInfo → Goal →
-    m MessageData :=
-  formatTreeGoal
+namespace Goal
+
+def toMessageData {m} [Monad m] [MonadOptions m] (traceCtx : TraceContext)
+    (g : Goal) : m MessageData := do
+  g.payload.toMessageData traceCtx
 
 @[inline]
-def Rapp.formatTree : GoalData.MessageInfo → RappData.MessageInfo → Rapp →
-    m MessageData :=
+def treeToMessageData' :
+    GoalData.MessageInfo → RappData.MessageInfo → Goal → m MessageData :=
+  formatTreeGoal
+
+def treeToMessageData [MonadOptions m] (traceCtx : TraceContext) (g : Goal) :
+    m MessageData := do
+  treeToMessageData' (← GoalData.getMessageInfo traceCtx)
+    (← RappData.getMessageInfo traceCtx) g
+
+end Goal
+
+namespace Rapp
+
+def toMessageData {m} [Monad m] [MonadOptions m] (traceCtx : TraceContext)
+    (r : Rapp) : m MessageData := do
+  r.payload.toMessageData traceCtx
+
+@[inline]
+def treeToMessageData' :
+    GoalData.MessageInfo → RappData.MessageInfo → Rapp → m MessageData :=
   formatTreeRapp
+
+def treeToMessageData [MonadOptions m] (traceCtx : TraceContext) (r : Rapp) :
+    m MessageData := do
+  treeToMessageData' (← GoalData.getMessageInfo traceCtx)
+    (← RappData.getMessageInfo traceCtx) r
+
+end Rapp
 
 /-! ## Miscellaneous Functions on Goals -/
 

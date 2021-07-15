@@ -97,6 +97,8 @@ abbrev NormRule := NormRule' RuleTac
 instance : ToFormat (NormRule' τ) where
   format r := f!"[{r.extra.penalty}] {r.name}"
 
+def defaultNormPenalty : Int := 1
+
 
 /-! ### Safe and Almost Safe Rules -/
 
@@ -131,6 +133,8 @@ abbrev SafeRule := SafeRule' RuleTac
 instance : ToFormat (SafeRule' τ) where
   format r := f!"[{r.extra.penalty}/{r.extra.safety}] {r.name}"
 
+def defaultSafePenalty : Int := 1
+
 
 /-! ### Unsafe Rules -/
 
@@ -149,7 +153,7 @@ abbrev UnsafeRule' := Rule' UnsafeRuleInfo
 abbrev UnsafeRule := UnsafeRule' RuleTac
 
 instance : ToFormat (UnsafeRule' τ) where
-  format r := f!"[{r.extra.successProbability}] {r.name}"
+  format r := f!"[{r.extra.successProbability.toHumanString}] {r.name}"
 
 
 /-! ### Regular Rules -/
@@ -172,7 +176,7 @@ instance : ToFormat (RegularRule' τ) where
     | («unsafe» r) => format r
 
 def successProbability : RegularRule' τ → Percent
-  | (safe r) => ⟨100⟩
+  | (safe r) => Percent.hundred
   | («unsafe» r) => r.extra.successProbability
 
 def isSafe : RegularRule' τ → Bool
@@ -203,14 +207,12 @@ structure RuleIndex (α : Type) where
 
 namespace RuleIndex
 
-open Std.Format in
-instance [ToFormat α] : ToFormat (RuleIndex α) where
-  format ri := Format.join
-    [ "rules indexed by target:",
-      Std.Format.indentD $ format ri.byTarget, -- TODO revisit
-      line,
-      "unindexed rules:",
-      ri.unindexed.map format |>.toList |> unlines |> Std.Format.indentD ]
+open MessageData in
+instance [ToMessageData α] : ToMessageData (RuleIndex α) where
+  toMessageData ri := node #[
+    "indexed by target:" ++ node (ri.byTarget.values.map toMessageData),
+    "unindexed:" ++ node (ri.unindexed.map toMessageData)
+    ]
 
 def empty : RuleIndex α where
   byTarget := DiscrTree.empty
@@ -228,7 +230,8 @@ def add [BEq α] (r : α) (imode : IndexingMode) (ri : RuleIndex α) :
 
 def applicableByTargetRules (ri : RuleIndex α) (goal : MVarId) :
     MetaM (Array α) := do
-  ri.byTarget.getMatch (← getMVarDecl goal).type
+  let target ← instantiateMVarsMVarType goal
+  ri.byTarget.getMatch target
 
 -- TODO remove Inhabited as soon as qsort doesn't require it any more.
 def applicableRules [Inhabited α] [LT α] [DecidableRel (α := α) (· < ·)]
@@ -285,6 +288,16 @@ structure RuleSet where
   deriving Inhabited
 
 namespace RuleSet
+
+open MessageData in
+instance : ToMessageData RuleSet where
+  toMessageData rs :=
+    "Aesop rule set:" ++ node #[
+      "Unsafe rules:" ++ toMessageData rs.unsafeRules,
+      "Safe rules:" ++ toMessageData rs.safeRules,
+      "Normalisation rules:" ++ toMessageData rs.normRules,
+      "Normalisation simp lemmas:" ++ rs.normSimpLemmas.toMessageData
+    ]
 
 def empty : RuleSet where
   normRules := RuleIndex.empty

@@ -1,6 +1,6 @@
 // Lean compiler output
 // Module: Lean.Aesop
-// Imports: Init Lean.Aesop.BestFirstSearch Lean.Aesop.Config Lean.Aesop.Main Lean.Aesop.MutAltTree Lean.Aesop.Percent Lean.Aesop.Rule Lean.Aesop.RuleBuilder Lean.Aesop.RuleTac Lean.Aesop.Tracing Lean.Aesop.Tree Lean.Aesop.Util
+// Imports: Init Lean.Aesop.BestFirstSearch Lean.Aesop.Config Lean.Aesop.DefaultRules Lean.Aesop.Main Lean.Aesop.MutAltTree Lean.Aesop.Percent Lean.Aesop.Rule Lean.Aesop.RuleBuilder Lean.Aesop.RuleTac Lean.Aesop.Tracing Lean.Aesop.Tree Lean.Aesop.Util
 #include <lean/lean.h>
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wunused-parameter"
@@ -16,6 +16,7 @@ extern "C" {
 lean_object* initialize_Init(lean_object*);
 lean_object* initialize_Lean_Aesop_BestFirstSearch(lean_object*);
 lean_object* initialize_Lean_Aesop_Config(lean_object*);
+lean_object* initialize_Lean_Aesop_DefaultRules(lean_object*);
 lean_object* initialize_Lean_Aesop_Main(lean_object*);
 lean_object* initialize_Lean_Aesop_MutAltTree(lean_object*);
 lean_object* initialize_Lean_Aesop_Percent(lean_object*);
@@ -37,6 +38,9 @@ res = initialize_Lean_Aesop_BestFirstSearch(lean_io_mk_world());
 if (lean_io_result_is_error(res)) return res;
 lean_dec_ref(res);
 res = initialize_Lean_Aesop_Config(lean_io_mk_world());
+if (lean_io_result_is_error(res)) return res;
+lean_dec_ref(res);
+res = initialize_Lean_Aesop_DefaultRules(lean_io_mk_world());
 if (lean_io_result_is_error(res)) return res;
 lean_dec_ref(res);
 res = initialize_Lean_Aesop_Main(lean_io_mk_world());

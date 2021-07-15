@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jannis Limperg, Asta Halkjær From
 -/
 
+import Lean.Elab.Syntax
+import Lean.Elab.Tactic.Basic
 import Lean.Message
 import Lean.Meta.DiscrTree
 import Lean.Meta.Tactic.Simp.SimpLemmas
+import Lean.Syntax
 import Std.Data.BinomialHeap
 
 namespace String
@@ -14,7 +17,11 @@ namespace String
 def joinSep (sep : String)  : List String → String
   | [] => ""
   | "" :: ss => joinSep sep ss
-  | s :: ss => s ++ sep ++ joinSep sep ss
+  | s :: ss =>
+    let tail := joinSep sep ss
+    match tail with
+    | "" => s
+    | _ => s ++ sep ++ tail
 
 end String
 
@@ -28,20 +35,21 @@ def isEmptyShallow : Format → Bool
   | _ => false
 
 @[inline]
-def indentDSkipEmpty (f : Format) : Format :=
+def indentDSkipEmpty [ToFormat α] (f : α) : Format :=
+  let f := format f
   if f.isEmptyShallow then nil else indentD f
 
 @[inline]
-def unlines (fs : List Format) : Format :=
+def unlines [ToFormat α] (fs : List α) : Format :=
   Format.joinSep fs line
 
 @[inline]
-def indentDUnlines : List Format → Format :=
+def indentDUnlines [ToFormat α] : List α → Format :=
   indentDSkipEmpty ∘ unlines
 
 @[inline]
-def indentDUnlinesSkipEmpty (fs : List Format) : Format :=
-  indentDSkipEmpty $ unlines $ fs.filter (¬ ·.isEmptyShallow)
+def indentDUnlinesSkipEmpty [ToFormat α] (fs : List α) : Format :=
+  indentDSkipEmpty $ unlines (fs.map format |>.filter (¬ ·.isEmptyShallow))
 
 def formatIf (b : Bool) (f : Thunk Format) : Format :=
   if b then f.get else nil
@@ -79,6 +87,9 @@ def indentDUnlinesSkipEmpty (fs : List MessageData) : MessageData :=
 def toMessageDataIf (b : Bool) (f : Thunk MessageData) : MessageData :=
   if b then f.get else nil
 
+def nodeFiltering (fs : Array (Option MessageData)) : MessageData :=
+  node $ fs.filterMap id
+
 end Lean.MessageData
 
 
@@ -90,6 +101,15 @@ def merge [BEq α] [Hashable α] (s t : PersistentHashSet α) : PersistentHashSe
   where
     @[inline]
     loop s t := s.fold (init := t) λ s a => s.insert a
+
+-- Elements are returned in unspecified order.
+def toList [BEq α] [Hashable α] (s : PersistentHashSet α) : List α :=
+  s.fold (init := []) λ as a => a :: as
+
+-- Elements are returned in unspecified order. (In fact, they are currently
+-- returned in reverse order of `toList`.)
+def toArray [BEq α] [Hashable α] (s : PersistentHashSet α) : Array α :=
+  s.fold (init := #[]) λ as a => as.push a
 
 end Std.PersistentHashSet
 
@@ -156,6 +176,7 @@ def toArray (t : DiscrTree α) : Array (Array Key × α) :=
 
 end DiscrTree
 
+
 namespace SimpLemmas
 
 def merge (s t : SimpLemmas) : SimpLemmas where
@@ -168,6 +189,17 @@ def merge (s t : SimpLemmas) : SimpLemmas where
 def addSimpEntry (s : SimpLemmas) : SimpEntry → SimpLemmas
   | SimpEntry.lemma l => addSimpLemmaEntry s l
   | SimpEntry.toUnfold d => s.addDeclToUnfold d
+
+open MessageData in
+protected def toMessageData (s : SimpLemmas) : MessageData :=
+  node #[
+    "pre lemmas:" ++ node (s.pre.values.map toMessageData),
+    "post lemmas:" ++ node (s.post.values.map toMessageData),
+    "definitions to unfold:" ++ node
+      (s.toUnfold.toArray.qsort Name.lt |>.map toMessageData),
+    "erased entries:" ++ node
+      (s.erased.toArray.qsort Name.lt |>.map toMessageData)
+  ]
 
 end SimpLemmas
 
@@ -239,3 +271,94 @@ def modifyGetM (r : Ref σ α) (f : α → m (β × α)) : m β := do
   return b
 
 end ST.Ref
+
+
+namespace Lean.Meta
+
+def instantiateMVarsMVarType (mvarId : MVarId) : MetaM Expr := do
+  let type ← instantiateMVars (← getMVarDecl mvarId).type
+  setMVarType mvarId type
+  return type
+
+end Lean.Meta
+
+
+namespace Lean.Syntax
+
+-- TODO for debugging, maybe remove
+partial def formatRaw : Syntax → String
+  | missing => "missing"
+  | node kind args =>
+    let args := ", ".joinSep $ args.map formatRaw |>.toList
+    s!"(node {kind} [{args}])"
+  | atom _ val => s!"(atom {val})"
+  | ident _ _ val _ => s!"(ident {val})"
+
+end Lean.Syntax
+
+
+namespace Lean
+
+open Lean.Elab.Tactic
+
+def runTacticMAsMetaM (tac : TacticM Unit) (goal : MVarId) :
+    MetaM (List MVarId) :=
+  run goal tac |>.run'
+
+def runMetaMAsImportM (x : MetaM α) : ImportM α := do
+  let ctx : Core.Context := { options := (← read).opts }
+  let state : Core.State := { env := (← read).env }
+  let r ← x |>.run {} {} |>.run ctx state |>.toIO'
+  match r with
+  | Except.ok ((a, _), _) => pure a
+  | Except.error e => throw $ IO.userError (← e.toMessageData.toString)
+
+def runMetaMAsCoreM (x : MetaM α) : CoreM α :=
+  Prod.fst <$> x.run {} {}
+
+end Lean
+
+
+namespace Lean.Elab.Command
+
+syntax (name := syntaxCatWithUnreservedTokens)
+  "declare_syntax_cat' " ident
+    (&"allow_leading_unreserved_tokens" <|> &"force_leading_unreserved_tokens")? : command
+
+-- Copied from Lean/Elab/Syntax.lean
+private def declareSyntaxCatQuotParser (catName : Name) : CommandElabM Unit := do
+  if let Name.str _ suffix _ := catName then
+    let quotSymbol := "`(" ++ suffix ++ "|"
+    let name := catName ++ `quot
+    -- TODO(Sebastian): this might confuse the pretty printer, but it lets us reuse the elaborator
+    let kind := ``Lean.Parser.Term.quot
+    let cmd ← `(
+      @[termParser] def $(mkIdent name) : Lean.ParserDescr :=
+        Lean.ParserDescr.node $(quote kind) $(quote Lean.Parser.maxPrec)
+          (Lean.ParserDescr.binary `andthen (Lean.ParserDescr.symbol $(quote quotSymbol))
+            (Lean.ParserDescr.binary `andthen
+              (Lean.ParserDescr.unary `incQuotDepth (Lean.ParserDescr.cat $(quote catName) 0))
+              (Lean.ParserDescr.symbol ")"))))
+    elabCommand cmd
+
+open Lean.Parser (LeadingIdentBehavior) in
+@[builtinCommandElab syntaxCatWithUnreservedTokens]
+def elabDeclareSyntaxCatWithUnreservedTokens : CommandElab := fun stx => do
+  let catName  := stx[1].getId
+  let leadingIdentBehavior :=
+    match stx[2].getOptional? with
+    | none => LeadingIdentBehavior.default
+    | some b =>
+      match b.getAtomVal! with
+      | "allow_leading_unreserved_tokens" => LeadingIdentBehavior.both
+      | "force_leading_unreserved_tokens" => LeadingIdentBehavior.symbol
+      | _ => unreachable!
+  let attrName := catName.appendAfter "Parser"
+  let env ← getEnv
+  let env ←
+    liftIO $ Parser.registerParserCategory env attrName catName
+      leadingIdentBehavior
+  setEnv env
+  declareSyntaxCatQuotParser catName
+
+end Lean.Elab.Command

@@ -19,6 +19,7 @@ static lean_object* l_Lean_Aesop_Percent_toHumanString___closed__3;
 double lean_float_of_scientific(lean_object*, uint8_t, lean_object*);
 double lean_float_of_nat(lean_object*);
 lean_object* l_Lean_Aesop_instBEqPercent;
+lean_object* l_Lean_Aesop_Percent_ofNat___boxed(lean_object*);
 lean_object* l_Lean_Aesop_Percent_ofFloat___boxed(lean_object*);
 lean_object* l___private_Lean_Aesop_Percent_0__Lean_Aesop_beqPercent____x40_Lean_Aesop_Percent___hyg_24__match__1___rarg___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 uint8_t l_Float_beq(double, double);
@@ -34,12 +35,14 @@ double l_Lean_Aesop_Percent_instMulPercent(double, double);
 uint8_t l_Float_decLt(double, double);
 lean_object* l_Lean_Aesop_instInhabitedPercent;
 lean_object* lean_float_to_string(double);
+double l_Float_div(double, double);
 lean_object* l_Lean_Aesop_Percent_instMulPercent___boxed(lean_object*, lean_object*);
 uint8_t l___private_Lean_Aesop_Percent_0__Lean_Aesop_beqPercent____x40_Lean_Aesop_Percent___hyg_24_(double, double);
 lean_object* l___private_Lean_Aesop_Percent_0__Lean_Aesop_beqPercent____x40_Lean_Aesop_Percent___hyg_24____boxed(lean_object*, lean_object*);
 lean_object* l___private_Lean_Aesop_Percent_0__Lean_Aesop_beqPercent____x40_Lean_Aesop_Percent___hyg_24__match__1(lean_object*);
 lean_object* l___private_Lean_Aesop_Percent_0__Lean_Aesop_beqPercent____x40_Lean_Aesop_Percent___hyg_24__match__1___rarg(double, double, lean_object*, lean_object*);
 static double l_Lean_Aesop_Percent_ofFloat___closed__2;
+lean_object* l_Lean_Aesop_Percent_ofNat(lean_object*);
 uint8_t l_UInt32_decEq(uint32_t, uint32_t);
 lean_object* l_Lean_Aesop_Percent_toHumanString(double);
 lean_object* l_Lean_Aesop_Percent_toHumanString___lambda__1___boxed(lean_object*);
@@ -357,6 +360,26 @@ x_2 = lean_unbox_float(x_1);
 lean_dec(x_1);
 x_3 = l_Lean_Aesop_Percent_toHumanString(x_2);
 return x_3;
+}
+}
+lean_object* l_Lean_Aesop_Percent_ofNat(lean_object* x_1) {
+_start:
+{
+double x_2; double x_3; double x_4; lean_object* x_5; 
+x_2 = lean_float_of_nat(x_1);
+x_3 = l_Lean_Aesop_Percent_toHumanString___closed__1;
+x_4 = x_2 / x_3;
+x_5 = l_Lean_Aesop_Percent_ofFloat(x_4);
+return x_5;
+}
+}
+lean_object* l_Lean_Aesop_Percent_ofNat___boxed(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; 
+x_2 = l_Lean_Aesop_Percent_ofNat(x_1);
+lean_dec(x_1);
+return x_2;
 }
 }
 lean_object* initialize_Init(lean_object*);

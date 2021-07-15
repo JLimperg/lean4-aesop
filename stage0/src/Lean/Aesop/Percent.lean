@@ -39,4 +39,7 @@ def hundred : Percent :=
 def toHumanString (p : Percent) : String :=
   (toString (p.toFloat * 100) |>.takeWhile (· ≠ '.')) ++ "%"
 
+protected def ofNat (n : Nat) : Option Percent :=
+  Percent.ofFloat $ n.toFloat / 100
+
 end Lean.Aesop.Percent
