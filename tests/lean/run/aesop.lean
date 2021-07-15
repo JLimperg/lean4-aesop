@@ -37,7 +37,7 @@ set_option pp.all false
 set_option trace.Aesop.RuleSet false
 set_option trace.Aesop.Steps false
 
-variable (n : Nat)
+example : EvenOrOdd' 3 := by aesop
 
-example : EvenOrOdd' 3 := by
-  aesop
+-- In this example, the goal is solved already during normalisation.
+example : 0 = 0 := by aesop

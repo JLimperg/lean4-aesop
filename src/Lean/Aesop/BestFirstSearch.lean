@@ -146,41 +146,64 @@ def addRapp (r : RappData) (parent : GoalRef) : SearchM RappRef := do
   parent.modify λ g => g.addChild rref
   return rref
 
-def runNormRule (goal : MVarId) (r : NormRule) : SearchM MVarId := do
+def runNormRule (goal : MVarId) (r : NormRule) : SearchM (Option MVarId) := do
   let subgoals ←
     try runTacticMAsMetaM r.tac.tac goal
     catch e => throwError
-      "aesop: normalization rule {r.name} failed with error:\n{e.toMessageData}"
-      -- TODO show error context
+      m!"aesop: normalization rule {r.name} failed with error:\n  {e.toMessageData}\nIt was run on this goal:" ++
+      MessageData.node #[MessageData.ofGoal goal]
   match subgoals with
-  | [g] => return g
-  | _ => throwError "aesop: normalization rule {r.name} did not produce exactly one subgoal"
+  | [] => return none
+  | [g] => return some g
+  | _ => throwError
+    m!"aesop: normalization rule {r.name} produced more than one subgoal when run on this goal:" ++
+    MessageData.node #[MessageData.ofGoal goal]
 
-def runNormalizationSimp (goal : MVarId) (ctx : Simp.Context) : SearchM MVarId := do
-  let (some goal) ← simpAll goal ctx | throwError
-    "aesop: normalization simp rule solved the goal"
+def runNormalizationSimp (goal : MVarId) (ctx : Simp.Context) : SearchM (Option MVarId) := do
+  let (some goal) ← simpAll goal ctx | return none
+  return some goal
+
+def runNormRules (goal : MVarId)
+    (rules : Array (MVarId → SearchM (Option MVarId))) : SearchM (Option MVarId) := do
+  let mut goal := goal
+  for r in rules do
+    let (some goal') ← r goal | return none
+    goal := goal'
   return goal
 
-def normalizeGoalMVar (goal : MVarId) : SearchM MVarId := do
+def normalizeGoalMVar (goal : MVarId) : SearchM (Option MVarId) := do
   let rs ← readThe RuleSet
   let rules ← rs.applicableNormalizationRules goal
   let (preSimpRules, postSimpRules) :=
     rules.partition λ r => r.extra.penalty < (0 : Int)
-  let goal ← preSimpRules.foldlM (init := goal) runNormRule
   let simpCtx :=
     { (← Simp.Context.mkDefault) with simpLemmas := rs.normSimpLemmas }
-  let goal ← runNormalizationSimp goal simpCtx
-  let goal ← postSimpRules.foldlM (init := goal) runNormRule
-  return goal
+  let rules : Array (MVarId → SearchM (Option MVarId)) :=
+    preSimpRules.map (λ r goal => runNormRule goal r) ++
+    #[λ goal => runNormalizationSimp goal simpCtx] ++
+    postSimpRules.map (λ r goal => runNormRule goal r)
+  runNormRules goal rules
 
-def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Unit :=
-  gref.modifyM λ g => do
-    let (false) ← pure g.normal? | return g
-    trace[Aesop.Steps] "Normalising the goal"
-    trace[Aesop.Steps] "Goal before normalisation:{indentD $ MessageData.ofGoal g.goal}"
-    let newGoal ← normalizeGoalMVar g.goal
+-- Returns true if the goal was solved by normalisation.
+def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Bool := do
+  let g ← gref.get
+  let (false) ← pure g.isNormal | return false
+  trace[Aesop.Steps] "Normalising the goal"
+  trace[Aesop.Steps] "Goal before normalisation:{indentD $ MessageData.ofGoal g.goal}"
+  match (← normalizeGoalMVar g.goal) with
+  | some newGoal =>
     trace[Aesop.Steps] "Goal after normalisation:{indentD $ MessageData.ofGoal newGoal}"
-    return g.setGoal newGoal
+    gref.set $ g.setGoal newGoal
+    return false
+  | none =>
+    trace[Aesop.Steps] "Normalisation solved the goal"
+    gref.set $ g.setProofStatus ProofStatus.provenByNormalization
+    -- Propagate the fact that g was proven up the tree. We start with the
+    -- parent rule application of g (if any). If we were to start with g,
+    -- setProven would set the proof status of g to provenByRuleApplication.
+    let (some parentRef) ← g.parent | return true
+    RappRef.setProven parentRef
+    return true
 
 def runRule (goal : MVarId) (r : TacticM Unit) :
     SearchM (Option (MVarId × List MVarId)) := do
@@ -280,8 +303,11 @@ def applyFirstUnsafeRule (gref : GoalRef) : SearchM Bool := do
     gref.setUnprovable
   return ¬ remainingRules.isEmpty
 
+-- Returns true if the goal should be reinserted into the goal queue.
 def expandGoal (gref : GoalRef) : SearchM Bool := do
-  normalizeGoalIfNecessary gref
+  let (false) ← normalizeGoalIfNecessary gref |
+    -- Goal was already proven by normalisation.
+    return false
   let result ← applyFirstSafeRule gref
   if result.failed?
     then applyFirstUnsafeRule gref
@@ -296,7 +322,7 @@ def expandNextGoal : SearchM Unit := do
   trace[Aesop.Steps] m!"Expanding {← g.payload.toMessageData TraceContext.steps}"
     -- TODO possible performance problem due to non-lazy trace:
     -- https://leanprover.zulipchat.com/#narrow/stream/270676-lean4/topic/.5Brfc.5D.20make.20trace.5B.2E.2E.2E.5D.20lazy
-  unless g.proven? ∨ g.unprovable? ∨ g.irrelevant? do
+  unless g.isProven ∨ g.isUnprovable ∨ g.isIrrelevant do
     let hasMoreRules ← expandGoal gref
     if hasMoreRules then do
       let ag ← ActiveGoal.ofGoalRef gref
@@ -304,7 +330,7 @@ def expandNextGoal : SearchM Unit := do
 
 def finishIfProven : SearchM Bool := do
   let root ← readRootGoal
-  let (true) ← pure (← root.get).proven?
+  let (true) ← pure (← root.get).isProven
     | return false
   root.linkProofs
   if (← isTracingEnabledFor `Aesop.Steps.FinalProof) then
@@ -316,7 +342,7 @@ def finishIfProven : SearchM Bool := do
 
 partial def search : SearchM Unit := do
   let root ← readRootGoal
-  let (false) ← pure (← root.get).unprovable?
+  let (false) ← pure (← root.get).isUnprovable
     | throwError "aesop: failed to prove the goal"
   let done ← finishIfProven
   if ¬ done then
