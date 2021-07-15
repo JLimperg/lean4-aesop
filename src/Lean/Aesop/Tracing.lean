@@ -21,6 +21,7 @@ builtin_initialize
   registerTraceClass `Aesop.Steps.FailedRuleApplications
   registerTraceClass `Aesop.Steps.Proofs
   registerTraceClass `Aesop.Steps.RuleSelection
+  registerTraceClass `Aesop.Steps.FinalProof
   registerTraceClass `Aesop.Tree
   registerTraceClass `Aesop.Tree.Goals
   registerTraceClass `Aesop.Tree.UnsafeQueues
@@ -48,6 +49,7 @@ inductive TraceOption : TraceContext → Type
   | showFailedRapps {c} : TraceOption c
   | showProofs {c} : TraceOption c
   | showRuleSelection : TraceOption TraceContext.steps
+  | showFinalProof : TraceOption TraceContext.steps
 
 namespace TraceOption
 
@@ -58,6 +60,7 @@ protected def toTraceOptionSuffix {c} : TraceOption c → Name
   | showFailedRapps => `FailedRuleApplications
   | showProofs => `Proofs
   | showRuleSelection => `RuleSelection
+  | showFinalProof => `FinalProof
 
 @[inline]
 protected def default {c} : TraceOption c → Bool :=

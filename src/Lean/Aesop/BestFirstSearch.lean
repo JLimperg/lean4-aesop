@@ -307,6 +307,11 @@ def finishIfProven : SearchM Bool := do
   let (true) ← pure (← root.get).proven?
     | return false
   root.linkProofs
+  if (← isTracingEnabledFor `Aesop.Steps.FinalProof) then
+    let mainGoal ← readMainGoal
+    withMVarContext mainGoal do
+      trace[Aesop.Steps.FinalProof] m!"Final proof:" ++ MessageData.node
+        #[← instantiateMVars $ mkMVar mainGoal]
   return true
 
 partial def search : SearchM Unit := do
