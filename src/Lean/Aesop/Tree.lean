@@ -491,13 +491,6 @@ partial def linkProofs (gref : GoalRef) : MetaM Unit := do
   --   "aesop/linkProofs: internal error: proof of rule application {r.id} did not unify with the goal of its parent node {g.id}"
   assignExprMVar g.goal r.proof
 
-/- Only call this after `linkProofs` has been run. -/
-def extractProof (gref : GoalRef) : MetaM Expr := do
-  let g ← gref.get
-  match g.normalizationProof with
-  | none => instantiateMVars $ mkMVar g.goal
-  | some prf => instantiateMVars prf
-
 end GoalRef
 
 /-! ## Propagating Provability/Unprovability/Irrelevance -/

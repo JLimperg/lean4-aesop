@@ -54,9 +54,8 @@ structure State where
 
 def mkInitialContextAndState (rs : RuleSet) (mainGoal : MVarId) :
     MetaM (Context × State) := do
-  let rootGoalMVar ← copyMVar mainGoal
   let rootGoal :=
-    Goal.mk none #[] $ GoalData.mkInitial GoalId.zero rootGoalMVar
+    Goal.mk none #[] $ GoalData.mkInitial GoalId.zero mainGoal
       Percent.hundred
   let rootGoalRef ← ST.mkRef rootGoal
   let ctx := {
@@ -307,8 +306,6 @@ def finishIfProven : SearchM Bool := do
   let (true) ← pure (← root.get).proven?
     | return false
   root.linkProofs
-  let prf ← root.extractProof
-  assignExprMVar (← readMainGoal) prf
   return true
 
 partial def search : SearchM Unit := do
