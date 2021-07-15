@@ -37,7 +37,7 @@ def defaultRules : TermElabM (Array RuleSetMember) := do
   where
     mkRule (decl : Name) (configStx : Syntax) : TermElabM RuleSetMember := do
       let config ← RuleConfig.parse configStx
-      config.applyToDecl decl
+      config.applyToRuleIdent (RuleIdent.const decl)
 
     mkRules (rs : Array (Name × Syntax)) : TermElabM (Array RuleSetMember) :=
       rs.mapM (λ (decl, configStx) => mkRule decl configStx)

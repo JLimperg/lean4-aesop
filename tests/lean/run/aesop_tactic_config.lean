@@ -24,6 +24,15 @@ set_option pp.all false
 set_option trace.Aesop.RuleSet false
 set_option trace.Aesop.Steps false
 
+-- We can add constants as rules.
 example : EvenOrOdd 3 := by
-  aesop (safe [Even.zero, Even.plus_two, Odd.one, Odd.plus_two])
+  aesop
+    (safe [Even.zero, Even.plus_two, Odd.one, Odd.plus_two])
     (unsafe [EvenOrOdd.even 50% (builder apply), EvenOrOdd.odd 50%])
+
+-- Same with local hypotheses, or a mix.
+example : EvenOrOdd 3 := by
+  have h₂ : ∀ n, Odd n → EvenOrOdd n := λ _ p => EvenOrOdd.odd p
+  aesop
+    (safe [Odd.one, Odd.plus_two])
+    (unsafe [EvenOrOdd.even 50%, h₂ 50%])

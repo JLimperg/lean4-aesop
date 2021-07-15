@@ -164,9 +164,10 @@ protected def parseBuilder : Syntax → BuilderClause
   | _ => unreachable!
 
 def toRuleBuilder : BuilderClause → RuleBuilder NormRuleBuilderResult
-  | regular c => λ decl => NormRuleBuilderResult.regular <$> c.toRuleBuilder decl
-  | simpLemma => λ decl => RuleBuilder.normSimpLemmas decl
-  | simpUnfold => λ decl => RuleBuilder.normSimpUnfold decl
+  | regular c => λ goal i =>
+    NormRuleBuilderResult.regular <$> c.toRuleBuilder goal i
+  | simpLemma => RuleBuilder.normSimpLemmas
+  | simpUnfold => RuleBuilder.normSimpUnfold
 
 end BuilderClause
 
@@ -214,17 +215,17 @@ protected def addClauses (clauses : Array Clause)
   clauses.foldlM NormRuleConfig.addClause conf
 
 open NormRuleBuilderResult in
-protected def applyToDecl (decl : Name) (conf : NormRuleConfig) :
-    MetaM RuleSetMember := do
+protected def applyToRuleIdent (i : RuleIdent)
+    (conf : NormRuleConfig) : MetaM RuleSetMember := do
   let builderResult ←
     match conf.builder with
-    | none => RuleBuilder.normRuleDefault decl
-    | some builderClause => builderClause.toRuleBuilder decl
+    | none => RuleBuilder.normRuleDefault i
+    | some builderClause => builderClause.toRuleBuilder i
   match builderResult with
   | regular res =>
     let penalty := conf.penalty.getD 1
     return RuleSetMember'.normRule
-      { name := `norm ++ res.builderName ++ decl
+      { name := `norm ++ res.builderName ++ i.ruleName
         indexingMode := res.indexingMode
         extra := { penalty := penalty }
         tac := res.tac }
@@ -263,15 +264,15 @@ protected def addClauses (clauses : Array Clause) (conf : SafeRuleConfig) :
     m SafeRuleConfig :=
   clauses.foldlM SafeRuleConfig.addClause conf
 
-protected def applyToDecl (decl : Name) (conf : SafeRuleConfig) :
-    MetaM RuleSetMember := do
+protected def applyToRuleIdent (i : RuleIdent)
+    (conf : SafeRuleConfig) : MetaM RuleSetMember := do
   let builderResult ←
     match conf.builder with
-    | none => RuleBuilder.safeRuleDefault decl
-    | some builderClause => builderClause.toRuleBuilder decl
+    | none => RuleBuilder.safeRuleDefault i
+    | some builderClause => builderClause.toRuleBuilder i
   let penalty := conf.penalty.getD 0
   return RuleSetMember'.safeRule
-    { name := `safe ++ builderResult.builderName ++ decl
+    { name := `safe ++ builderResult.builderName ++ i.ruleName
       indexingMode := builderResult.indexingMode,
       extra := { penalty := penalty, safety := Safety.safe }
         -- TODO support almost_safe rules
@@ -309,14 +310,14 @@ protected def addClauses (clauses : Array Clause) (conf : UnsafeRuleConfig) :
     m UnsafeRuleConfig :=
   clauses.foldlM UnsafeRuleConfig.addClause conf
 
-protected def applyToDecl (decl : Name) (conf : UnsafeRuleConfig) :
+protected def applyToRuleIdent (i : RuleIdent) (conf : UnsafeRuleConfig) :
     MetaM RuleSetMember := do
   let builderResult ←
     match conf.builder with
-    | none => RuleBuilder.unsafeRuleDefault decl
-    | some builderClause => builderClause.toRuleBuilder decl
+    | none => RuleBuilder.unsafeRuleDefault i
+    | some builderClause => builderClause.toRuleBuilder i
   return RuleSetMember'.unsafeRule
-    { name := `unsafe ++ builderResult.builderName ++ decl
+    { name := `unsafe ++ builderResult.builderName ++ i.ruleName
       indexingMode := builderResult.indexingMode,
       extra := { successProbability := conf.successProbability },
       tac := builderResult.tac }
@@ -358,10 +359,11 @@ protected def parse : Syntax → m RuleConfig
     RuleConfig.ofKindAndClauses kind clauses
   | _ => unreachable!
 
-protected def applyToDecl (decl : Name) : RuleConfig → MetaM RuleSetMember
-  | norm conf => conf.applyToDecl decl
-  | safe conf => conf.applyToDecl decl
-  | «unsafe» conf => conf.applyToDecl decl
+protected def applyToRuleIdent (i : RuleIdent) :
+  RuleConfig → MetaM RuleSetMember
+  | norm conf => conf.applyToRuleIdent i
+  | safe conf => conf.applyToRuleIdent i
+  | «unsafe» conf => conf.applyToRuleIdent i
 
 end RuleConfig
 
@@ -372,7 +374,8 @@ builtin_initialize extension :
     name := `aesopExt
     mkInitial := return {}
     ofOLeanEntry := λ rs r => runMetaMAsImportM r.ofDescr
-    toOLeanEntry := (·.toDescr)
+    toOLeanEntry := λ r => r.toDescr.getD
+      (panic! "aesop attribute extension: trying to serialise a rule set member without a description")
     addEntry := λ rs r => rs.add r
   }
 
@@ -385,7 +388,7 @@ builtin_initialize
     descr := "Register a declaration as an Aesop rule."
     add := λ decl stx attrKind => do
       let config ← RuleConfig.parse stx
-      let rule ← runMetaMAsCoreM $ config.applyToDecl decl
+      let rule ← runMetaMAsCoreM $ config.applyToRuleIdent (RuleIdent.const decl)
       extension.add rule attrKind
     erase := λ _ =>
       throwError "aesop attribute currently cannot be removed"
@@ -416,30 +419,30 @@ syntax (name := aesop) &"aesop " (aesop_tactic_clause)* : tactic
 end Parser.Tactic
 
 structure AdditionalRule where
-  decl : Name
+  ruleIdent : RuleIdent
   config : RuleConfig
   deriving Inhabited
 
 namespace AdditionalRule
 
 protected def parse (prioParser : Option Syntax → Except String α)
-    (ruleKind : α → RuleKind) : Syntax → m AdditionalRule
-  | `(aesop_rule|$decl:ident $[$prio:aesop_prio]? $clauses:aesop_clause*) => do
+    (ruleKind : α → RuleKind) : Syntax → MetaM AdditionalRule
+  | `(aesop_rule|$i:ident $[$prio:aesop_prio]? $clauses:aesop_clause*) => do
     let prio ←
       match prioParser prio with
       | Except.ok p => p
-      | Except.error e => throwError "aesop: at rule {decl}: {e}"
+      | Except.error e => throwError "aesop: at rule {i}: {e}"
     let clauses ← clauses.mapM Clause.parse
     let config ← RuleConfig.ofKindAndClauses (ruleKind prio) clauses
-    return { decl := decl.getId, config := config }
+    return { ruleIdent := (← RuleIdent.ofName i.getId), config := config }
   | _ => unreachable!
 
 protected def toRuleSetMember (r : AdditionalRule) : MetaM RuleSetMember :=
-  r.config.applyToDecl r.decl
+  r.config.applyToRuleIdent r.ruleIdent
 
 end AdditionalRule
 
-def parseAdditionalRuleClause : Syntax → m (Array AdditionalRule)
+def parseAdditionalRuleClause : Syntax → MetaM (Array AdditionalRule)
   | `(aesop_tactic_clause|(unsafe [$rules:aesop_rule,*])) =>
     (rules : Array Syntax).mapM
       (AdditionalRule.parse parsePrioForUnsafeRule RuleKind.unsafe)
@@ -457,7 +460,8 @@ structure TacticConfig where
 
 namespace TacticConfig
 
-protected def parse : Syntax → m TacticConfig
+-- NOTE: Must be called with the MVar context of the main goal.
+protected def parse : Syntax → MetaM TacticConfig
   | `(tactic|aesop $[$clauses:aesop_tactic_clause]*) => do
     let rs ← clauses.concatMapM parseAdditionalRuleClause
     return { additionalRules := rs }

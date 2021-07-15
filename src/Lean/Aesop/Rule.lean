@@ -70,7 +70,7 @@ def mapExtraM [Monad m] (f : α → m β) (r : Rule' α τ) : m (Rule' β τ) :=
 def mapTacM [Monad m] (f : τ → m ι) (r : Rule' α τ) : m (Rule' α ι) :=
   mapM pure f r
 
-def tacToDescr (r : Rule' α RuleTac) : Rule' α RuleTacDescr :=
+def tacToDescr (r : Rule' α RuleTac) : Rule' α (Option RuleTacDescr) :=
   r.mapTac (·.descr)
 
 def descrToTac (r : Rule' α RuleTacDescr) : MetaM (Rule' α RuleTac) :=
@@ -269,8 +269,8 @@ def mapM [Monad m] (f : τ → m ι) : RuleSetMember' τ → m (RuleSetMember' �
   | unsafeRule r => return unsafeRule (← r.mapTacM f)
   | safeRule r => return safeRule (← r.mapTacM f)
 
-def toDescr (r : RuleSetMember) : RuleSetMemberDescr :=
-  r.map (·.descr)
+def toDescr (r : RuleSetMember) : Option RuleSetMemberDescr :=
+  OptionM.run $ r.mapM (·.descr)
 
 def ofDescr (r : RuleSetMemberDescr) : MetaM RuleSetMember :=
   r.mapM (·.toRuleTac)

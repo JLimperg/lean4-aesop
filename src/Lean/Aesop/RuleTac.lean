@@ -11,26 +11,21 @@ open Lean.Meta
 
 namespace Lean.Aesop
 
-/- A `RuleTacDescr` is a 'recipe' for constructing the tactic used by a rule.
-When we serialise the rule set to an olean file, we serialise `RuleTacDescr`s
-because we can't (currently?) serialise the actual tactics. -/
+-- A `RuleTacDescr` is a 'recipe' for constructing the tactic used by a rule.
+-- When we serialise the rule set to an olean file, we serialise `RuleTacDescr`s
+-- because we can't (currently?) serialise the actual tactics.
 inductive RuleTacDescr
   | applyConst (decl : Name)
   | tactic (decl : Name)
   deriving Inhabited, BEq
 
-/- A `RuleTac` bundles a `RuleTacDescr` and the tactic that was computed from
-the description. -/
+-- A `RuleTac` bundles a `RuleTacDescr` and the tactic that was computed from
+-- the description. Local rules do not have descriptions since we never
+-- serialise them.
 structure RuleTac where
   tac : TacticM Unit
-  descr : RuleTacDescr
+  descr : Option RuleTacDescr
   deriving Inhabited
-
-namespace RuleTac
-
-end RuleTac
-
-abbrev RuleTacBuilder := MetaM RuleTac
 
 namespace RuleTacBuilder
 
@@ -54,16 +49,26 @@ constant evalTacticConst : Name → TacticM Unit
 -- I think the above use of `evalConst` is safe because we call it at a concrete
 -- type, making sure that the constant actually has that type.
 
-def tactic (decl : Name) : RuleTacBuilder := do
+def tactic (decl : Name) : MetaM RuleTac := do
   checkTacticM decl
   return { tac := evalTacticConst decl, descr := RuleTacDescr.tactic decl }
 
-def apply (decl : Name) : RuleTacBuilder := return {
-  tac := liftMetaTactic λ goal => do
-    Lean.Meta.apply goal (← mkConstWithFreshMVarLevels decl)
-    -- TODO Go via apply tactic syntax to ensure intuitive behaviour?
-  descr := RuleTacDescr.applyConst decl
-}
+def apply (decl : Name) : MetaM RuleTac :=
+  return {
+    tac := liftMetaTactic λ goal => do
+      Lean.Meta.apply goal (← mkConstWithFreshMVarLevels decl)
+      -- TODO Go via apply tactic syntax to ensure intuitive behaviour?
+    descr := RuleTacDescr.applyConst decl
+  }
+
+def applyFVar (userName : Name) : MetaM RuleTac := do
+  let _ ← getLocalDeclFromUserName userName
+  return {
+    tac := liftMetaTactic λ goal => do
+      let decl ← getLocalDeclFromUserName userName
+      Lean.Meta.apply goal (mkFVar decl.fvarId)
+    descr := none
+  }
 
 end RuleTacBuilder
 
