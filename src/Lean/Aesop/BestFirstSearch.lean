@@ -240,7 +240,8 @@ def applyRegularRule (parentRef : GoalRef) (rule : RegularRule) :
 def applyFirstSafeRule (gref : GoalRef) : SearchM RuleResult := do
   let g ← gref.get
   let rules ← (← readThe RuleSet).applicableSafeRules g.goal
-  trace[Aesop.Steps] m!"Selected safe rules:" ++ MessageData.node #[]
+  trace[Aesop.Steps] m!"Selected safe rules:" ++ MessageData.node
+    (rules.map toMessageData)
   trace[Aesop.Steps] "Trying safe rules"
   let mut result := RuleResult.failed
   for r in rules do
