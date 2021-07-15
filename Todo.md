@@ -1,9 +1,7 @@
 # Todo
 
-- add tactic runtime configuration options
-  - additional rules
-  - erased rules
 - allow aesop attr to be removed
+- allow rules to be removed when calling the tactic
 - add forward rules
   - by-hyp indexing
   - per-hyp rules
@@ -12,10 +10,11 @@
 - document how to merge upstream (wrt stage0 conflicts)
 - allow registration of MetaM and TacticM tactics (and maybe SomeM Syntax for
   tactic syntax quotations?)
-- refactor config parsing code to try to use syntax quotations (again)
 - suppress case tags in trace messages
 - compress trace messages for new goals added
-- check that we create the right mvar kind for goals (namely synthetic opaque
-  metas; see docs in MetavarContext.lean)
 - deal with the interaction between safe tactics and metas (lots of safe
   tactics become unsafe if they assign metas)
+- allow normalization rules to solve the goal
+- Maybe support additional rules that aren't constants or fvars. (Users can
+  work around this restriction by adding the rule to the context as a hyp, but
+  we could do this for them.)
