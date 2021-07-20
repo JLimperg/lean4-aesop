@@ -22,6 +22,7 @@ builtin_initialize
   registerTraceClass `Aesop.Steps.Proofs
   registerTraceClass `Aesop.Steps.RuleSelection
   registerTraceClass `Aesop.Steps.FinalProof
+  registerTraceClass `Aesop.Steps.Normalization
   registerTraceClass `Aesop.Tree
   registerTraceClass `Aesop.Tree.Goals
   registerTraceClass `Aesop.Tree.UnsafeQueues
@@ -50,6 +51,7 @@ inductive TraceOption : TraceContext → Type
   | showProofs {c} : TraceOption c
   | showRuleSelection : TraceOption TraceContext.steps
   | showFinalProof : TraceOption TraceContext.steps
+  | showNormalizationSteps : TraceOption TraceContext.steps
 
 namespace TraceOption
 
@@ -61,6 +63,7 @@ protected def toTraceOptionSuffix {c} : TraceOption c → Name
   | showProofs => `Proofs
   | showRuleSelection => `RuleSelection
   | showFinalProof => `FinalProof
+  | showNormalizationSteps => `Normalization
 
 @[inline]
 protected def default {c} : TraceOption c → Bool :=
@@ -68,7 +71,7 @@ protected def default {c} : TraceOption c → Bool :=
 
 @[inline]
 def get [Monad m] [MonadOptions m] (c : TraceContext) (o : TraceOption c) :
-    m Bool := do
+    m Bool :=
   getBoolOption (c.toTraceOptionPrefix ++ o.toTraceOptionSuffix) o.default
 
 end TraceOption

@@ -163,12 +163,14 @@ def runNormalizationSimp (goal : MVarId) (ctx : Simp.Context) : SearchM (Option 
   let (some goal) ← simpAll goal ctx | return none
   return some goal
 
-def runNormRules (goal : MVarId)
-    (rules : Array (MVarId → SearchM (Option MVarId))) : SearchM (Option MVarId) := do
+def runNormRules (goal : MVarId) (rules : Array NormRule) :
+    SearchM (Option MVarId) := do
   let mut goal := goal
   for r in rules do
-    let (some goal') ← r goal | return none
+    trace[Aesop.Steps.Normalization] "Running {r}"
+    let (some goal') ← runNormRule goal r | return none
     goal := goal'
+    trace[Aesop.Steps.Normalization] "Goal after {r}:{indentD $ MessageData.ofGoal goal}"
   return goal
 
 def normalizeGoalMVar (goal : MVarId) : SearchM (Option MVarId) := do
@@ -176,13 +178,14 @@ def normalizeGoalMVar (goal : MVarId) : SearchM (Option MVarId) := do
   let rules ← rs.applicableNormalizationRules goal
   let (preSimpRules, postSimpRules) :=
     rules.partition λ r => r.extra.penalty < (0 : Int)
+  let (some goal) ← runNormRules goal preSimpRules | return none
   let simpCtx :=
     { (← Simp.Context.mkDefault) with simpLemmas := rs.normSimpLemmas }
-  let rules : Array (MVarId → SearchM (Option MVarId)) :=
-    preSimpRules.map (λ r goal => runNormRule goal r) ++
-    #[λ goal => runNormalizationSimp goal simpCtx] ++
-    postSimpRules.map (λ r goal => runNormRule goal r)
-  runNormRules goal rules
+  trace[Aesop.Steps.Normalization] "Running normalization simp"
+  let (some goal) ← runNormalizationSimp goal simpCtx | return none
+  trace[Aesop.Steps.Normalization]
+    "Goal after normalization simp:{indentD $ MessageData.ofGoal goal}"
+  runNormRules goal postSimpRules
 
 -- Returns true if the goal was solved by normalisation.
 def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Bool := do
