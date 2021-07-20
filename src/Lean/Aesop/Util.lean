@@ -127,6 +127,54 @@ def merge [BEq α] [Hashable α] (m n : PersistentHashMap α β) (f : α → β 
       | some v' => map.insert k (f k v v')
       | none => map.insert k v
 
+universe u v
+
+-- We need to give u and v explicitly here, otherwise the compiler gets
+-- confused.
+unsafe def forInImpl [BEq α] [Hashable α] {m : Type u → Type v} [Monad m]
+    (map : PersistentHashMap α β) (init : σ) (f : α × β → σ → m (ForInStep σ)) :
+    m σ := do
+  match (← go map.root init) with
+  | ForInStep.yield r => pure r
+  | ForInStep.done r => pure r
+  where
+    go : Node α β → σ → m (ForInStep σ)
+      | Node.collision keys vals heq, acc =>
+        let rec go' (i : Nat) (acc : σ) : m (ForInStep σ) := do
+          if h : i < keys.size then
+            let k := keys.get ⟨i, h⟩
+            let v := vals.get ⟨i, heq ▸ h⟩
+            match (← f (k, v) acc) with
+            | ForInStep.done result => return ForInStep.done result
+            | ForInStep.yield acc => go' (i + 1) acc
+          else
+            return ForInStep.yield acc
+        go' 0 acc
+      | Node.entries entries, acc => do
+        let mut acc := acc
+        for entry in entries do
+          match entry with
+          | Entry.null => pure ⟨⟩
+          | Entry.entry k v =>
+            match (← f (k, v) acc) with
+            | ForInStep.done result => return ForInStep.done result
+            | ForInStep.yield acc' => acc := acc'
+          | Entry.ref node =>
+            match (← go node acc) with
+            | ForInStep.done result => return ForInStep.done result
+            | ForInStep.yield acc' => acc := acc'
+        return ForInStep.yield acc
+
+-- Inhabited inference is being stupid here, so we can't use `partial`.
+@[implementedBy forInImpl]
+constant forIn [BEq α] [Hashable α] {m : Type u → Type v} [Monad m]
+  (map : PersistentHashMap α β) (init : σ) (f : α × β → σ → m (ForInStep σ)) :
+  m σ :=
+  pure init
+
+instance [BEq α] [Hashable α] : ForIn m (PersistentHashMap α β) (α × β) where
+  forIn map := map.forIn
+
 end Std.PersistentHashMap
 
 
@@ -399,6 +447,5 @@ def evalRunTactic : Tactic
     let t ← evalTacticMUnit t
     t
   | _ => unreachable!
-
 
 end Lean.Elab.Tactic
