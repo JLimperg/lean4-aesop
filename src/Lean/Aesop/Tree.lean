@@ -101,24 +101,20 @@ def isProven : ProofStatus → Bool
 end ProofStatus
 
 
--- Invariant: if proofStatus = provenByNormalization then
--- normalizationProof ≠ none
+-- Invariant: if proofStatus = provenByNormalization then isNormal = true
 structure GoalData : Type where
   id : GoalId
   goal : MVarId
   successProbability : Percent
-  normalizationProof : Option Expr
   failedRapps : List RegularRule
   unsafeQueue : Option (List UnsafeRule)
   proofStatus : ProofStatus
   isUnprovable : Bool
   isIrrelevant : Bool
+  isNormal : Bool
   deriving Inhabited
 
 namespace GoalData
-
-def isNormal (g : GoalData) : Bool :=
-  g.normalizationProof.isSome
 
 def isProven (g : GoalData) : Bool :=
   g.proofStatus.isProven
@@ -169,12 +165,12 @@ protected def mkInitial (id : GoalId) (goal : MVarId) (successProbability : Perc
   id := id
   goal := goal
   successProbability := successProbability
-  normalizationProof := none
   failedRapps := []
   unsafeQueue := none
   proofStatus := ProofStatus.unproven
   isUnprovable := false
   isIrrelevant := false
+  isNormal := false
 
 end GoalData
 
@@ -183,9 +179,9 @@ structure RappData : Type where
   appliedRule : RegularRule
   successProbability : Percent
   proof : Expr
-  proven? : Bool
-  unprovable? : Bool
-  irrelevant? : Bool
+  isProven : Bool
+  isUnprovable : Bool
+  isIrrelevant : Bool
   deriving Inhabited
 
 namespace RappData
@@ -207,9 +203,9 @@ protected def toMessageData' (minfo : MessageInfo) (r : RappData) : MessageData 
   m!"Rule application {r.id} [{r.successProbability}]" ++ nodeFiltering #[
     toMessageData r.appliedRule,
     join
-      [ m!"proven: {r.proven?.toYesNo} | ",
-        m!"unprovable: {r.unprovable?.toYesNo} | ",
-        m!"irrelevant: {r.irrelevant?.toYesNo}" ],
+      [ m!"proven: {r.isProven.toYesNo} | ",
+        m!"unprovable: {r.isUnprovable.toYesNo} | ",
+        m!"irrelevant: {r.isIrrelevant.toYesNo}" ],
     if ¬ minfo.showProof then none else
       m!"Proof:{indentD r.proof}" ]
 
@@ -223,9 +219,9 @@ protected def mkInitial (id : RappId) (appliedRule : RegularRule)
   appliedRule := appliedRule
   successProbability := successProbability
   proof := proof
-  proven? := false
-  unprovable? := false
-  irrelevant? := false
+  isProven := false
+  isUnprovable := false
+  isIrrelevant := false
 
 end RappData
 
@@ -267,10 +263,6 @@ def successProbability (g : Goal) : Percent :=
   g.payload.successProbability
 
 @[inline]
-def normalizationProof (g : Goal) : Option Expr :=
-  g.payload.normalizationProof
-
-@[inline]
 def failedRapps (g : Goal) : List RegularRule :=
   g.payload.failedRapps
 
@@ -294,6 +286,10 @@ def isUnprovable (g : Goal) : Bool :=
 def isIrrelevant (g : Goal) : Bool :=
   g.payload.isIrrelevant
 
+@[inline]
+def isNormal (g : Goal) : Bool :=
+  g.payload.isNormal
+
 /-! ### Setters -/
 
 @[inline]
@@ -307,10 +303,6 @@ def setGoal (goal : MVarId) (g : Goal) : Goal :=
 @[inline]
 def setSuccessProbability (successProbability : Percent) (g : Goal) : Goal :=
   g.modifyPayload λ d => { d with successProbability := successProbability }
-
-@[inline]
-def setNormalizationProof (normalizationProof : Expr) (g : Goal) : Goal :=
-  g.modifyPayload λ d => { d with normalizationProof := normalizationProof }
 
 @[inline]
 def setFailedRapps (failedRapps : List RegularRule) (g : Goal) : Goal :=
@@ -332,11 +324,11 @@ def setUnprovable (unprovable? : Bool) (g : Goal) : Goal :=
 def setIrrelevant (irrelevant? : Bool) (g : Goal) : Goal :=
   g.modifyPayload λ d => { d with isIrrelevant := irrelevant? }
 
-/-! ### Miscellaneous -/
-
 @[inline]
-def isNormal (g : Goal) : Bool :=
-  g.payload.isNormal
+def setNormal (normal? : Bool) (g : Goal) : Goal :=
+  g.modifyPayload λ d => { d with isNormal := normal? }
+
+/-! ### Miscellaneous -/
 
 def hasNoUnexpandedUnsafeRule (g : Goal) : Bool :=
   match g.unsafeQueue with
@@ -380,16 +372,16 @@ def proof (r : Rapp) : Expr :=
   r.payload.proof
 
 @[inline]
-def proven? (r : Rapp) : Bool :=
-  r.payload.proven?
+def isProven (r : Rapp) : Bool :=
+  r.payload.isProven
 
 @[inline]
-def unprovable? (r : Rapp) : Bool :=
-  r.payload.unprovable?
+def isUnprovable (r : Rapp) : Bool :=
+  r.payload.isUnprovable
 
 @[inline]
-def irrelevant? (r : Rapp) : Bool :=
-  r.payload.irrelevant?
+def isIrrelevant (r : Rapp) : Bool :=
+  r.payload.isIrrelevant
 
 -- Setters
 
@@ -410,16 +402,16 @@ def setProof (proof : Expr) (r : Rapp) : Rapp :=
   r.modifyPayload λ r => { r with proof := proof }
 
 @[inline]
-def setProven? (proven? : Bool) (r : Rapp) : Rapp :=
-  r.modifyPayload λ r => { r with proven? := proven? }
+def setProven (proven? : Bool) (r : Rapp) : Rapp :=
+  r.modifyPayload λ r => { r with isProven := proven? }
 
 @[inline]
-def setUnprovable? (unprovable? : Bool) (r : Rapp) : Rapp :=
-  r.modifyPayload λ r => { r with unprovable? := unprovable? }
+def setUnprovable (unprovable? : Bool) (r : Rapp) : Rapp :=
+  r.modifyPayload λ r => { r with isUnprovable := unprovable? }
 
 @[inline]
-def setIrrelevant? (irrelevant? : Bool) (r : Rapp) : Rapp :=
-  r.modifyPayload λ r => { r with irrelevant? := irrelevant? }
+def setIrrelevant (irrelevant? : Bool) (r : Rapp) : Rapp :=
+  r.modifyPayload λ r => { r with isIrrelevant := irrelevant? }
 
 /-! ### Miscellaneous -/
 
@@ -491,7 +483,7 @@ def mayHaveUnexpandedRapp (g : Goal) : m Bool := do pure $
   ¬ (← g.rapps.anyM λ r => return (← r.get : Rapp).appliedRule.isSafe)
 
 def hasProvableRapp (g : Goal) : m Bool :=
-  g.rapps.anyM λ r => return ¬ (← r.get).unprovable?
+  g.rapps.anyM λ r => return ¬ (← r.get).isUnprovable
 
 end Goal
 
@@ -511,7 +503,7 @@ partial def linkProofs (gref : GoalRef) : MetaM Unit := do
   | ProofStatus.provenByRuleApplication =>
     let provenRapp? ← g.rapps.findSomeM? λ r => do
       let r ← r.get
-      return if r.proven? then some r else none
+      return if r.isProven then some r else none
     let (some provenRapp) ← pure provenRapp? | throwError
       "aesop/linkProofs: internal error: goal {g.id} marked as proven but does not have a proven rule application"
     provenRapp.subgoals.forM linkProofs
@@ -539,10 +531,10 @@ def Internal.setIrrelevant : Sum GoalRef RappRef → m Unit :=
           return true)
     (λ rref => do
       let r : Rapp ← rref.get
-      if r.irrelevant?
+      if r.isIrrelevant
         then return false
         else do
-          rref.set $ r.setIrrelevant? true
+          rref.set $ r.setIrrelevant true
           return true)
 
 def GoalRef.setIrrelevant : GoalRef → m Unit :=
@@ -567,7 +559,7 @@ def Internal.setProven : Sum GoalRef RappRef → m Unit :=
       if ¬ (← r.allSubgoalsProven)
         then return false
         else do
-          rref.set $ r.setProven? true
+          rref.set $ r.setProven true
           let siblings ← MutAltTree.siblings rref
           siblings.forM RappRef.setIrrelevant
           return true)
@@ -596,7 +588,7 @@ def Internal.setUnprovable : Sum GoalRef RappRef → m Unit :=
           return true)
     -- Rapps are unconditionally marked as unprovable.
     (λ rref => do
-      rref.modify λ (r : Rapp) => r.setUnprovable? true
+      rref.modify λ (r : Rapp) => r.setUnprovable true
       return true)
 
 def GoalRef.setUnprovable : GoalRef → m Unit :=

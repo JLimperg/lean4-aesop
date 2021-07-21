@@ -196,11 +196,15 @@ def normalizeGoalIfNecessary (gref : GoalRef) : SearchM Bool := do
   match (← normalizeGoalMVar g.goal) with
   | some newGoal =>
     trace[Aesop.Steps] "Goal after normalisation:{indentD $ MessageData.ofGoal newGoal}"
-    gref.set $ g.setGoal newGoal
+    let g := g.setGoal newGoal
+    let g := g.setNormal true
+    gref.set g
     return false
   | none =>
     trace[Aesop.Steps] "Normalisation solved the goal"
-    gref.set $ g.setProofStatus ProofStatus.provenByNormalization
+    let g := g.setProofStatus ProofStatus.provenByNormalization
+    let g := g.setNormal true
+    gref.set g
     -- Propagate the fact that g was proven up the tree. We start with the
     -- parent rule application of g (if any). If we were to start with g,
     -- setProven would set the proof status of g to provenByRuleApplication.
@@ -242,7 +246,7 @@ def applyRegularRule (parentRef : GoalRef) (rule : RegularRule) :
     let r :=
       { RappData.mkInitial RappId.dummy rule successProbability
           (mkMVar proofMVar) with
-        proven? := true }
+        isProven := true }
     let _ ← addRapp r parentRef
     parentRef.setProven
     return RuleResult.proven
