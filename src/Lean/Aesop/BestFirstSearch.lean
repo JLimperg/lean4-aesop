@@ -360,8 +360,11 @@ def applyRegularRule (parentRef : GoalRef) (rule : RegularRule) :
     return RuleResult.failed
 
 def applyFirstSafeRule (gref : GoalRef) : SearchM RuleResult := do
-  -- TODO exit early if we've already tried the safe rules
   let g ← gref.get
+  let (none) ← g.unsafeQueue
+    | return RuleResult.failed
+    -- If the unsafe rules have been selected, we have already tried all the
+    -- safe rules.
   let ruleSet ← readThe RuleSet
   let (rules, _) ← g.runMetaMInParentState $ ruleSet.applicableSafeRules g.goal
   trace[Aesop.Steps] m!"Selected safe rules:" ++ MessageData.node
