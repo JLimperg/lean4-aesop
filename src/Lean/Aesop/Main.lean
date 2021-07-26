@@ -21,6 +21,6 @@ def evalAesop : Tactic := λ stx =>
     let rs := rs.addArray (← defaultRules)
     let rs := rs.addArray (← config.additionalRuleSetMembers)
     trace[Aesop.RuleSet] m!"{rs}"
-    search rs
+    searchTactic rs
 
 end Lean.Aesop

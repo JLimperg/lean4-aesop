@@ -19,7 +19,6 @@ builtin_initialize
   registerTraceClass `Aesop.Steps.Goals
   registerTraceClass `Aesop.Steps.UnsafeQueues
   registerTraceClass `Aesop.Steps.FailedRuleApplications
-  registerTraceClass `Aesop.Steps.Proofs
   registerTraceClass `Aesop.Steps.RuleSelection
   registerTraceClass `Aesop.Steps.FinalProof
   registerTraceClass `Aesop.Steps.Normalization
@@ -27,7 +26,6 @@ builtin_initialize
   registerTraceClass `Aesop.Tree.Goals
   registerTraceClass `Aesop.Tree.UnsafeQueues
   registerTraceClass `Aesop.Tree.FailedRuleApplications
-  registerTraceClass `Aesop.Tree.Proofs
 
 namespace Lean.Aesop
 
@@ -45,10 +43,9 @@ protected def toTraceOptionPrefix : TraceContext → Name
 end TraceContext
 
 inductive TraceOption : TraceContext → Type
-  | showGoals {c} : TraceOption c
-  | showUnsafeQueues {c} : TraceOption c
-  | showFailedRapps {c} : TraceOption c
-  | showProofs {c} : TraceOption c
+  | showGoals : TraceOption c
+  | showUnsafeQueues : TraceOption c
+  | showFailedRapps : TraceOption c
   | showRuleSelection : TraceOption TraceContext.steps
   | showFinalProof : TraceOption TraceContext.steps
   | showNormalizationSteps : TraceOption TraceContext.steps
@@ -60,7 +57,6 @@ protected def toTraceOptionSuffix {c} : TraceOption c → Name
   | showGoals => `Goals
   | showUnsafeQueues => `UnsafeQueues
   | showFailedRapps => `FailedRuleApplications
-  | showProofs => `Proofs
   | showRuleSelection => `RuleSelection
   | showFinalProof => `FinalProof
   | showNormalizationSteps => `Normalization

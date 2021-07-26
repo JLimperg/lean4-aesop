@@ -45,8 +45,8 @@ instance : LT GoalId where
 instance : DecidableRel (α := GoalId) (· < ·) :=
   λ n m => inferInstanceAs (Decidable (n.toNat < m.toNat))
 
-instance : ToFormat GoalId where
-  format n := format n.toNat
+instance : ToString GoalId where
+  toString n := toString n.toNat
 
 end GoalId
 
@@ -77,8 +77,8 @@ instance : LT RappId where
 instance : DecidableRel (α := RappId) (· < ·) :=
   λ n m => inferInstanceAs $ Decidable (n.toNat < m.toNat)
 
-instance : ToFormat RappId where
-  format n := format n.toNat
+instance : ToString RappId where
+  toString n := toString n.toNat
 
 end RappId
 
@@ -127,9 +127,8 @@ protected structure MessageInfo where
 
 open GoalData (MessageInfo)
 
-variable [Monad m] [MonadOptions m]
-
-protected def getMessageInfo (traceCtx : TraceContext) : m MessageInfo := do
+protected def getMessageInfo [Monad m] [MonadOptions m]
+    (traceCtx : TraceContext) : m MessageInfo := do
   return {
     showGoal := (← TraceOption.showGoals.get traceCtx)
     showUnsafeQueue := (← TraceOption.showUnsafeQueues.get traceCtx)
@@ -137,12 +136,14 @@ protected def getMessageInfo (traceCtx : TraceContext) : m MessageInfo := do
   }
 
 open MessageData in
-protected def toMessageData' (minfo : MessageInfo) (g : GoalData) : MessageData :=
+protected def toMessageData (traceCtx : TraceContext) (g : GoalData) :
+    MetaM MessageData := do
+  let minfo ← GoalData.getMessageInfo traceCtx
   let unsafeQueueLength :=
     match g.unsafeQueue with
     | none => f!"<not selected>"
     | some q => format q.length
-  m!"Goal {g.id} [{g.successProbability.toHumanString}]" ++ nodeFiltering #[
+  return m!"Goal {g.id} [{g.successProbability.toHumanString}]" ++ nodeFiltering #[
     m!"Unsafe rules in queue: {unsafeQueueLength}, failed: {g.failedRapps.length}",
     join
       [ m!"normal: {g.isNormal.toYesNo} | ",
@@ -156,12 +157,8 @@ protected def toMessageData' (minfo : MessageInfo) (g : GoalData) : MessageData 
     if ¬ minfo.showFailedRapps then none else
       m!"Failed rule applications:{indentDUnlines $ g.failedRapps.map toMessageData}" ]
 
-protected def toMessageData (traceCtx : TraceContext) (g : GoalData) :
-    m MessageData :=
-  return g.toMessageData' (← GoalData.getMessageInfo traceCtx)
-
-protected def mkInitial (id : GoalId) (goal : MVarId) (successProbability : Percent) :
-    GoalData where
+protected def mkInitial (id : GoalId) (goal : MVarId)
+    (successProbability : Percent) : GoalData where
   id := id
   goal := goal
   successProbability := successProbability
@@ -176,9 +173,11 @@ end GoalData
 
 structure RappData : Type where
   id : RappId
+  state : Meta.SavedState
+    -- This is the state *after* the rule was successfully applied, so the goal
+    -- mvar is assigned in this state.
   appliedRule : RegularRule
   successProbability : Percent
-  proof : Expr
   isProven : Bool
   isUnprovable : Bool
   isIrrelevant : Bool
@@ -187,38 +186,26 @@ structure RappData : Type where
 namespace RappData
 
 protected structure MessageInfo where
-  showProof : Bool
 
 open RappData (MessageInfo)
 
-variable [Monad m] [MonadOptions m]
-
-protected def getMessageInfo (traceCtx : TraceContext) : m MessageInfo :=
-  return {
-    showProof := (← TraceOption.showProofs.get traceCtx)
-  }
-
 open MessageData in
-protected def toMessageData' (minfo : MessageInfo) (r : RappData) : MessageData :=
-  m!"Rule application {r.id} [{r.successProbability}]" ++ nodeFiltering #[
-    toMessageData r.appliedRule,
-    join
-      [ m!"proven: {r.isProven.toYesNo} | ",
-        m!"unprovable: {r.isUnprovable.toYesNo} | ",
-        m!"irrelevant: {r.isIrrelevant.toYesNo}" ],
-    if ¬ minfo.showProof then none else
-      m!"Proof:{indentD r.proof}" ]
+protected def toMessageData [Monad m] [MonadOptions m] (traceCtx : TraceContext)
+    (r : RappData) : m MessageData := do
+  return m!"Rapp {r.id} [{r.successProbability.toHumanString}]" ++
+    nodeFiltering #[
+      toMessageData r.appliedRule,
+      join
+        [ m!"proven: {r.isProven.toYesNo} | ",
+          m!"unprovable: {r.isUnprovable.toYesNo} | ",
+          m!"irrelevant: {r.isIrrelevant.toYesNo}" ] ]
 
-protected def toMessageData (traceCtx : TraceContext) (r : RappData) :
-    m MessageData :=
-  return r.toMessageData' (← RappData.getMessageInfo traceCtx)
-
-protected def mkInitial (id : RappId) (appliedRule : RegularRule)
-  (successProbability : Percent) (proof : Expr) : RappData where
+protected def mkInitial (id : RappId) (state : Meta.SavedState)
+    (appliedRule : RegularRule) (successProbability : Percent) : RappData where
   id := id
+  state := state
   appliedRule := appliedRule
   successProbability := successProbability
-  proof := proof
   isProven := false
   isUnprovable := false
   isIrrelevant := false
@@ -232,6 +219,7 @@ abbrev Rapp    := MutAltTree IO.RealWorld RappData GoalData
 abbrev RappRef := IO.Ref Rapp
 
 variable [Monad m] [MonadLiftT (ST IO.RealWorld) m]
+
 
 /-! ## Functions on Goals -/
 
@@ -352,6 +340,12 @@ protected def mk (parent : Option GoalRef) (subgoals : Array GoalRef)
 /-! ### Getters -/
 
 @[inline]
+def parent! (r : Rapp) : GoalRef :=
+  match r.parent with
+  | some p => p
+  | none => panic! s!"aesop/Rapp.parent!: rapp {r.payload.id} "
+
+@[inline]
 def subgoals (r : Rapp) : Array GoalRef :=
   r.children
 
@@ -360,16 +354,16 @@ def id (r : Rapp) : RappId :=
   r.payload.id
 
 @[inline]
+def state (r : Rapp) : Meta.SavedState :=
+  r.payload.state
+
+@[inline]
 def appliedRule (r : Rapp) : RegularRule :=
   r.payload.appliedRule
 
 @[inline]
 def successProbability (r : Rapp) : Percent :=
   r.payload.successProbability
-
-@[inline]
-def proof (r : Rapp) : Expr :=
-  r.payload.proof
 
 @[inline]
 def isProven (r : Rapp) : Bool :=
@@ -390,16 +384,16 @@ def setId (id : RappId) (r : Rapp) : Rapp :=
   r.modifyPayload λ r => { r with id := id }
 
 @[inline]
+def setState (state : Meta.SavedState) (r : Rapp) : Rapp :=
+  r.modifyPayload λ r => { r with state := state }
+
+@[inline]
 def setAppliedRule (appliedRule : RegularRule) (r : Rapp) : Rapp :=
   r.modifyPayload λ r => { r with appliedRule := appliedRule }
 
 @[inline]
 def setSuccessProbability (successProbability : Percent) (r : Rapp) : Rapp :=
   r.modifyPayload λ r => { r with successProbability := successProbability }
-
-@[inline]
-def setProof (proof : Expr) (r : Rapp) : Rapp :=
-  r.modifyPayload λ r => { r with proof := proof }
 
 @[inline]
 def setProven (proven? : Bool) (r : Rapp) : Rapp :=
@@ -420,59 +414,46 @@ def allSubgoalsProven (r : Rapp) : m Bool :=
 
 end Rapp
 
+
 /-! ## Formatting -/
 
 mutual
-  private partial def formatTreeGoal (goalMInfo : GoalData.MessageInfo)
-      (rappMInfo : RappData.MessageInfo) (goal : Goal) : m MessageData := do
-    let goalMsg := goal.payload.toMessageData' goalMInfo
+  private partial def formatTreeGoal (traceCtx : TraceContext) (goal : Goal) :
+      MetaM MessageData := do
+    let goalMsg ← goal.payload.toMessageData traceCtx
     let childrenMsgs ← goal.rapps.mapM λ c => do
-      formatTreeRapp goalMInfo rappMInfo (← c.get)
+      formatTreeRapp traceCtx (← c.get)
     return goalMsg ++ indentD (MessageData.node childrenMsgs)
 
-  private partial def formatTreeRapp (goalMInfo : GoalData.MessageInfo)
-      (rappMInfo : RappData.MessageInfo) (rapp : Rapp) : m MessageData := do
-    let rappMsg := rapp.payload.toMessageData' rappMInfo
+  private partial def formatTreeRapp (traceCtx : TraceContext) (rapp : Rapp) :
+      MetaM MessageData := do
+    let rappMsg ← rapp.payload.toMessageData TraceContext.tree
     let childrenMsgs ← rapp.subgoals.mapM λ c => do
-      formatTreeGoal goalMInfo rappMInfo (← c.get)
+      formatTreeGoal traceCtx (← c.get)
     return rappMsg ++ indentD (MessageData.node childrenMsgs)
 end
 
 namespace Goal
 
-def toMessageData {m} [Monad m] [MonadOptions m] (traceCtx : TraceContext)
-    (g : Goal) : m MessageData := do
+def toMessageData (traceCtx : TraceContext) (g : Goal) : MetaM MessageData :=
   g.payload.toMessageData traceCtx
 
-@[inline]
-def treeToMessageData' :
-    GoalData.MessageInfo → RappData.MessageInfo → Goal → m MessageData :=
-  formatTreeGoal
-
-def treeToMessageData [MonadOptions m] (traceCtx : TraceContext) (g : Goal) :
-    m MessageData := do
-  treeToMessageData' (← GoalData.getMessageInfo traceCtx)
-    (← RappData.getMessageInfo traceCtx) g
+def treeToMessageData (traceCtx : TraceContext) (g : Goal) : MetaM MessageData :=
+  formatTreeGoal traceCtx g
 
 end Goal
 
 namespace Rapp
 
-def toMessageData {m} [Monad m] [MonadOptions m] (traceCtx : TraceContext)
-    (r : Rapp) : m MessageData := do
+def toMessageData (traceCtx : TraceContext) (r : Rapp) : MetaM MessageData :=
   r.payload.toMessageData traceCtx
 
-@[inline]
-def treeToMessageData' :
-    GoalData.MessageInfo → RappData.MessageInfo → Rapp → m MessageData :=
-  formatTreeRapp
-
-def treeToMessageData [MonadOptions m] (traceCtx : TraceContext) (r : Rapp) :
-    m MessageData := do
-  treeToMessageData' (← GoalData.getMessageInfo traceCtx)
-    (← RappData.getMessageInfo traceCtx) r
+def treeToMessageData (traceCtx : TraceContext) (r : Rapp) :
+    MetaM MessageData := do
+  formatTreeRapp traceCtx r
 
 end Rapp
+
 
 /-! ## Miscellaneous Functions on Goals -/
 
@@ -485,42 +466,17 @@ def mayHaveUnexpandedRapp (g : Goal) : m Bool := do pure $
 def hasProvableRapp (g : Goal) : m Bool :=
   g.rapps.anyM λ r => return ¬ (← r.get).isUnprovable
 
+def firstProvenRapp? (g : Goal) : m (Option RappRef) :=
+  g.rapps.findSomeM? λ rref =>
+    return if (← rref.get).isProven then some rref else none
+
 end Goal
 
-
-/-! ## Proof Extraction -/
-
-namespace GoalRef
-
-/- May only be called *once*. The given goal must be proven. -/
-partial def linkProofs (gref : GoalRef) : MetaM Unit := do
-  let g ← gref.get
-  match g.proofStatus with
-  | ProofStatus.unproven =>
-    throwError "aesop/linkProofs: internal error: goal {g.id} marked as unproven"
-  | ProofStatus.provenByNormalization =>
-    return ()
-  | ProofStatus.provenByRuleApplication =>
-    let provenRapp? ← g.rapps.findSomeM? λ r => do
-      let r ← r.get
-      return if r.isProven then some r else none
-    let (some provenRapp) ← pure provenRapp? | throwError
-      "aesop/linkProofs: internal error: goal {g.id} marked as proven but does not have a proven rule application"
-    provenRapp.subgoals.forM linkProofs
-    let goalMVar := g.goal
-    checkNotAssigned `aesop goalMVar
-    -- TODO check for type-correct assignment?
-    -- let goalType ← getMVarType goalMVar
-    -- let (true) ← isDefEq goalType r.proof | throwError
-    --   "aesop/linkProofs: internal error: proof of rule application {r.id} did not unify with the goal of its parent node {g.id}"
-    assignExprMVar goalMVar provenRapp.proof
-
-end GoalRef
 
 /-! ## Propagating Provability/Unprovability/Irrelevance -/
 
 @[inline]
-def Internal.setIrrelevant : Sum GoalRef RappRef → m Unit :=
+def setIrrelevantImpl : Sum GoalRef RappRef → m Unit :=
   MutAltTree.visitDown'
     (λ gref => do
       let g : Goal ← gref.get
@@ -538,13 +494,13 @@ def Internal.setIrrelevant : Sum GoalRef RappRef → m Unit :=
           return true)
 
 def GoalRef.setIrrelevant : GoalRef → m Unit :=
-  Internal.setIrrelevant ∘ Sum.inl
+  setIrrelevantImpl ∘ Sum.inl
 
 def RappRef.setIrrelevant : RappRef → m Unit :=
-  Internal.setIrrelevant ∘ Sum.inr
+  setIrrelevantImpl ∘ Sum.inr
 
 @[inline]
-def Internal.setProven : Sum GoalRef RappRef → m Unit :=
+private def setProvenImpl : Sum GoalRef RappRef → m Unit :=
   MutAltTree.visitUp'
     -- Goals are unconditionally marked as proven.
     (λ gref => do
@@ -565,13 +521,13 @@ def Internal.setProven : Sum GoalRef RappRef → m Unit :=
           return true)
 
 def GoalRef.setProven : GoalRef → m Unit :=
-  Internal.setProven ∘ Sum.inl
+  setProvenImpl ∘ Sum.inl
 
 def RappRef.setProven : RappRef → m Unit :=
-  Internal.setProven ∘ Sum.inr
+  setProvenImpl ∘ Sum.inr
 
 @[inline]
-def Internal.setUnprovable : Sum GoalRef RappRef → m Unit :=
+private def setUnprovableImpl : Sum GoalRef RappRef → m Unit :=
   MutAltTree.visitUp'
     -- Goals are marked as unprovable only if they are in fact unprovable, i.e.
     -- if all their rule applications are unprovable and they do not have
@@ -592,9 +548,9 @@ def Internal.setUnprovable : Sum GoalRef RappRef → m Unit :=
       return true)
 
 def GoalRef.setUnprovable : GoalRef → m Unit :=
-  Internal.setUnprovable ∘ Sum.inl
+  setUnprovableImpl ∘ Sum.inl
 
 def RappRef.setUnprovable : RappRef → m Unit :=
-  Internal.setUnprovable ∘ Sum.inr
+  setUnprovableImpl ∘ Sum.inr
 
 end Lean.Aesop
