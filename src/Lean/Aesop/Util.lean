@@ -390,7 +390,7 @@ private def declareSyntaxCatQuotParser (catName : Name) : CommandElabM Unit := d
     elabCommand cmd
 
 open Lean.Parser (LeadingIdentBehavior) in
-@[builtinCommandElab syntaxCatWithUnreservedTokens]
+@[commandElab syntaxCatWithUnreservedTokens]
 def elabDeclareSyntaxCatWithUnreservedTokens : CommandElab := fun stx => do
   let catName  := stx[1].getId
   let leadingIdentBehavior :=
